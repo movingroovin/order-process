@@ -7,6 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Helios Rebot</title>
   <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script async src="../js/index.js"></script>
+
 </head>
 
 <body>
@@ -53,6 +57,65 @@
               <p>找約過的人員？<a href="#">輸入您的手機號碼</a></p>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="seach-layout">
+    <div class="body-filter">
+      <div class="filter-container">
+        <h3 class="filter-title">選擇預約日期</h3>
+        <div>
+          <div id="filter-calendar"></div>
+        </div>
+        <div class="mT20 w100">
+          <!-- <hr> -->
+          <h3 class="filter-title">選擇預約時段</h3>
+          <div class="time-select-container">
+            <div class="mT10">
+              <a class="btn-outline time-btn">08:00</a>
+              <a class="btn-outline time-btn">09:00</a>
+              <a class="btn-outline time-btn">10:00</a>
+              <a class="btn-outline time-btn">11:00</a>
+              <a class="btn-outline time-btn">12:00</a>
+              <a class="btn-outline time-btn">13:00</a>
+              <a class="btn-outline time-btn">14:00</a>
+              <a class="btn-outline time-btn">15:00</a>
+              <a class="btn-outline time-btn">16:00</a>
+              <a class="btn-outline time-btn">17:00</a>
+              <a class="btn-outline time-btn">18:00</a>
+              <a class="btn-outline time-btn">19:00</a>
+              <a class="btn-outline time-btn">20:00</a>
+              <a class="btn-outline time-btn">21:00</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="body-result">
+      <h3 class="filter-title best-title">為您選擇最佳潔客</h3>
+      <div class="best-container">
+        <div class="best-card">
+          <div class="best-card-bg"></div>
+          <div class="best-card-content">
+            <div class="best-card-info_wrapper">
+              <div class="best-card-thumbnail">
+                <div class="best-card-thumbnail_img"></div>
+              </div>
+              <div class="best-card-headline">
+                <div class="best-card-name">Helios</div>
+              </div>
+              <div class="best-card-price">1000/hr</div>
+            </div>
+          </div>
+          <div class="best-footer">
+            <div class="best-footer-content">
+              The best you can find. Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, necessitatibus.
+            </div>
+          </div>
+        </div>
+        <div class="next-step">
+          <button class="w100 btn-primary btn-extra-large">下一步</button>
         </div>
       </div>
     </div>

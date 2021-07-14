@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&display=swap');
 
+/* element */
 html, body {
   font-family: -apple-system, 'Noto Sans TC', Roboto, sans-serif, serif;
 }
@@ -14,6 +15,16 @@ a {
   text-decoration: none;
   color: #36bbd9;
 }
+
+a:hover {
+  color: #2a99b3;;
+}
+
+h3 {
+  font-weight: 500;
+}
+
+/* classes */
 /* 768 below */
 .header {
   /* background-color: rgb(213, 247, 185); */
@@ -49,7 +60,7 @@ a {
   position: relative;
   cursor: pointer;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 12px;
   padding: 6px 12px;
   border-radius: 4px 4px 0px 0px;
   color: #9b9b9b;
@@ -81,6 +92,149 @@ a {
   justify-content: space-between;
 }
 
+/* body-filter */
+.filter-container {
+  max-width: 700px;
+  width: 97%;
+  margin: auto;
+  text-align: center;
+}
+
+.filter-title {
+  color: #b6b6b6;
+  margin: 15px auto;
+}
+
+/* body-result */
+.body-result {
+  text-align: center;
+}
+
+.best-title {
+  color: #36bbd9;
+}
+
+.best-card {
+  margin: auto;
+  width: 350px;
+  border-radius: 4px;
+  position: relative;
+  height: 100%;
+  -webkit-transition: 0.1s all ease-in;
+  transition: 0.1s all ease-in;
+  background: #ffffff;
+  -webkit-box-shadow: 0 4px 18px 0 #36bbd9;
+  box-shadow: 0 4px 18px 0 #36bbd9;
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+
+.best-card-bg {
+  background-image: url(https://storage.googleapis.com/jackercleaning/assets/optImg/web/page/platform_three/bestcleaner-bg.jpg);
+  width: 100%;
+  height: 160px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.best-card-content {
+  padding: 0px 20px 12px;
+}
+
+.best-card-info_wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 60px;
+  margin-bottom: 12px;
+}
+
+.best-card-thumbnail {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #ffffff;
+  -webkit-transform: translateY(-30px);
+  -ms-transform: translateY(-30px);
+  transform: translateY(-30px);
+  background-color: #ffffff;
+}
+
+.best-card-thumbnail_img {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: darkgrey;
+}
+
+.best-card-headline {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.best-card-name {
+  font-size: 18px;
+  font-weight: 500;
+  color: #808080;
+  margin-right: 4px;
+}
+
+.best-card-price {
+  font-size: 20px;
+  color: #3e4459;
+  font-weight: 500;
+}
+
+.best-footer {
+  padding: 0px 12px;
+  height: 100%;
+  margin-bottom: 32px;
+}
+
+.best-footer-content {
+  overflow: hidden;
+  height: 76px;
+}
+
+.next-step {
+  margin: auto;
+  width: 345px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+/* calendar */
+.flatpickr-calendar {
+  width: 100%;
+  margin: auto;
+}
 /* ----utlities---- */
 .mT10 {
   margin-top: 10px;
@@ -95,6 +249,10 @@ a {
 }
 
 /* ----button---- */
+.btn-extra-large {
+  padding: 15px 20px !important;
+}
+
 .btn-primary {
   display: inline-block;
   padding: 6px 12px;
@@ -109,6 +267,46 @@ a {
   text-align: center;
 }
 
+.btn-primary:hover {
+  background: #2a99b3;
+}
+
+.btn-outline {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.time-btn {
+  width: 60px;
+  color: #36bbd9;
+  border-color: #36bbd9;
+  border-radius: 2px;
+  padding: 10px;
+  margin: 0px 2.5px 5px;
+  -webkit-transition: 0.2s all cubic-bezier(0.3, -0.14, 0.38, 1.02);
+  transition: 0.2s all cubic-bezier(0.3, -0.14, 0.38, 1.02);
+}
+
+.time-btn:hover {
+  color: #eeeeee;
+  background-color: #36bbd9;
+}
+
 /* 700 up */
 @media screen and (min-width: 700px) {
   .header {
@@ -117,6 +315,10 @@ a {
     background: url(https://storage.googleapis.com/jackercleaning/assets/optImg/landing/landing-bedroom.png);
     background-size: cover;
     background-position-x: 100%;
+  }
+
+  .header-form-tab {
+    font-size: 16px;
   }
 }
 
