@@ -230,6 +230,123 @@ h3 {
   margin-bottom: 16px;
 }
 
+.next-step-text {
+  text-align: center;
+  font-size: 14px;
+  color: #bbb7ba;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.next-step-icon{
+  width: 14px;
+  height: 14px;
+  -webkit-animation: arrowShake 1s infinite ease;
+  animation: arrowShake 1s infinite ease;
+}
+
+@keyframes arrowShake1 {
+  0% {
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+  }
+  50% {
+    -webkit-transform: translate(0px, -2px);
+    transform: translate(0px, -2px);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+  }
+}
+
+.more-card-container {
+  max-width: 1176px;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.more-card {
+  width: 360px;
+  border: 1px solid #cfcfcf;
+  border-radius: 4px;
+  position: relative;
+  height: 100%;
+  margin: 0px 16px 16px 16px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: 0.2s all ease-in-out;
+  transition: 0.2s all ease-in-out;
+  background-color: #ffffff;
+}
+
+.more-card:hover {
+  -webkit-box-shadow: 0 4px 18px 0 #939fa1;
+  box-shadow: 0 4px 18px 0 #939fa1;
+}
+
+.more-card-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 40px 24px 40px 30px;
+}
+
+.more-card-info-thumbnail {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 24px;
+}
+
+.more-card-info-thumbnail_img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: darkgrey;
+}
+
+.more-card-info-content {
+  width: 165px;
+  height: 120px;
+}
+
+.more-card-action {
+  height: 70px;
+  padding: 0px 20px 20px 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.more-card-action_price {
+  font-size: 20px;
+  color: #3e4459;
+  font-weight: 500;
+  text-align: center;
+}
+
 /* calendar */
 .flatpickr-calendar {
   width: 100%;
@@ -248,7 +365,17 @@ h3 {
   width: 100%;
 }
 
+.flex1 {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
 /* ----button---- */
+.btn-large {
+  padding: 8px 20px !important;
+}
+
 .btn-extra-large {
   padding: 15px 20px !important;
 }
@@ -271,7 +398,7 @@ h3 {
   background: #2a99b3;
 }
 
-.btn-outline {
+.btn {
   display: inline-block;
   padding: 6px 12px;
   margin-bottom: 0;
@@ -303,6 +430,26 @@ h3 {
 }
 
 .time-btn:hover {
+  color: #eeeeee;
+  background-color: #36bbd9;
+}
+
+.btn-primary-outline {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  outline: none;
+  background: white;
+  color: #36bbd9;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #36bbd9;
+}
+
+.btn-primary-outline:hover {
   color: #eeeeee;
   background-color: #36bbd9;
 }

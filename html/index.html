@@ -9,113 +9,211 @@
   <link rel="stylesheet" href="../css/index.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
   <script async src="../js/index.js"></script>
 
 </head>
 
 <body>
-  <div class="header">
-    <div class="header-inner">
-      <div class="header-title">
-        <h1>預約居家清潔，三分鐘馬上搞定!!</h1>
-      </div>
-      <div class="header-form">
-        <div class="header-form-tabs">
-          <a href="#" class="header-form-tab">快速預約</a>
-          <a href="#" class="header-form-tab">雙人快清</a>
-          <a href="#" class="header-form-tab">指定人員</a>
-          <a href="#" class="header-form-tab">定期享優惠</a>
+  <div id="app">
+    <div class="header">
+      <div class="header-inner">
+        <div class="header-title">
+          <h1>預約居家清潔，三分鐘馬上搞定!!</h1>
         </div>
-        <div class="header-form-content">
+        <div class="header-form">
+          <div class="header-form-tabs">
+            <a href="#" class="header-form-tab">快速預約</a>
+            <a href="#" class="header-form-tab">雙人快清</a>
+            <a href="#" class="header-form-tab">指定人員</a>
+            <a href="#" class="header-form-tab">定期享優惠</a>
+          </div>
+          <div class="header-form-content">
+            <div>
+              <div class="header-form-info">
+                <div class="mT20">
+                  <select class="header-form-select" name="" id="">
+                    <option value="台北市">台北市</option>
+                    <option value="新北市">新北市</option>
+                    <option value="基隆市">基隆市</option>
+                    <option value="桃園市">桃園市</option>
+                  </select>
+                </div>
+                <div class="mT20">
+                  <select class="header-form-select" name="" id="">
+                    <option value="3">單人打掃 3小時</option>
+                    <option value="4">單人打掃 4小時</option>
+                    <option value="5">雙人打掃 5小時</option>
+                    <option value="6">雙人打掃 6小時</option>
+                  </select>
+                </div>
+                <div class="header-form-other mT20">
+                  <div>家中有無寵物</div>
+                  <div>有/無</div>
+                </div>
+              </div>
+              <div class="mT20 w100">
+                <button class="btn-primary w100" @click="SubmitBasicInfo">開始預約，查看清潔價格</button>
+              </div>
+              <div class="mT10 w100">
+                <p>找約過的人員？<a href="#">輸入您的手機號碼</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="seach-layout" v-show="isBasicInfo" ref="searchLayout">
+      <div class="body-filter">
+        <div class="filter-container">
+          <h3 class="filter-title">選擇預約日期</h3>
           <div>
-            <div class="header-form-info">
-              <div class="mT20">
-                <select class="header-form-select" name="" id="">
-                  <option value="台北市">台北市</option>
-                  <option value="新北市">新北市</option>
-                  <option value="基隆市">基隆市</option>
-                  <option value="桃園市">桃園市</option>
-                </select>
+            <div id="filter-calendar"></div>
+          </div>
+          <div class="mT20 w100" >
+            <!-- v-if="isDateSelect" -->
+            <!-- <hr> -->
+            <h3 class="filter-title">選擇預約時段</h3>
+            <div class="time-select-container">
+              <div class="mT10">
+                <a 
+                  class="btn time-btn"
+                  v-for="(ele, idx) in timeList"
+                  :key="idx"
+                  @click="SubmitTimeSelect"
+                >{{ele}}</a>
               </div>
-              <div class="mT20">
-                <select class="header-form-select" name="" id="">
-                  <option value="3">單人打掃 3小時</option>
-                  <option value="4">單人打掃 4小時</option>
-                  <option value="5">雙人打掃 5小時</option>
-                  <option value="6">雙人打掃 6小時</option>
-                </select>
-              </div>
-              <div class="header-form-other mT20">
-                <div>家中有無寵物</div>
-                <div>有/無</div>
-              </div>
-            </div>
-            <div class="mT20 w100">
-              <button class="btn-primary w100">開始預約，查看清潔價格</button>
-            </div>
-            <div class="mT10 w100">
-              <p>找約過的人員？<a href="#">輸入您的手機號碼</a></p>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="seach-layout">
-    <div class="body-filter">
-      <div class="filter-container">
-        <h3 class="filter-title">選擇預約日期</h3>
-        <div>
-          <div id="filter-calendar"></div>
-        </div>
-        <div class="mT20 w100">
-          <!-- <hr> -->
-          <h3 class="filter-title">選擇預約時段</h3>
-          <div class="time-select-container">
-            <div class="mT10">
-              <a class="btn-outline time-btn">08:00</a>
-              <a class="btn-outline time-btn">09:00</a>
-              <a class="btn-outline time-btn">10:00</a>
-              <a class="btn-outline time-btn">11:00</a>
-              <a class="btn-outline time-btn">12:00</a>
-              <a class="btn-outline time-btn">13:00</a>
-              <a class="btn-outline time-btn">14:00</a>
-              <a class="btn-outline time-btn">15:00</a>
-              <a class="btn-outline time-btn">16:00</a>
-              <a class="btn-outline time-btn">17:00</a>
-              <a class="btn-outline time-btn">18:00</a>
-              <a class="btn-outline time-btn">19:00</a>
-              <a class="btn-outline time-btn">20:00</a>
-              <a class="btn-outline time-btn">21:00</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="body-result">
-      <h3 class="filter-title best-title">為您選擇最佳潔客</h3>
-      <div class="best-container">
-        <div class="best-card">
-          <div class="best-card-bg"></div>
-          <div class="best-card-content">
-            <div class="best-card-info_wrapper">
-              <div class="best-card-thumbnail">
-                <div class="best-card-thumbnail_img"></div>
+      <div class="body-result" v-show="isTimeSelect" ref="bodyResult">
+        <h3 class="filter-title best-title">為您選擇最佳潔客</h3>
+        <div class="best-container">
+          <div class="best-card">
+            <div class="best-card-bg"></div>
+            <div class="best-card-content">
+              <div class="best-card-info_wrapper">
+                <div class="best-card-thumbnail">
+                  <div class="best-card-thumbnail_img"></div>
+                </div>
+                <div class="best-card-headline">
+                  <div class="best-card-name">Helios</div>
+                </div>
+                <div class="best-card-price">1000/hr</div>
               </div>
-              <div class="best-card-headline">
-                <div class="best-card-name">Helios</div>
+            </div>
+            <div class="best-footer">
+              <div class="best-footer-content">
+                The best you can find. Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit,
+                necessitatibus.
               </div>
-              <div class="best-card-price">1000/hr</div>
             </div>
           </div>
-          <div class="best-footer">
-            <div class="best-footer-content">
-              The best you can find. Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, necessitatibus.
-            </div>
+          <div class="next-step">
+            <button class="w100 btn-primary btn-extra-large">下一步</button>
+            <div class="next-step-text mT20" @click="MoreCard">往下查看更多潔客</div>
+            <img src="https://storage.googleapis.com/jackercleaning/assets/optImg/icon/icon-arrowdown.svg" alt=""
+              class="next-step-icon">
           </div>
         </div>
-        <div class="next-step">
-          <button class="w100 btn-primary btn-extra-large">下一步</button>
+        <div class="result-sort"></div>
+        <div class="more-card-container" ref="moreCard">
+          <div class="more-card">
+            <div class="more-card-info">
+              <div class="more-card-info-thumbnail">
+                <div class="more-card-info-thumbnail_img"></div>
+              </div>
+              <div class="more-card-info-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
+                aliquam!</div>
+            </div>
+            <div class="more-card-action">
+              <div class="flex1 more-card-action_price">$1000/hr</div>
+              <div class="flex1">
+                <a class="btn-primary-outline btn-large w100">預約此潔客</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="more-card">
+            <div class="more-card-info">
+              <div class="more-card-info-thumbnail">
+                <div class="more-card-info-thumbnail_img"></div>
+              </div>
+              <div class="more-card-info-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
+                aliquam!</div>
+            </div>
+            <div class="more-card-action">
+              <div class="flex1 more-card-action_price">$1000/hr</div>
+              <div class="flex1">
+                <a class="btn-primary-outline btn-large w100">預約此潔客</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="more-card">
+            <div class="more-card-info">
+              <div class="more-card-info-thumbnail">
+                <div class="more-card-info-thumbnail_img"></div>
+              </div>
+              <div class="more-card-info-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
+                aliquam!</div>
+            </div>
+            <div class="more-card-action">
+              <div class="flex1 more-card-action_price">$1000/hr</div>
+              <div class="flex1">
+                <a class="btn-primary-outline btn-large w100">預約此潔客</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="more-card">
+            <div class="more-card-info">
+              <div class="more-card-info-thumbnail">
+                <div class="more-card-info-thumbnail_img"></div>
+              </div>
+              <div class="more-card-info-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
+                aliquam!</div>
+            </div>
+            <div class="more-card-action">
+              <div class="flex1 more-card-action_price">$1000/hr</div>
+              <div class="flex1">
+                <a class="btn-primary-outline btn-large w100">預約此潔客</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="more-card">
+            <div class="more-card-info">
+              <div class="more-card-info-thumbnail">
+                <div class="more-card-info-thumbnail_img"></div>
+              </div>
+              <div class="more-card-info-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
+                aliquam!</div>
+            </div>
+            <div class="more-card-action">
+              <div class="flex1 more-card-action_price">$1000/hr</div>
+              <div class="flex1">
+                <a class="btn-primary-outline btn-large w100">預約此潔客</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="more-card">
+            <div class="more-card-info">
+              <div class="more-card-info-thumbnail">
+                <div class="more-card-info-thumbnail_img"></div>
+              </div>
+              <div class="more-card-info-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
+                aliquam!</div>
+            </div>
+            <div class="more-card-action">
+              <div class="flex1 more-card-action_price">$1000/hr</div>
+              <div class="flex1">
+                <a class="btn-primary-outline btn-large w100">預約此潔客</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
