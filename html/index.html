@@ -7,14 +7,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Helios Rebot</title>
   <link rel="stylesheet" href="../css/index.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script> -->
+
+  <!-- Flatpickr related files -->
+  <link href="https://cdn.jsdelivr.net/npm/flatpickr@4/dist/flatpickr.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr@4/dist/flatpickr.min.js"></script>
+  <script src="https://npmcdn.com/flatpickr/dist/l10n/zh-tw.js"></script>
+  <!-- Vue js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script> -->
+  <!-- Lastly add this package -->
+  <script src="https://cdn.jsdelivr.net/npm/vue-flatpickr-component@9"></script>
+
   <script
     src="https://cdn.jsdelivr.net/npm/seamless-scroll-polyfill@1.0.0/dist/es5/seamless.auto-polyfill.min.js"
     data-seamless
   ></script>
-  <script async src="../js/index.js"></script>
+  <script defer src="../js/index.js"></script>
 
 </head>
 
@@ -27,10 +38,13 @@
         </div>
         <div class="header-form">
           <div class="header-form-tabs">
-            <a href="#" class="header-form-tab">快速預約</a>
-            <a href="#" class="header-form-tab">雙人快清</a>
-            <a href="#" class="header-form-tab">指定人員</a>
-            <a href="#" class="header-form-tab">定期享優惠</a>
+            <a
+              class="header-form-tab"
+              v-for="(ele, idx) in tabList"
+              :key="idx"
+              :class="{ header_form_tab_selected: ele.isSelect }"
+              @click="ClickTab(ele)">{{ele.text}}
+            </a>
           </div>
           <div class="header-form-content">
             <div>
@@ -72,10 +86,14 @@
         <div class="filter-container">
           <h3 class="filter-title">選擇預約日期</h3>
           <div>
+            <flat-pickr 
+              v-model="selectedDate"
+              :config="calendarConfig"
+              @input="SubmitDateSelect">
+            </flat-pickr>
             <div id="filter-calendar"></div>
           </div>
-          <div class="mT20 w100" >
-            <!-- v-if="isDateSelect" -->
+          <div class="mT20 w100" v-show="isDateSelect" ref="timeSelect">
             <!-- <hr> -->
             <h3 class="filter-title">選擇預約時段</h3>
             <div class="time-select-container">
@@ -84,8 +102,9 @@
                   class="btn time-btn"
                   v-for="(ele, idx) in timeList"
                   :key="idx"
-                  @click="SubmitTimeSelect"
-                >{{ele}}</a>
+                  :class="{ time_btn_selected: ele.isSelect }"
+                  @click="SubmitTimeSelect(ele)"
+                >{{ele.time}}</a>
               </div>
             </div>
           </div>

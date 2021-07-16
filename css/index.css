@@ -48,7 +48,7 @@ h3 {
 }
 
 .header-form {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: transparent;
 }
 
 .header-form-tabs {
@@ -72,8 +72,14 @@ h3 {
   box-sizing: border-box;
 }
 
+.header_form_tab_selected {
+  color: #36bbd9;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
 .header-form-content {
   padding: 20px 30px;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .header-form-info {
@@ -352,6 +358,9 @@ h3 {
   width: 100%;
   margin: auto;
 }
+.flatpickr-input {
+  display: none;
+}
 /* ----utlities---- */
 .mT10 {
   margin-top: 10px;
@@ -430,6 +439,11 @@ h3 {
 }
 
 .time-btn:hover {
+  color: #eeeeee;
+  background-color: #36bbd9;
+}
+
+.time_btn_selected {
   color: #eeeeee;
   background-color: #36bbd9;
 }
