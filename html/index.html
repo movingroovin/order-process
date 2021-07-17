@@ -27,6 +27,9 @@
   ></script>
   <script defer src="../js/index.js"></script>
 
+  <!-- font awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+
 </head>
 
 <body>
@@ -142,101 +145,87 @@
         </div>
         <div class="result-sort"></div>
         <div class="more-card-container" ref="moreCard">
-          <div class="more-card">
+          <div 
+            class="more-card" 
+            v-for="(ele, idx) in moreCardInfoList"
+            :key="idx">
             <div class="more-card-info">
               <div class="more-card-info-thumbnail">
                 <div class="more-card-info-thumbnail_img"></div>
               </div>
-              <div class="more-card-info-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
-                aliquam!</div>
+              <div class="more-card-info-content">{{ele.content}}</div>
             </div>
             <div class="more-card-action">
-              <div class="flex1 more-card-action_price">$1000/hr</div>
+              <div class="flex1 more-card-action_price">${{ele.price}}/hr</div>
               <div class="flex1">
                 <a class="btn-primary-outline btn-large w100">預約此潔客</a>
               </div>
             </div>
           </div>
-
-          <div class="more-card">
-            <div class="more-card-info">
-              <div class="more-card-info-thumbnail">
-                <div class="more-card-info-thumbnail_img"></div>
-              </div>
-              <div class="more-card-info-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
-                aliquam!</div>
-            </div>
-            <div class="more-card-action">
-              <div class="flex1 more-card-action_price">$1000/hr</div>
-              <div class="flex1">
-                <a class="btn-primary-outline btn-large w100">預約此潔客</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="more-card">
-            <div class="more-card-info">
-              <div class="more-card-info-thumbnail">
-                <div class="more-card-info-thumbnail_img"></div>
-              </div>
-              <div class="more-card-info-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
-                aliquam!</div>
-            </div>
-            <div class="more-card-action">
-              <div class="flex1 more-card-action_price">$1000/hr</div>
-              <div class="flex1">
-                <a class="btn-primary-outline btn-large w100">預約此潔客</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="more-card">
-            <div class="more-card-info">
-              <div class="more-card-info-thumbnail">
-                <div class="more-card-info-thumbnail_img"></div>
-              </div>
-              <div class="more-card-info-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
-                aliquam!</div>
-            </div>
-            <div class="more-card-action">
-              <div class="flex1 more-card-action_price">$1000/hr</div>
-              <div class="flex1">
-                <a class="btn-primary-outline btn-large w100">預約此潔客</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="more-card">
-            <div class="more-card-info">
-              <div class="more-card-info-thumbnail">
-                <div class="more-card-info-thumbnail_img"></div>
-              </div>
-              <div class="more-card-info-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
-                aliquam!</div>
-            </div>
-            <div class="more-card-action">
-              <div class="flex1 more-card-action_price">$1000/hr</div>
-              <div class="flex1">
-                <a class="btn-primary-outline btn-large w100">預約此潔客</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="more-card">
-            <div class="more-card-info">
-              <div class="more-card-info-thumbnail">
-                <div class="more-card-info-thumbnail_img"></div>
-              </div>
-              <div class="more-card-info-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
-                aliquam!</div>
-            </div>
-            <div class="more-card-action">
-              <div class="flex1 more-card-action_price">$1000/hr</div>
-              <div class="flex1">
-                <a class="btn-primary-outline btn-large w100">預約此潔客</a>
+        </div>
+      </div>
+    </div>
+    <div class="checkout-layout">
+      <div class="booking-header">
+        <a class="booking-last-step">
+          <i class="fas fa-angle-left"></i> 選擇其他潔客
+        </a>
+      </div>
+      <div class="booking-body-container">
+        <div class="booking-body">
+          <div class="booking-body-detail">
+            <div class="order-detail">
+              <div class="order-detail_card">
+                <div class="order-detail-content">
+                  <div class="order-detail-content_top">
+                    <p><i class="fas fa-clock" style="color: lightgray;"></i> 2021-07-24 10:30-13:30</p>
+                    <p><i class="fas fa-map-marker-alt" style="color: lightgray;"></i> 台北市 中正區</p>
+                  </div>
+                  <div class="order-detail-content_name">
+                    <div class="order-detail-content_thumbnail"></div>
+                    <div class="order-detail-content_name_info">
+                      <p>Project 1</p>
+                      <p>3 hr x 1000 元/hr<span class="force-right mR10">$3000</span></p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="order-detail-content_price">
+                    <div class="order-detail-price-row">
+                      <div class="order-detail-price-row_title"></div>
+                      <div class="order-detail-price-row_subtitle"></div>
+                      <div class="order-detail-price-row_amount">小計: $3000</div>
+                    </div>
+                    <div class="order-detail-price-row">
+                      <div class="order-detail-price-row_title">鐘點清潔</div>
+                      <div class="order-detail-price-row_subtitle">3 hr x 1000 元/hr</div>
+                      <div class="order-detail-price-row_amount">$3000</div>
+                    </div>
+                    <div class="order-detail-price-row">
+                      <div class="order-detail-price-row_title">旺季加價</div>
+                      <div class="order-detail-price-row_subtitle"></div>
+                      <div class="order-detail-price-row_amount">$1000</div>
+                    </div>
+                  </div>
+                  <div class="order-detail-content_total">
+                    <hr>
+                    <div class="order-detail-price-row color-secondary bold">
+                      <div class="order-detail-price-row_title">總計</div>
+                      <div class="order-detail-price-row_subtitle"></div>
+                      <div class="order-detail-price-row_amount">$4000</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="order-detail-footer">
+                  <p><i class="fas fa-info-circle"></i> 注意事項</p>
+                  <div class="order-detail-footer_text">
+                    <span class="order-detail-footer_text-info">取消及更改服務政策、加購用具相關政策...</span>
+                    <span class="order-detail-footer_text-pop">查看完整資訊</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          <div class="booking-body-process"></div>
         </div>
       </div>
     </div>

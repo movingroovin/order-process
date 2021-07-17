@@ -31,6 +31,14 @@ const vueInstance = Vue.createApp({
         { time: '20:00', isSelect: false },
         { time: '21:00', isSelect: false },
       ],
+      moreCardInfoList: [
+        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1000 },
+        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1000 },
+        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1000 },
+        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1000 },
+        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1000 },
+        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1000 },
+      ],
       calendarConfig: {
         inline: true,
         mode: "range",
