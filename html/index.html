@@ -84,7 +84,9 @@
         </div>
       </div>
     </div>
-    <div class="seach-layout" v-show="isBasicInfo" ref="searchLayout">
+
+    <!-- BASIC SELECT -->
+    <div class="seach-layout" v-show="isBasicInfo && !isProjectSelect" ref="searchLayout">
       <div class="body-filter">
         <div class="filter-container">
           <h3 class="filter-title">選擇預約日期</h3>
@@ -137,7 +139,7 @@
             </div>
           </div>
           <div class="next-step">
-            <button class="w100 btn-primary btn-extra-large">下一步</button>
+            <button class="w100 btn-primary btn-extra-large" @click="SubmitProjectSelect">下一步</button>
             <div class="next-step-text mT20" @click="MoreCard">往下查看更多潔客</div>
             <img src="https://storage.googleapis.com/jackercleaning/assets/optImg/icon/icon-arrowdown.svg" alt=""
               class="next-step-icon">
@@ -158,16 +160,18 @@
             <div class="more-card-action">
               <div class="flex1 more-card-action_price">${{ele.price}}/hr</div>
               <div class="flex1">
-                <a class="btn-primary-outline btn-large w100">預約此潔客</a>
+                <a class="btn-primary-outline btn-large w100" @click="SubmitProjectSelect">預約此潔客</a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="checkout-layout">
+
+    <!-- ORDER PROCESS -->
+    <div class="checkout-layout" v-show="isProjectSelect" ref="checkLayout">
       <div class="booking-header">
-        <a class="booking-last-step">
+        <a class="booking-last-step" @click="ReselectProject">
           <i class="fas fa-angle-left"></i> 選擇其他潔客
         </a>
       </div>
@@ -228,31 +232,31 @@
           <div class="booking-body-process">
             <div class="booking-process-progressbar">
               <div class="progrssbar-step">
-                <span class="progrssbar-step_label">1</span>
+                <span class="progrssbar-step_label" :class="{ bg_color_primary: orderStep.isStep1 || orderStep.isStep2 || orderStep.isStep3 || orderStep.isStep4}">1</span>
                 <span class="progrssbar-step_text">填寫資料</span>
               </div>
-              <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);"></span>
+              <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);" :class="{ bg_color_primary: orderStep.isStep2 }"></span>
 
               <div class="progrssbar-step">
-                <span class="progrssbar-step_label">2</span>
+                <span class="progrssbar-step_label" :class="{ bg_color_primary: orderStep.isStep2 || orderStep.isStep3 || orderStep.isStep4 }">2</span>
                 <span class="progrssbar-step_text">清潔計畫</span>
               </div>
-              <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);"></span>
+              <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);" :class="{ bg_color_primary: orderStep.isStep3 }"></span>
 
               <div class="progrssbar-step">
-                <span class="progrssbar-step_label">3</span>
+                <span class="progrssbar-step_label" :class="{ bg_color_primary: orderStep.isStep3 || orderStep.isStep4 }">3</span>
                 <span class="progrssbar-step_text">付款確認</span>
               </div>
-              <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);"></span>
+              <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);" :class="{ bg_color_primary: orderStep.isStep4 }"></span>
 
               <div class="progrssbar-step">
-                <span class="progrssbar-step_label">4</span>
+                <span class="progrssbar-step_label" :class="{ bg_color_primary: orderStep.isStep4 }">4</span>
                 <span class="progrssbar-step_text">預約完成</span>
               </div>
             </div>
 
             <!-- step 1 -->
-            <div class="booking-process-form">
+            <div class="booking-process-form" v-show="orderStep.isStep1">
               <div class="booking-process-form_titlebox">
                 <h5 class="booking-process-form_title"><i class="fas fa-phone-alt icon-w20 mR10"></i>聯絡資訊</h5>
               </div>
@@ -308,22 +312,36 @@
               </div>
               <input type="text" class="form-control" placeholder="這裡可以留下備註、注意事項">
               <div class="w100 mT20 text-center">
-                <button class="btn-primary btn-large mR10">上一步</button>
-                <button class="btn-primary btn-large mR10">下一步</button>
+                <button class="btn-primary btn-large mR10" @click="ReselectProject">上一步</button>
+                <button class="btn-primary btn-large mR10" @click="NextStep(2)">下一步</button>
               </div>
             </div>
 
             <!-- step 2 -->
-            <div class="booking-process-form process-form-plan">
+            <div class="booking-process-form process-form-plan" v-show="orderStep.isStep2">
               <div class="booking-process-form_titlebox title-flex-center">
                 <h4 class="booking-process-form_title color-secondary font-title-medium"><span class="mR5">請選擇您的清潔計畫</span><i class="fas fa-question-circle"></i></h4>
               </div>
               <div class="process-form-plan-content">
-                <div class="process-form-plan-content_option process-form-plan-content_option_selected">每四週一次</div>
-                <div class="process-form-plan-content_option">每兩週一次</div>
-                <div class="process-form-plan-content_option">單次預約</div>
+                <div
+                  class="process-form-plan-content_option"
+                  :class="{ process_form_plan_content_option_selected: ele.isSelect }"
+                  v-for="(ele, idx) in planList"
+                  :key="idx"
+                  @click="SelectPlan(ele)">
+                  <div class="process-content-option-badge" v-show="!ele.isSimple">省10％</div>
+                  <div class="process-content-option-icon" v-show="!ele.isSimple"><i class="far fa-calendar-alt" style="font-size: 40px;"></i></div>
+                  <div v-show="!ele.isSimple">
+                    <div class="process-content-option-title font-title-medium">{{ele.name}}</div>
+                    <div class="plan-detail_subtitle">每次服務省10%，可隨時取消續訂</div>
+                  </div>
+                  <div class="process-content-option-check" v-show="!ele.isSimple"></div>
+
+                  <div class="process-content-option-title_single" v-show="ele.isSimple">單次預約<span class="plan-detail_subtitle">原價</span></div>
+                  <div class="process-content-option-check" style="bottom: 15px;" v-show="ele.isSimple"></div>
+                </div>
               </div>
-              <div class="process-form-plan-detail">
+              <div class="process-form-plan-detail" v-show="planList.find(ele => ele.isSelect) && !planList.find(ele => ele.isSelect).isSimple">
                 <div class="plan-detail_title font-title-medium">每兩週定期幫您預約打掃</div>
                 <div class="plan-detail_subtitle">每次只要$1755，省$195</div>
                 <div class="plan-detail_time mT10">
@@ -349,7 +367,7 @@
                 </div>
               </div>
               <div class="w100 mT20 text-center">
-                <button class="btn-primary btn-large mR10">上一步</button>
+                <button class="btn-primary btn-large mR10" @click="LastStep(1)">上一步</button>
                 <button class="btn-primary btn-large mR10">下一步</button>
               </div>
             </div>

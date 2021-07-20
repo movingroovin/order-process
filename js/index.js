@@ -10,6 +10,7 @@ const vueInstance = Vue.createApp({
       isBasicInfo: false,
       isDateSelect: false,
       isTimeSelect: false,
+      isProjectSelect: false,
       selectedDate: '',
       selectedStartDate: '',
       selectedEndDate: '',
@@ -33,11 +34,22 @@ const vueInstance = Vue.createApp({
       ],
       moreCardInfoList: [
         { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1000 },
-        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1000 },
-        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1000 },
-        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1000 },
-        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1000 },
-        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1000 },
+        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1500 },
+        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 2000 },
+        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 2500 },
+        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 3000 },
+        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 3500 },
+      ],
+      orderStep: {
+        isStep1: true,
+        isStep2: false,
+        isStep3: false,
+        isStep4: false,
+      },
+      planList: [
+        { name: '每四週一次', isSimple: false, isSelect: false },
+        { name: '每兩週一次', isSimple: false, isSelect: false },
+        { name: '單次預約', isSimple: true, isSelect: false },
       ],
       calendarConfig: {
         inline: true,
@@ -110,6 +122,42 @@ const vueInstance = Vue.createApp({
           el.scrollIntoView({behavior: 'smooth'});
         });
       }
+    },
+    SubmitProjectSelect() {
+      this.isProjectSelect = true;
+      const el = this.$refs.checkLayout;
+      if (el) {
+        this.$nextTick(() => {
+          el.scrollIntoView({behavior: 'smooth'});
+        });
+      }
+    },
+    ReselectProject() {
+      this.isProjectSelect = false;
+    },
+    NextStep(toStep) {
+      this.orderStep = {
+        isStep1: false,
+        isStep2: false,
+        isStep3: false,
+        isStep4: false,
+      }
+      this.orderStep[`isStep${toStep}`] = true;
+    },
+    LastStep(toStep) {
+      this.orderStep = {
+        isStep1: false,
+        isStep2: false,
+        isStep3: false,
+        isStep4: false,
+      }
+      this.orderStep[`isStep${toStep}`] = true;
+    },
+    SelectPlan(plan) {
+      this.planList.forEach(ele => {
+        ele.isSelect = false;
+      });
+      this.planList.find(ele => ele.name === plan.name).isSelect = true;
     }
   }
 });

@@ -550,8 +550,8 @@ hr {
   -webkit-box-shadow: 0px 0px 4px grey;
   box-shadow: 0px 0px 4px grey;
   margin-bottom: 15px;
-  -webkit-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
 }
 
 .progrssbar-step_text {
@@ -569,6 +569,8 @@ hr {
   -webkit-transform: scaleX(1.01);
   -ms-transform: scaleX(1.01);
   transform: scaleX(1.01);
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
 }
 
 .booking-process-form {
@@ -651,8 +653,68 @@ hr {
   transition: all 0.2s cubic-bezier(0, 0.81, 0, -0.1);
 }
 
-.process-form-plan-content_option_selected {
+.process_form_plan_content_option_selected {
   border: 2px solid #36bbd9;
+}
+
+.process-content-option-badge {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  color: #c9302c;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.process-content-option-icon {
+  margin-right: 12px;
+  width: 60px;
+  height: 60px;
+  padding: 3% 4%;
+  background-color: rgba(238, 238, 238, 0.9);
+  border-radius: 50%;
+}
+
+.process-content-option-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 6px;
+}
+
+.process-content-option-check {
+  position: absolute;
+  bottom: 8px;
+  right: 7px;
+  width: 14px;
+  height: 14px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 50%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border: 1px solid #eeeeee;
+}
+
+.process-content-option-title_single {
+  font-size: 18px;
+  font-weight: 300;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0px 16px 0px 0px;
 }
 
 .process-form-plan-detail {
@@ -761,6 +823,10 @@ hr {
 
 .bold {
   font-weight: bold !important;
+}
+
+.bg_color_primary {
+  background-color: #36bbd9 
 }
 
 .mT5 {
