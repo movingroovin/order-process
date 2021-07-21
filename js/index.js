@@ -32,13 +32,15 @@ const vueInstance = Vue.createApp({
         { time: '20:00', isSelect: false },
         { time: '21:00', isSelect: false },
       ],
+      selectedProject: {},
       moreCardInfoList: [
-        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1000 },
-        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1500 },
-        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 2000 },
-        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 2500 },
-        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 3000 },
-        { content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 3500 },
+        { title: 'Project 0', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 4000, isSelect: true },
+        { title: 'Project 1', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1000, isSelect: false },
+        { title: 'Project 2', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1500, isSelect: false },
+        { title: 'Project 3', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 2000, isSelect: false },
+        { title: 'Project 4', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 2500, isSelect: false },
+        { title: 'Project 5', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 3000, isSelect: false },
+        { title: 'Project 6', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 3500, isSelect: false },
       ],
       orderStep: {
         isStep1: true,
@@ -123,13 +125,20 @@ const vueInstance = Vue.createApp({
         });
       }
     },
-    SubmitProjectSelect() {
+    SubmitProjectSelect(project) {
       this.isProjectSelect = true;
       const el = this.$refs.checkLayout;
       if (el) {
         this.$nextTick(() => {
           el.scrollIntoView({behavior: 'smooth'});
         });
+      }
+      if (project) {
+        this.moreCardInfoList.forEach(ele => {
+          ele.isSelect = false;
+        })
+        this.selectedProject = this.moreCardInfoList.find(ele => ele.title === project.title);
+        this.moreCardInfoList.find(ele => ele.title === project.title).isSelect = true;
       }
     },
     ReselectProject() {

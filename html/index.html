@@ -126,9 +126,9 @@
                   <div class="best-card-thumbnail_img"></div>
                 </div>
                 <div class="best-card-headline">
-                  <div class="best-card-name">Helios</div>
+                  <div class="best-card-name">{{moreCardInfoList[0].title}}</div>
                 </div>
-                <div class="best-card-price">1000/hr</div>
+                <div class="best-card-price">{{moreCardInfoList[0].price}}/hr</div>
               </div>
             </div>
             <div class="best-footer">
@@ -139,7 +139,7 @@
             </div>
           </div>
           <div class="next-step">
-            <button class="w100 btn-primary btn-extra-large" @click="SubmitProjectSelect">下一步</button>
+            <button class="w100 btn-primary btn-extra-large" @click="SubmitProjectSelect(moreCardInfoList[0])">下一步</button>
             <div class="next-step-text mT20" @click="MoreCard">往下查看更多潔客</div>
             <img src="https://storage.googleapis.com/jackercleaning/assets/optImg/icon/icon-arrowdown.svg" alt=""
               class="next-step-icon">
@@ -149,18 +149,18 @@
         <div class="more-card-container" ref="moreCard">
           <div 
             class="more-card" 
-            v-for="(ele, idx) in moreCardInfoList"
+            v-for="(ele, idx) in moreCardInfoList.slice(1, moreCardInfoList.length)"
             :key="idx">
             <div class="more-card-info">
               <div class="more-card-info-thumbnail">
                 <div class="more-card-info-thumbnail_img"></div>
               </div>
-              <div class="more-card-info-content">{{ele.content}}</div>
+              <div class="more-card-info-content">{{ele.title}} - {{ele.content}}</div>
             </div>
             <div class="more-card-action">
               <div class="flex1 more-card-action_price">${{ele.price}}/hr</div>
               <div class="flex1">
-                <a class="btn-primary-outline btn-large w100" @click="SubmitProjectSelect">預約此潔客</a>
+                <a class="btn-primary-outline btn-large w100" @click="SubmitProjectSelect(ele)">預約此潔客</a>
               </div>
             </div>
           </div>
@@ -182,14 +182,14 @@
               <div class="order-detail_card">
                 <div class="order-detail-content">
                   <div class="order-detail-content_top">
-                    <p><i class="fas fa-clock icon-w14 mR5 text-center" style="color: lightgray;"></i> 2021-07-24 10:30-13:30</p>
+                    <p><i class="fas fa-clock icon-w14 mR5 text-center" style="color: lightgray;"></i> {{selectedDate}} {{selectedTime}}</p>
                     <p><i class="fas fa-map-marker-alt icon-w14 mR5 text-center" style="color: lightgray;"></i> 台北市 中正區</p>
                   </div>
                   <div class="order-detail-content_name">
                     <div class="order-detail-content_thumbnail"></div>
                     <div class="order-detail-content_name_info">
-                      <p>Project 1</p>
-                      <p>3 hr x 1000 元/hr<span class="force-right mR10">$3000</span></p>
+                      <p>{{selectedProject.title}}</p>
+                      <p>3 hr x {{selectedProject.price}} 元/hr<span class="force-right mR10">${{selectedProject.price*3}}</span></p>
                     </div>
                   </div>
                   <hr>
@@ -197,12 +197,12 @@
                     <div class="order-detail-price-row">
                       <div class="order-detail-price-row_title"></div>
                       <div class="order-detail-price-row_subtitle"></div>
-                      <div class="order-detail-price-row_amount">小計: $3000</div>
+                      <div class="order-detail-price-row_amount">小計: ${{selectedProject.price*3}}</div>
                     </div>
                     <div class="order-detail-price-row">
                       <div class="order-detail-price-row_title">鐘點清潔</div>
-                      <div class="order-detail-price-row_subtitle">3 hr x 1000 元/hr</div>
-                      <div class="order-detail-price-row_amount">$3000</div>
+                      <div class="order-detail-price-row_subtitle">3 hr x {{selectedProject.price}} 元/hr</div>
+                      <div class="order-detail-price-row_amount">${{selectedProject.price*3}}</div>
                     </div>
                     <div class="order-detail-price-row">
                       <div class="order-detail-price-row_title">旺季加價</div>
@@ -215,7 +215,7 @@
                     <div class="order-detail-price-row color-secondary bold">
                       <div class="order-detail-price-row_title">總計</div>
                       <div class="order-detail-price-row_subtitle"></div>
-                      <div class="order-detail-price-row_amount">$4000</div>
+                      <div class="order-detail-price-row_amount">${{selectedProject.price*3 + 1000}}</div>
                     </div>
                   </div>
                 </div>
@@ -335,10 +335,10 @@
                     <div class="process-content-option-title font-title-medium">{{ele.name}}</div>
                     <div class="plan-detail_subtitle">每次服務省10%，可隨時取消續訂</div>
                   </div>
-                  <div class="process-content-option-check" v-show="!ele.isSimple"></div>
+                  <div class="process-content-option-check" v-show="!ele.isSimple"><i class="fas fa-check-circle color-primary" v-show="ele.isSelect"></i></div>
 
                   <div class="process-content-option-title_single" v-show="ele.isSimple">單次預約<span class="plan-detail_subtitle">原價</span></div>
-                  <div class="process-content-option-check" style="bottom: 15px;" v-show="ele.isSimple"></div>
+                  <div class="process-content-option-check" style="bottom: 15px;" v-show="ele.isSimple"><i class="fas fa-check-circle color-primary" v-show="ele.isSelect"></i></div>
                 </div>
               </div>
               <div class="process-form-plan-detail" v-show="planList.find(ele => ele.isSelect) && !planList.find(ele => ele.isSelect).isSimple">
