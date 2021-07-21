@@ -574,7 +574,7 @@ hr {
 }
 
 .booking-process-form {
-  padding: 0 20px 30px;
+  padding: 0 5% 30px;
   margin-top: 20px;
   -webkit-box-shadow: 0 1px 4px 2px rgb(229 229 229 / 50%);
   box-shadow: 0 1px 4px 2px rgb(229 229 229 / 50%);
@@ -642,7 +642,7 @@ hr {
   -ms-flex-align: center;
   align-items: center;
   position: relative;
-  width: 331px;
+  width: 100%;
   padding: 10px 12px;
   margin-bottom: 8px;
   border: 2px solid #f5f4f4;
@@ -1021,6 +1021,11 @@ hr {
 .btn-primary-outline:hover {
   color: #eeeeee;
   background-color: #36bbd9;
+}
+
+/* 480 up */
+.process-form-plan-content_option {
+  width: 331px;
 }
 
 /* 700 up */
