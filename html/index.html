@@ -189,7 +189,7 @@
                     <div class="order-detail-content_thumbnail"></div>
                     <div class="order-detail-content_name_info">
                       <p>{{selectedProject.title}}</p>
-                      <p>3 hr x {{selectedProject.price}} 元/hr<span class="force-right mR10">${{selectedProject.price*3}}</span></p>
+                      <p>{{selectedDateRange}} 日 x 24 hr x {{selectedProject.price}} 元/hr<span class="force-right mR10">${{selectedProject.price * selectedDateRange * 24}}</span></p>
                     </div>
                   </div>
                   <hr>
@@ -197,12 +197,12 @@
                     <div class="order-detail-price-row">
                       <div class="order-detail-price-row_title"></div>
                       <div class="order-detail-price-row_subtitle"></div>
-                      <div class="order-detail-price-row_amount">小計: ${{selectedProject.price*3}}</div>
+                      <div class="order-detail-price-row_amount">小計: ${{selectedProject.price * selectedDateRange * 24}}</div>
                     </div>
                     <div class="order-detail-price-row">
                       <div class="order-detail-price-row_title">鐘點清潔</div>
-                      <div class="order-detail-price-row_subtitle">3 hr x {{selectedProject.price}} 元/hr</div>
-                      <div class="order-detail-price-row_amount">${{selectedProject.price*3}}</div>
+                      <div class="order-detail-price-row_subtitle">{{selectedDateRange}} 日 x 24 hr x {{selectedProject.price}} 元/hr</div>
+                      <div class="order-detail-price-row_amount">${{selectedProject.price * selectedDateRange * 24}}</div>
                     </div>
                     <div class="order-detail-price-row">
                       <div class="order-detail-price-row_title">旺季加價</div>
@@ -215,7 +215,7 @@
                     <div class="order-detail-price-row color-secondary bold">
                       <div class="order-detail-price-row_title">總計</div>
                       <div class="order-detail-price-row_subtitle"></div>
-                      <div class="order-detail-price-row_amount">${{selectedProject.price*3 + 1000}}</div>
+                      <div class="order-detail-price-row_amount">${{selectedProject.price * selectedDateRange * 24 + 1000}}</div>
                     </div>
                   </div>
                 </div>
@@ -235,13 +235,13 @@
                 <span class="progrssbar-step_label" :class="{ bg_color_primary: orderStep.isStep1 || orderStep.isStep2 || orderStep.isStep3 || orderStep.isStep4}">1</span>
                 <span class="progrssbar-step_text">填寫資料</span>
               </div>
-              <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);" :class="{ bg_color_primary: orderStep.isStep2 }"></span>
+              <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);" :class="{ bg_color_primary: orderStep.isStep2 || orderStep.isStep3 || orderStep.isStep4 }"></span>
 
               <div class="progrssbar-step">
                 <span class="progrssbar-step_label" :class="{ bg_color_primary: orderStep.isStep2 || orderStep.isStep3 || orderStep.isStep4 }">2</span>
                 <span class="progrssbar-step_text">清潔計畫</span>
               </div>
-              <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);" :class="{ bg_color_primary: orderStep.isStep3 }"></span>
+              <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);" :class="{ bg_color_primary: orderStep.isStep3 || orderStep.isStep4 }"></span>
 
               <div class="progrssbar-step">
                 <span class="progrssbar-step_label" :class="{ bg_color_primary: orderStep.isStep3 || orderStep.isStep4 }">3</span>
@@ -368,11 +368,28 @@
               </div>
               <div class="w100 mT20 text-center">
                 <button class="btn-primary btn-large mR10" @click="LastStep(1)">上一步</button>
-                <button class="btn-primary btn-large mR10">下一步</button>
+                <button class="btn-primary btn-large mR10" @click="NextStep(3)">下一步</button>
               </div>
             </div>
 
             <!-- step 3 -->
+            <div class="booking-process-form" v-show="orderStep.isStep3">
+              <div class="booking-process-form_titlebox">
+                <h5 class="booking-process-form_title"><i class="fas fa-ticket-alt icon-w20 mR10"></i>優惠券</h5>
+              </div>
+              <input type="text" class="form-control" placeholder="優惠券代碼/禮物卡代碼/好友邀請代碼">
+              <div class="w100 mT20 text-center">
+                <button class="btn-primary btn-large mR10" @click="LastStep(2)">上一步</button>
+                <button class="btn-primary btn-large mR10" @click="NextStep(4)">下一步</button>
+              </div>
+            </div>
+
+            <!-- step 4 -->
+            <div class="booking-process-form" v-show="orderStep.isStep4">
+              <div class="booking-process-form_titlebox title-flex-center">
+                <h4 class="booking-process-form_title color-secondary font-title-medium"><span class="mR5">預約完成！</span></h4>
+              </div>
+            </div>
           </div>
         </div>
       </div>

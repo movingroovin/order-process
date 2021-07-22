@@ -14,6 +14,7 @@ const vueInstance = Vue.createApp({
       selectedDate: '',
       selectedStartDate: '',
       selectedEndDate: '',
+      selectedDateRange: 0,
       calenderClickTime: 0,
       selectedTime: '',
       timeList: [
@@ -92,6 +93,8 @@ const vueInstance = Vue.createApp({
         this.isDateSelect = true;
         this.selectedStartDate = this.selectedDate.split('至')[0].trim();
         this.selectedEndDate = this.selectedDate.split('至')[1].trim();
+        this.selectedDateRange = Math.floor(( Date.parse(this.selectedEndDate) - Date.parse(this.selectedStartDate) ) / 86400000);
+        
         // reset selectd time
         this.selectedTime = '';
         this.timeList.forEach(ele => {
@@ -139,6 +142,7 @@ const vueInstance = Vue.createApp({
         })
         this.selectedProject = this.moreCardInfoList.find(ele => ele.title === project.title);
         this.moreCardInfoList.find(ele => ele.title === project.title).isSelect = true;
+        this.NextStep(1);
       }
     },
     ReselectProject() {
