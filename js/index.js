@@ -93,7 +93,9 @@ const vueInstance = Vue.createApp({
         this.isDateSelect = true;
         this.selectedStartDate = this.selectedDate.split('至')[0].trim();
         this.selectedEndDate = this.selectedDate.split('至')[1].trim();
-        this.selectedDateRange = Math.floor(( Date.parse(this.selectedEndDate) - Date.parse(this.selectedStartDate) ) / 86400000);
+        let sDate = new Date(this.selectedStartDate);
+        let eDate = new Date(this.selectedEndDate);
+        this.selectedDateRange = Math.floor(( eDate - sDate ) / 86400000);
         
         // reset selectd time
         this.selectedTime = '';
