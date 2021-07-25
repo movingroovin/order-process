@@ -40,7 +40,7 @@
     <div class="header">
       <div class="header-inner">
         <div class="header-title">
-          <h1>預約居家清潔，三分鐘馬上搞定!!</h1>
+          <h1>預約線上AI天線設計，五分鐘立刻完成</h1>
         </div>
         <div class="header-form">
           <div class="header-form-tabs">
@@ -57,27 +57,33 @@
               <div class="header-form-info">
                 <div class="mT20">
                   <select class="header-form-select" name="" id="">
-                    <option value="台北市">台北市</option>
-                    <option value="新北市">新北市</option>
-                    <option value="基隆市">基隆市</option>
-                    <option value="桃園市">桃園市</option>
+                    <option value="筆記型電腦天線設計">筆記型電腦天線設計</option>
+                    <option value="平板電腦天線設計">平板電腦天線設計</option>
+                    <option value="電磁環境建模服務">電磁環境建模服務</option>
+                    <option value="競品分析">競品分析</option>
                   </select>
                 </div>
                 <div class="mT20">
                   <select class="header-form-select" name="" id="">
-                    <option value="3">單人打掃 3小時</option>
-                    <option value="4">單人打掃 4小時</option>
-                    <option value="5">雙人打掃 5小時</option>
-                    <option value="6">雙人打掃 6小時</option>
+                    <option value="WLAN天線設計">WLAN天線設計</option>
+                    <option value="LTE天線設計">LTE天線設計</option>
+                    <option value="MIMO天線設計">MIMO天線設計</option>
+                    <option value="mmWave天線設計">mmWave天線設計</option>
                   </select>
                 </div>
-                <div class="header-form-other mT20">
+                <div class="mT20">
+                  <select class="header-form-select" name="" id="">
+                    <option value="需要專人服務">需要專人服務</option>
+                    <option value="讓AI自己設計">讓AI自己設計</option>
+                  </select>
+                </div>
+                <!-- <div class="header-form-other mT20">
                   <div>家中有無寵物</div>
                   <div>有/無</div>
-                </div>
+                </div> -->
               </div>
               <div class="mT20 w100">
-                <button class="btn-primary w100" @click="SubmitBasicInfo">開始預約，查看清潔價格</button>
+                <button class="btn-primary w100" @click="SubmitBasicInfo">開始預約，查看服務價格</button>
               </div>
               <div class="mT10 w100">
                 <p>找約過的人員？<a href="#">輸入您的手機號碼</a></p>
@@ -103,7 +109,7 @@
           </div>
           <div class="mT20 w100" v-show="isDateSelect" ref="timeSelect">
             <!-- <hr> -->
-            <h3 class="filter-title">選擇預約時段</h3>
+            <h3 class="filter-title">預約服務方案</h3>
             <div class="time-select-container">
               <div class="mT10">
                 <a 
@@ -119,7 +125,7 @@
         </div>
       </div>
       <div class="body-result" v-show="isTimeSelect" ref="bodyResult">
-        <h3 class="filter-title best-title">為您選擇最佳潔客</h3>
+        <h3 class="filter-title best-title">推薦設計樣板</h3>
         <div class="best-container">
           <div class="best-card">
             <div class="best-card-bg"></div>
@@ -143,7 +149,7 @@
           </div>
           <div class="next-step">
             <button class="w100 btn-primary btn-extra-large" @click="SubmitProjectSelect(moreCardInfoList[0])">下一步</button>
-            <div class="next-step-text mT20" @click="MoreCard">往下查看更多潔客</div>
+            <div class="next-step-text mT20" @click="MoreCard">往下查看更多設計樣板</div>
             <img src="https://storage.googleapis.com/jackercleaning/assets/optImg/icon/icon-arrowdown.svg" alt=""
               class="next-step-icon">
           </div>
@@ -163,7 +169,7 @@
             <div class="more-card-action">
               <div class="flex1 more-card-action_price">${{ele.price}}/hr</div>
               <div class="flex1">
-                <a class="btn-primary-outline btn-large w100" @click="SubmitProjectSelect(ele)">預約此潔客</a>
+                <a class="btn-primary-outline btn-large w100" @click="SubmitProjectSelect(ele)">預約此服務</a>
               </div>
             </div>
           </div>
@@ -175,7 +181,7 @@
     <div class="checkout-layout" v-show="isProjectSelect" ref="checkLayout">
       <div class="booking-header">
         <a class="booking-last-step" @click="ReselectProject">
-          <i class="fas fa-angle-left"></i> 選擇其他潔客
+          <i class="fas fa-angle-left"></i> 選擇其他設計樣板
         </a>
       </div>
       <div class="booking-body-container">
@@ -378,12 +384,93 @@
             <!-- step 3 -->
             <div class="booking-process-form" v-show="orderStep.isStep3">
               <div class="booking-process-form_titlebox">
-                <h5 class="booking-process-form_title"><i class="fas fa-ticket-alt icon-w20 mR10"></i>優惠券</h5>
+                <h5 class="booking-process-form_title"><i class="fas fa-ticket-alt icon-w20 mR10"></i>優惠券<span class="font-title-small-400">（禮物卡/好友邀請）</span></h5>
               </div>
-              <input type="text" class="form-control" placeholder="優惠券代碼/禮物卡代碼/好友邀請代碼">
+              <div>
+                <p class="color-primary font-title-medium-small">優惠券代碼</p>
+                <div class="coupon-input">
+                  <input type="text" class="form-control font-title-small-400 w75" placeholder="優惠券代碼/禮物卡代碼/好友邀請代碼">
+                  <button class="btn-primary-outline w20">使用</button>
+                </div>
+              </div>
+              
+              <div class="booking-process-form_titlebox">
+                <h5 class="booking-process-form_title"><i class="fas fa-h-square icon-w20 mR10"></i>Ｈ點支付</h5>
+              </div>
+              <div>
+                <p class="color-primary font-title-medium-small">Ｈ點折抵</p>
+              </div>
+              <p>使用或購買H點，請<button class="btn-primary-outline btn-round">登入會員</button>(購買H點，就送清潔現金券)</p>
+            </div>
+
+            <div class="booking-process-form" v-show="orderStep.isStep3">
+              <div class="booking-process-form_titlebox">
+                <h5 class="booking-process-form_title"><i class="far fa-credit-card icon-w20 mR10"></i>付款方式</h5>
+              </div>
+              <div class="payment-group">
+                <label for="payment1" class="payment-label">
+                  <input type="radio" name="payment" id="payment1" class="payment-choose">
+                  <div class="payment-choose-text">
+                    <span class="fw500 mR10">線上刷卡</span>
+                    <span class="plan-detail_subtitle">(可接受VISA, Master Card, JCB)</span>
+                  </div>
+                </label>
+                <label for="payment2" class="payment-label">
+                  <input type="radio" name="payment" id="payment2" class="payment-choose">
+                  <div class="payment-choose-text">
+                    <span class="fw500 mR10">線上ATM轉帳</span>
+                    <span class="plan-detail_subtitle">(需有讀卡機，部分銀行只支援Windows系統)</span>
+                  </div>
+                </label>
+                <label for="payment3" class="payment-label">
+                  <input type="radio" name="payment" id="payment3" class="payment-choose">
+                  <div class="payment-choose-text">
+                    <span class="fw500 mR10">實體ATM轉帳</span>
+                    <span class="plan-detail_subtitle">(請於一天內轉帳，訂單只保留一天)</span>
+                  </div>
+                </label>
+                <label for="payment4" class="payment-label">
+                  <input type="radio" name="payment" id="payment4" class="payment-choose">
+                  <div class="payment-choose-text">
+                    <span class="fw500 mR10">超商代碼繳費</span>
+                    <span class="plan-detail_subtitle">(請於1天內至四大超商輸入代碼繳費，訂單只保留一天)</span>
+                  </div>
+                </label>
+              </div>
+              
+              <div class="booking-process-form_titlebox">
+                <h5 class="booking-process-form_title"><i class="fas fa-receipt icon-w20 mR10"></i>發票選項</h5>
+              </div>
+              <div class="mB10">
+                <select class="header-form-select" name="" id="">
+                  <option value="個人電子發票">個人電子發票</option>
+                  <option value="載具發票">載具發票</option>
+                  <option value="捐贈">捐贈</option>
+                  <option value="三聯式發票（統編）">三聯式發票（統編）</option>
+                </select>
+              </div>
+              <div>
+                <p class="plan-detail_subtitle">由潔客幫自動為您兌獎，中獎後將主動通知您並掛號寄出紙本發票。</p>
+                <p class="plan-detail_subtitle">提醒您，個人電子發票一旦開立，不得任意更改或改開三聯式發票(統編)。</p>
+              </div>
+              <hr>
+              <div class="payment-group">
+                <label for="payment-terms-1" class="payment-label">
+                  <input type="checkbox" name="paymentTerms1" id="payment-terms-1" class="payment-choose">
+                  <div class="payment-choose-text">
+                    <span class="fw500 mR10">我同意如果原預約的潔客有狀況不能服務，請潔客幫自動找尋別的潔客替代。</span>
+                  </div>
+                </label>
+                <label for="payment-terms-2" class="payment-label">
+                  <input type="checkbox" name="paymentTerms2" id="payment-terms-2" class="payment-choose" v-model="paymentTerms2Checked">
+                  <div class="payment-choose-text">
+                    <span class="fw500 mR10">我已閱讀 <a>未清潔範圍</a> 、 <a>取消或更改服務政策</a> 、 <a>服務條款</a> 及 <a>隱私權政策</a></span>
+                  </div>
+                </label>
+              </div>
               <div class="w100 mT20 text-center">
                 <button class="btn-primary btn-large mR10" @click="LastStep(2)">上一步</button>
-                <button class="btn-primary btn-large mR10" @click="NextStep(4)">下一步</button>
+                <button class="btn-primary btn-large mR10" :disabled="!paymentTerms2Checked" @click="NextStep(4)">進行付款預約</button>
               </div>
             </div>
 
