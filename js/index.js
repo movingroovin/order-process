@@ -3,9 +3,9 @@ const vueInstance = Vue.createApp({
     return {
       tabList: [
         { text: '快速預約', isSelect: true },
-        { text: '雙人快清', isSelect: false },
-        { text: '指定人員', isSelect: false },
-        { text: '定期享優惠', isSelect: false },
+        // { text: '雙人快清', isSelect: false },
+        // { text: '指定人員', isSelect: false },
+        // { text: '定期享優惠', isSelect: false },
       ],
       isBasicInfo: false,
       isDateSelect: false,
@@ -17,6 +17,25 @@ const vueInstance = Vue.createApp({
       selectedDateRange: 0,
       calenderClickTime: 0,
       selectedTime: '',
+      selectedService: { label: '筆記型電腦天線設計', value: '筆記型電腦天線設計' }, 
+      serviceList: [
+        { label: '筆記型電腦天線設計', value: '筆記型電腦天線設計' }, 
+        { label: '平板電腦天線設計', value: '平板電腦天線設計' }, 
+        { label: '電磁環境建模服務', value: '電磁環境建模服務' }, 
+        { label: '競品分析', value: '競品分析' }, 
+      ],
+      selectedDesign: { label: 'WLAN天線設計', value: 'WLAN天線設計' },
+      designList: [
+        { label: 'WLAN天線設計', value: 'WLAN天線設計' },
+        { label: 'LTE天線設計', value: 'LTE天線設計' },
+        { label: 'MIMO天線設計', value: 'MIMO天線設計' },
+        { label: 'mmWave天線設計', value: 'mmWave天線設計' },
+      ],
+      selectedWorker: { label: '需要專人服務', value: '需要專人服務' },
+      workerList: [
+        { label: '需要專人服務', value: '需要專人服務' },
+        { label: '讓AI自己設計', value: '讓AI自己設計' },
+      ],
       timeList: [
         { time: '72小時 (快速評估)', isSelect: false },
         { time: '200小時 (準確評估)', isSelect: false },

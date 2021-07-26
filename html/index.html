@@ -56,25 +56,33 @@
             <div>
               <div class="header-form-info">
                 <div class="mT20">
-                  <select class="header-form-select" name="" id="">
-                    <option value="筆記型電腦天線設計">筆記型電腦天線設計</option>
-                    <option value="平板電腦天線設計">平板電腦天線設計</option>
-                    <option value="電磁環境建模服務">電磁環境建模服務</option>
-                    <option value="競品分析">競品分析</option>
+                  <select class="header-form-select" name="" id="" v-model="selectedService">
+                    <option
+                      v-for="(ele, idx) in serviceList"
+                      :key="idx"
+                      :value="ele">
+                      {{ele.label}}
+                    </option>
                   </select>
                 </div>
                 <div class="mT20">
-                  <select class="header-form-select" name="" id="">
-                    <option value="WLAN天線設計">WLAN天線設計</option>
-                    <option value="LTE天線設計">LTE天線設計</option>
-                    <option value="MIMO天線設計">MIMO天線設計</option>
-                    <option value="mmWave天線設計">mmWave天線設計</option>
+                  <select class="header-form-select" name="" id="" v-model="selectedDesign">
+                    <option
+                      v-for="(ele, idx) in designList"
+                      :key="idx"
+                      :value="ele">
+                      {{ele.label}}
+                    </option>
                   </select>
                 </div>
                 <div class="mT20">
-                  <select class="header-form-select" name="" id="">
-                    <option value="需要專人服務">需要專人服務</option>
-                    <option value="讓AI自己設計">讓AI自己設計</option>
+                  <select class="header-form-select" name="" id="" v-model="selectedWorker">
+                    <option
+                      v-for="(ele, idx) in workerList"
+                      :key="idx"
+                      :value="ele">
+                      {{ele.label}}
+                    </option>
                   </select>
                 </div>
                 <!-- <div class="header-form-other mT20">
@@ -192,7 +200,9 @@
                 <div class="order-detail-content">
                   <div class="order-detail-content_top">
                     <p><i class="fas fa-clock icon-w14 mR5 text-center" style="color: lightgray;"></i> {{selectedDate}} {{selectedTime}}</p>
-                    <p><i class="fas fa-map-marker-alt icon-w14 mR5 text-center" style="color: lightgray;"></i> 台北市 中正區</p>
+                    <p><i class="fas fa-tasks icon-w14 mR5 text-center" style="color: lightgray;"></i> {{selectedService.label}}</p>
+                    <p><i class="fas fa-broadcast-tower icon-w14 mR5 text-center" style="color: lightgray;"></i> {{selectedDesign.label}}</p>
+                    <p><i class="fas fa-atom icon-w14 mR5 text-center" style="color: lightgray;"></i> {{selectedWorker.label}}</p>
                   </div>
                   <div class="order-detail-content_name">
                     <div class="order-detail-content_thumbnail"></div>
@@ -477,7 +487,24 @@
             <!-- step 4 -->
             <div class="booking-process-form" v-show="orderStep.isStep4">
               <div class="booking-process-form_titlebox title-flex-center">
-                <h4 class="booking-process-form_title color-secondary font-title-medium"><span class="mR5">預約完成！</span></h4>
+                <h4 class="booking-process-form_title color-secondary font-title-medium"><span>預約完成，訂單已成立！</span></h4>
+              </div>
+              <div class="process-img">
+                <img src="./../assest/img/building.svg" alt="">
+              </div>
+              <div class="booking-process-form_titlebox title-flex-center mT20">
+                <p class="font-title-small">您的訂單編號：{{Math.random().toString(36).substring(5)}}</p>
+              </div>
+              <div class="booking-process-form_titlebox title-flex-center">
+                <p class="font-title-small-400">您可利用訂單編號及聯絡資訊來電客服查詢，依照不同服務系統，系統稍後將會寄送訂單相關資訊至您的Email信箱，請詳加確認。</p>
+              </div>
+              <div class="w100 mT20 text-center">
+                <button class="w100 btn-primary btn-large">查看訂單紀錄</button>、
+              </div>
+              <div>
+                <p class="plan-detail_subtitle">提醒您，取消或更改服務酌收手續費如下：</p>
+                <p class="plan-detail_subtitle">1. 於服務前一日取消或更改服務時間將酌收整體服務費用30％</p>
+                <p class="plan-detail_subtitle">2. 已於開始服務時間取消或更改服務時間將酌收整體服務費用50％</p>
               </div>
             </div>
           </div>

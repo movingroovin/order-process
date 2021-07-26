@@ -820,12 +820,22 @@ hr {
 }
 
 .payment-choose {
+  min-width: 2px;
   margin-top: 4px;
 }
 
 .payment-choose-text {
   padding-left: 15px;
   display: inline-block;
+}
+
+/* step 4 */
+.process-img {
+  text-align: center;
+}
+
+.process-img img {
+  max-width: 50%;
 }
 
 /* calendar */
@@ -1164,7 +1174,7 @@ hr {
   }
 
   .process-form-plan {
-    padding: 0 60px 20px!important;
+    padding: 0 50px 20px!important;
   }
 }
 
