@@ -4,7 +4,7 @@ const vueInstance = Vue.createApp({
       tabList: [
         { text: '快速預約', isSelect: true },
         // { text: '雙人快清', isSelect: false },
-        // { text: '指定人員', isSelect: false },
+        { text: '指定人員', isSelect: false },
         // { text: '定期享優惠', isSelect: false },
       ],
       isBasicInfo: false,

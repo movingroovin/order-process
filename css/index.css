@@ -820,8 +820,8 @@ hr {
 }
 
 .payment-choose {
-  min-width: 5px;
   margin-top: 4px;
+  flex-shrink: 0;
 }
 
 .payment-choose-text {
