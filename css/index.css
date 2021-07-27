@@ -46,12 +46,13 @@ hr {
 /* 768 below */
 .header {
   /* background-color: rgb(213, 247, 185); */
-  height: auto;
+  height: 600px;
   padding: 10px 20px;
   text-align: center;
-  background: url(https://storage.googleapis.com/jackercleaning/assets/optImg/landing/landing_mobilebg.png);
+  /* background: url(https://storage.googleapis.com/jackercleaning/assets/optImg/landing/landing_mobilebg.png); */
+  background-image: url('../assest/img/header-mask.png'), url('../assest/img/header.png');
   background-size: cover;
-  background-position-x: right;
+  background-position: center;
 }
 
 .header-inner {
@@ -59,7 +60,7 @@ hr {
 }
 
 .header-title {
-  color: #3e4459;
+  color: #eeece1;
   font-weight: bold;
   margin-bottom: 50px;
   letter-spacing: 3px;
@@ -498,7 +499,7 @@ hr {
 }
 
 .order-detail-price-row_title {
-  width: 70px;
+  width: 75px;
 }
 
 .order-detail-price-row_subtitle {
@@ -1125,11 +1126,12 @@ hr {
 /* 700 up */
 @media screen and (min-width: 700px) {
   .header {
-    height: 500px;
+    height: 600px;
     padding: 10px 100px;
-    background: url(https://storage.googleapis.com/jackercleaning/assets/optImg/landing/landing-bedroom.png);
+    /* background: url(https://storage.googleapis.com/jackercleaning/assets/optImg/landing/landing-bedroom.png); */
+    background-image: url('../assest/img/header-mask.png'), url('../assest/img/header.png');
     background-size: cover;
-    background-position-x: 100%;
+    background-position: center;
   }
 
   .header-form-tab {
@@ -1152,7 +1154,7 @@ hr {
 /* 900 up */
 @media screen and (min-width: 900px) {
   .header {
-    height: 600px;
+    height: 1000px;
   }
 
   .booking-process-form {

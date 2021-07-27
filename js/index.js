@@ -37,19 +37,19 @@ const vueInstance = Vue.createApp({
         { label: '讓AI自己設計', value: '讓AI自己設計' },
       ],
       timeList: [
-        { time: '72小時 (快速評估)', isSelect: false },
-        { time: '200小時 (準確評估)', isSelect: false },
-        { time: '360小時 (高精度評估)', isSelect: false },
+        { time: '72小時 (快速評估)', hour: 72, isSelect: false },
+        { time: '200小時 (準確評估)', hour: 200, isSelect: false },
+        { time: '360小時 (高精度評估)', hour: 360, isSelect: false },
       ],
       selectedProject: {},
       moreCardInfoList: [
-        { title: 'Project 0', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 4000, isSelect: true },
-        { title: 'Project 1', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1000, isSelect: false },
-        { title: 'Project 2', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 1500, isSelect: false },
-        { title: 'Project 3', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 2000, isSelect: false },
-        { title: 'Project 4', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 2500, isSelect: false },
-        { title: 'Project 5', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 3000, isSelect: false },
-        { title: 'Project 6', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', price: 3500, isSelect: false },
+        { title: 'Project 0', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', hour: 400, isSelect: true },
+        { title: 'Project 1', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', hour: 100, isSelect: false },
+        { title: 'Project 2', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', hour: 150, isSelect: false },
+        { title: 'Project 3', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', hour: 200, isSelect: false },
+        { title: 'Project 4', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', hour: 250, isSelect: false },
+        { title: 'Project 5', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', hour: 300, isSelect: false },
+        { title: 'Project 6', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', hour: 350, isSelect: false },
       ],
       orderStep: {
         isStep1: true,
@@ -58,9 +58,9 @@ const vueInstance = Vue.createApp({
         isStep4: false,
       },
       planList: [
-        { name: '每四週一次', isSimple: false, isSelect: false },
-        { name: '每兩週一次', isSimple: false, isSelect: false },
-        { name: '單次預約', isSimple: true, isSelect: false },
+        { id: 1, name: '急件處理', subtitle: '急件處理，另加24小時', tag: '+ 24 hr', isSimple: false, isSelect: false },
+        { id: 2, name: '購買版權', subtitle: '購買版權，總時數 x 2', tag: ' hr x 2', isSimple: false, isSelect: false },
+        { id: 3, name: '下載3D資料', subtitle: '下載3D資料，總時數 x 1.5', tag: 'hr x 1.5', isSimple: false, isSelect: false },
       ],
       paymentTerms2Checked: false,
       calendarConfig: {
@@ -72,7 +72,31 @@ const vueInstance = Vue.createApp({
     }
   },
 
-  
+  computed: {
+    subTotal() {
+      if (this.selectedDateRange && this.selectedTime && this.selectedProject) {
+        return (this.selectedDateRange * 24 + this.selectedTime.hour + this.selectedProject.hour);
+      }
+      return 0;
+    },
+    totalHour() {
+      let subTotal = 0;
+      if (this.selectedDateRange && this.selectedTime && this.selectedProject) {
+        subTotal = (this.selectedDateRange * 24 + this.selectedTime.hour + this.selectedProject.hour);
+        if (this.planList.find(ele => ele.id === 1).isSelect) {
+          subTotal = subTotal + 24;
+        }
+        if (this.planList.find(ele => ele.id === 2).isSelect) {
+          subTotal = subTotal * 2;
+        }
+        if (this.planList.find(ele => ele.id === 3).isSelect) {
+          subTotal = subTotal * 1.5;
+        }
+        return subTotal;
+      }
+      return subTotal;
+    }
+  },
   methods: {
     ClickTab(tab) {
       this.tabList.forEach(ele => {
@@ -102,7 +126,7 @@ const vueInstance = Vue.createApp({
         this.isDateSelect = true;
         this.selectedStartDate = this.selectedDate.split('至')[0].trim();
         this.selectedEndDate = this.selectedDate.split('至')[1].trim();
-        this.selectedDateRange = moment(this.selectedEndDate).diff(moment(this.selectedStartDate), 'days');
+        this.selectedDateRange = moment(this.selectedEndDate).diff(moment(this.selectedStartDate), 'days') + 1;
         
         // reset selectd time
         this.selectedTime = '';
@@ -116,7 +140,7 @@ const vueInstance = Vue.createApp({
       }
     },
     SubmitTimeSelect(clickTime) {
-      this.selectedTime = clickTime.time;
+      this.selectedTime = clickTime;
       this.timeList.forEach(ele => {
         ele.isSelect = false;
       });
@@ -176,10 +200,10 @@ const vueInstance = Vue.createApp({
       this.orderStep[`isStep${toStep}`] = true;
     },
     SelectPlan(plan) {
-      this.planList.forEach(ele => {
-        ele.isSelect = false;
-      });
-      this.planList.find(ele => ele.name === plan.name).isSelect = true;
+      // this.planList.forEach(ele => {
+      //   ele.isSelect = false;
+      // });
+      this.planList.find(ele => ele.id === plan.id).isSelect = !this.planList.find(ele => ele.id === plan.id).isSelect;
     }
   }
 });
