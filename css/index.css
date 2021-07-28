@@ -46,13 +46,13 @@ hr {
 /* 768 below */
 .header {
   /* background-color: rgb(213, 247, 185); */
-  height: 600px;
+  height: 105vh;
   padding: 10px 20px;
   text-align: center;
   /* background: url(https://storage.googleapis.com/jackercleaning/assets/optImg/landing/landing_mobilebg.png); */
-  background-image: url('../assest/img/header-mask.png'), url('../assest/img/header.png');
+  background-image: url('../assest/img/header-img-mobile.jpg');
   background-size: cover;
-  background-position: center;
+  background-position: center -10px;
 }
 
 .header-inner {
@@ -1126,12 +1126,13 @@ hr {
 /* 700 up */
 @media screen and (min-width: 700px) {
   .header {
-    height: 600px;
+    height: 101vh ;
     padding: 10px 100px;
     /* background: url(https://storage.googleapis.com/jackercleaning/assets/optImg/landing/landing-bedroom.png); */
-    background-image: url('../assest/img/header-mask.png'), url('../assest/img/header.png');
+    background-image: url('../assest/img/header-img.jpg');
     background-size: cover;
-    background-position: center;
+    background-position: center -1px;
+    background-repeat: no-repeat;
   }
 
   .header-form-tab {
@@ -1154,7 +1155,7 @@ hr {
 /* 900 up */
 @media screen and (min-width: 900px) {
   .header {
-    height: 1000px;
+    height: 100vh;
   }
 
   .booking-process-form {
@@ -1181,6 +1182,9 @@ hr {
 }
 
 @media screen and (min-width: 1200px) {
+  .header {
+    background-position: center -230px;
+  }
   .header-inner {
     max-width: 450px;
     margin: auto;
