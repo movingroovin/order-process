@@ -52,7 +52,7 @@ hr {
   /* background: url(https://storage.googleapis.com/jackercleaning/assets/optImg/landing/landing_mobilebg.png); */
   background-image: url('../assest/img/header-img-mobile.jpg');
   background-size: cover;
-  background-position: center -10px;
+  background-position: center -1px;
 }
 
 .header-inner {
