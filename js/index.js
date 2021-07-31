@@ -4,7 +4,7 @@ const vueInstance = Vue.createApp({
       tabList: [
         { text: '快速預約', isSelect: true },
         // { text: '雙人快清', isSelect: false },
-        { text: '指定人員', isSelect: false },
+        { text: '加入會員', isSelect: false },
         // { text: '定期享優惠', isSelect: false },
       ],
       isBasicInfo: false,
@@ -31,9 +31,9 @@ const vueInstance = Vue.createApp({
         { label: 'MIMO天線設計', value: 'MIMO天線設計' },
         { label: 'mmWave天線設計', value: 'mmWave天線設計' },
       ],
-      selectedWorker: { label: '需要專人服務', value: '需要專人服務' },
+      selectedWorker: { label: '客戶提供參考設計', value: '客戶提供參考設計' },
       workerList: [
-        { label: '需要專人服務', value: '需要專人服務' },
+        { label: '客戶提供參考設計', value: '客戶提供參考設計' },
         { label: '讓AI自己設計', value: '讓AI自己設計' },
       ],
       timeList: [
@@ -51,6 +51,7 @@ const vueInstance = Vue.createApp({
         { title: 'Project 5', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', hour: 300, isSelect: false },
         { title: 'Project 6', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', hour: 350, isSelect: false },
       ],
+      isLightbox: false,
       orderStep: {
         isStep1: true,
         isStep2: false,
@@ -160,6 +161,9 @@ const vueInstance = Vue.createApp({
           el.scrollIntoView({behavior: 'smooth'});
         });
       }
+    },
+    ToggleCardContent() {
+      this.isLightbox = !this.isLightbox;
     },
     SubmitProjectSelect(project) {
       this.isProjectSelect = true;

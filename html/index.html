@@ -40,7 +40,8 @@
     <div class="header">
       <div class="header-inner">
         <div class="header-title">
-          <h1>預約線上AI天線設計，五分鐘立刻完成</h1>
+          <h1>線上AI天線模擬服務</h1>
+          <h1>五分鐘完成預約</h1>
         </div>
         <div class="header-form">
           <div class="header-form-tabs">
@@ -92,9 +93,6 @@
               </div>
               <div class="mT20 w100">
                 <button class="btn-primary w100" @click="SubmitBasicInfo">開始預約，查看服務價格</button>
-              </div>
-              <div class="mT10 w100">
-                <p>找約過的人員？<a href="#">輸入您的手機號碼</a></p>
               </div>
             </div>
           </div>
@@ -163,7 +161,8 @@
           </div>
         </div>
         <div class="result-sort"></div>
-        <div class="more-card-container" ref="moreCard">
+        <!-- jacker style-->
+        <!-- <div class="more-card-container" ref="moreCard">
           <div 
             class="more-card" 
             v-for="(ele, idx) in moreCardInfoList.slice(1, moreCardInfoList.length)"
@@ -181,7 +180,47 @@
               </div>
             </div>
           </div>
+        </div> -->
+        <!-- inline style -->
+        <div class="more-card-container" ref="moreCard">
+          <div 
+            class="more-card-box" 
+            v-for="(ele, idx) in moreCardInfoList.slice(1, moreCardInfoList.length)"
+            :key="idx"
+            @click="ToggleCardContent">
+            <div class="more-card-content">
+              <div>
+                <p class="font-title-medium-small">牛排買一送一 ★ 沙朗牛排拼盤組</p>
+                <div class="more-card-content-sub">兩份特價550元，原價1100~1050元；A區→沙朗牛排海鮮鮮蔬拼盤(牛排140g)，B區→沙朗牛排海鮮鮮蔬拼盤(牛排140g)、香煎牛排干貝(牛排180g)、十盎司沙朗牛排(牛排280g)三選一 (牛肉產地：紐西蘭)</div>
+              </div>
+              <div class="more-card-content-price">
+                <a class="font-title-medium"><i class="fas fa-plus-square"></i></a>
+                <span class="mL10 fw500">$1000</span>
+              </div>
+            </div>
+            <div>
+              <img src="./../assest/img/menu/product1.jpeg" alt="" class="more-card-img">
+            </div>
+            <!-- <div class="more-card-info">
+              <div class="more-card-info-thumbnail">
+                <div class="more-card-info-thumbnail_img"></div>
+              </div>
+              <div class="more-card-info-content">{{ele.title}} - {{ele.content}}</div>
+            </div> -->
+            <!-- <div class="more-card-action">
+              <div class="flex1 more-card-action_price">{{ele.hour}} hr</div>
+              <div class="flex1">
+                <a class="btn-primary-outline btn-large w100" @click="SubmitProjectSelect(ele)">預約此服務</a>
+              </div>
+            </div> -->
+          </div>
         </div>
+      </div>
+    </div>
+    <div class="lightbox" v-if="isLightbox">
+      <div class="lightbox-inside">
+        <button @click="ToggleCardContent">close</button>
+        <p class="font-title-medium-small">牛排買一送一 ★ 沙朗牛排拼盤組</p>
       </div>
     </div>
 
