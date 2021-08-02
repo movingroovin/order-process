@@ -130,7 +130,8 @@
           </div>
         </div>
       </div>
-      <div class="body-result" v-show="isTimeSelect" ref="bodyResult">
+      <!-- v-show="isTimeSelect" -->
+      <div class="body-result"  ref="bodyResult">
         <h3 class="filter-title best-title">推薦設計樣板</h3>
         <div class="best-container">
           <div class="best-card">
@@ -219,8 +220,154 @@
     </div>
     <div class="lightbox" v-if="isLightbox">
       <div class="lightbox-inside">
-        <button @click="ToggleCardContent">close</button>
-        <p class="font-title-medium-small">牛排買一送一 ★ 沙朗牛排拼盤組</p>
+        <div class="btn-top-right font-size-26">
+          <i class="fas fa-times-circle" @click="ToggleCardContent"></i>
+        </div>
+        <div>
+          <p class="font-title-large">牛排買一送一 ★ 沙朗牛排拼盤組</p>
+          <span class="font-title-medium">$0</span>
+        </div>
+        <p class="color-secondary mT25 mB25">
+          兩份特價550元，原價1100~1050元；A區→沙朗牛排海鮮鮮蔬拼盤(牛排140g)，B區→沙朗牛排海鮮鮮蔬拼盤(牛排140g)、香煎牛排干貝(牛排180g)、十盎司沙朗牛排(牛排280g)三選一 (牛肉產地：紐西蘭)
+        </p>
+        <div class="menu-section">
+          <div>
+            <div class="menu-section-title">
+              <p class="font-title-medium-small fw400 mB0">沙朗拼盤組，A區</p>
+              <span class="plan-detail_subtitle">必選 • 請選擇 1 項</span>
+            </div>
+          </div>
+          <div>
+            <span class="menu-section-content">
+              <label class="menu-section-content-label">
+                <input id="" type="radio" class="menu-section-content-choose">
+                <div class="menu-section-content-choose-text">
+                  <div class="font-title-medium-small fw300 mB0">沙朗牛排海鮮鮮蔬拼盤</div>
+                  <div>+$550</div>
+                </div>
+              </label>
+            </span>
+          </div>
+        </div>
+        <div class="menu-section">
+          <div>
+            <div class="menu-section-title">
+              <p class="font-title-medium-small fw400 mB0">A區牛排熟度</p>
+              <span class="plan-detail_subtitle">必選 • 請選擇 1 項</span>
+            </div>
+          </div>
+          <div>
+            <span class="menu-section-content">
+              <label class="menu-section-content-label">
+                <input id="" type="radio" class="menu-section-content-choose">
+                <div class="menu-section-content-choose-text">
+                  <div class="font-title-medium-small fw300 mB0">三分熟</div>
+                </div>
+              </label>
+            </span>
+            <span class="menu-section-content">
+              <label class="menu-section-content-label">
+                <input id="" type="radio" class="menu-section-content-choose">
+                <div class="menu-section-content-choose-text">
+                  <div class="font-title-medium-small fw300 mB0">五分熟</div>
+                </div>
+              </label>
+            </span>
+            <span class="menu-section-content">
+              <label class="menu-section-content-label">
+                <input id="" type="radio" class="menu-section-content-choose">
+                <div class="menu-section-content-choose-text">
+                  <div class="font-title-medium-small fw300 mB0">七分熟</div>
+                </div>
+              </label>
+            </span>
+            <span class="menu-section-content">
+              <label class="menu-section-content-label">
+                <input id="" type="radio" class="menu-section-content-choose">
+                <div class="menu-section-content-choose-text">
+                  <div class="font-title-medium-small fw300 mB0">全熟</div>
+                </div>
+              </label>
+            </span>
+          </div>
+        </div>
+        
+        <div class="menu-section">
+          <div>
+            <div class="menu-section-title">
+              <p class="font-title-medium-small fw400 mB0">沙朗拼盤組，B區</p>
+              <span class="plan-detail_subtitle">必選 • 請選擇 1 項</span>
+            </div>
+          </div>
+          <div>
+            <span class="menu-section-content">
+              <label class="menu-section-content-label">
+                <input id="" type="radio" class="menu-section-content-choose">
+                <div class="menu-section-content-choose-text">
+                  <div class="font-title-medium-small fw300 mB0">沙朗牛排海鮮鮮蔬拼盤</div>
+                </div>
+              </label>
+            </span>
+            <span class="menu-section-content">
+              <label class="menu-section-content-label">
+                <input id="" type="radio" class="menu-section-content-choose">
+                <div class="menu-section-content-choose-text">
+                  <div class="font-title-medium-small fw300 mB0">香煎牛排干貝</div>
+                </div>
+              </label>
+            </span>
+            <span class="menu-section-content">
+              <label class="menu-section-content-label">
+                <input id="" type="radio" class="menu-section-content-choose">
+                <div class="menu-section-content-choose-text">
+                  <div class="font-title-medium-small fw300 mB0">十盎司沙朗牛排</div>
+                </div>
+              </label>
+            </span>
+          </div>
+        </div>
+        <div class="menu-section">
+          <div>
+            <div class="menu-section-title">
+              <p class="font-title-medium-small fw400 mB0">B區牛排熟度</p>
+              <span class="plan-detail_subtitle">必選 • 請選擇 1 項</span>
+            </div>
+          </div>
+          <div>
+            <span class="menu-section-content">
+              <label class="menu-section-content-label">
+                <input id="" type="radio" class="menu-section-content-choose">
+                <div class="menu-section-content-choose-text">
+                  <div class="font-title-medium-small fw300 mB0">三分熟</div>
+                </div>
+              </label>
+            </span>
+            <span class="menu-section-content">
+              <label class="menu-section-content-label">
+                <input id="" type="radio" class="menu-section-content-choose">
+                <div class="menu-section-content-choose-text">
+                  <div class="font-title-medium-small fw300 mB0">五分熟</div>
+                </div>
+              </label>
+            </span>
+            <span class="menu-section-content">
+              <label class="menu-section-content-label">
+                <input id="" type="radio" class="menu-section-content-choose">
+                <div class="menu-section-content-choose-text">
+                  <div class="font-title-medium-small fw300 mB0">七分熟</div>
+                </div>
+              </label>
+            </span>
+            <span class="menu-section-content">
+              <label class="menu-section-content-label">
+                <input id="" type="radio" class="menu-section-content-choose">
+                <div class="menu-section-content-choose-text">
+                  <div class="font-title-medium-small fw300 mB0">全熟</div>
+                </div>
+              </label>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
 

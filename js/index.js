@@ -163,7 +163,13 @@ const vueInstance = Vue.createApp({
       }
     },
     ToggleCardContent() {
+      if (!this.isLightbox) {
+        document.documentElement.style.overflow = "hidden";
+      } else {
+        document.documentElement.style.overflow = "auto";
+      }
       this.isLightbox = !this.isLightbox;
+      
     },
     SubmitProjectSelect(project) {
       this.isProjectSelect = true;

@@ -468,6 +468,54 @@ hr {
   padding: 25px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  position: relative;
+  overflow: scroll;
+}
+
+.menu-section-title {
+  cursor: pointer;
+  position: -webkit-sticky;
+  position: sticky;
+  background-color: #f3f4f5;
+  padding: 5px 25px;
+  margin: 0 -25px;
+}
+
+.menu-section-content {
+  cursor: pointer;
+  padding: 17px 20px;
+  display: block;
+  line-height: 1;
+  margin: 0 -20px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.menu-section-content:hover {
+  background-color: #f0f0f071;
+}
+
+.menu-section-content-label {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.menu-section-content-choose {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.menu-section-content-choose-text {
+  color: #4a4a4a;
+  width: 100%;
+  padding-left: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 /* checkout-layout */
@@ -945,6 +993,15 @@ hr {
   display: none;
 }
 /* ----utlities---- */
+.font-size-26 {
+  font-size: 26px;
+}
+
+.font-title-large {
+  font-size: 24px;
+  font-weight: 500;
+}
+
 .font-title-medium {
   font-size: 18px;
   font-weight: 500;
@@ -985,6 +1042,14 @@ hr {
   font-weight: 500;
 }
 
+.fw400 {
+  font-weight: 400;
+}
+
+.fw300 {
+  font-weight: 300;
+}
+
 .bg_color_primary {
   background-color: #36bbd9 
 }
@@ -1001,6 +1066,10 @@ hr {
   margin-top: 20px;
 }
 
+.mT25 {
+  margin-top: 25px;
+}
+
 .mR10 {
   margin-right: 10px;
 }
@@ -1013,8 +1082,16 @@ hr {
   margin-left: 10px;
 }
 
+.mB0 {
+  margin-bottom: 0;
+}
+
 .mB10 {
   margin-bottom: 10px;
+}
+
+.mB25 {
+  margin-bottom: 25px;
 }
 
 .pR15 {
@@ -1065,6 +1142,10 @@ hr {
 
 .text-center {
   text-align: center;
+}
+
+.noscroll { 
+  overflow: hidden;
 }
 
 /* layout */
@@ -1215,6 +1296,15 @@ hr {
   background-color: #36bbd9;
 }
 
+.btn-top-right{
+  /* parent element needs to be position: relative */
+  position: absolute; 
+  top: 0px;
+  right: 0px;
+  cursor: pointer;
+  padding: 20px;
+}
+
 /* 480 up */
 .process-form-plan-content_option {
   width: 331px;
@@ -1283,6 +1373,7 @@ hr {
 
   .lightbox-inside {
     max-width: 640px;
+    max-height: 80%;
   }
 }
 
