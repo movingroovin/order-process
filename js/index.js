@@ -51,6 +51,7 @@ const vueInstance = Vue.createApp({
         { title: 'Project 5', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', hour: 300, isSelect: false },
         { title: 'Project 6', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', hour: 350, isSelect: false },
       ],
+      lightboxAmount: 1,
       isLightbox: false,
       orderStep: {
         isStep1: true,
@@ -163,13 +164,21 @@ const vueInstance = Vue.createApp({
       }
     },
     ToggleCardContent() {
-      if (!this.isLightbox) {
+      if (!this.isLightbox) { //open
         document.documentElement.style.overflow = "hidden";
-      } else {
+      } else { //close
         document.documentElement.style.overflow = "auto";
+        this.lightboxAmount = 1;
       }
       this.isLightbox = !this.isLightbox;
       
+    },
+    MinusLightboxAmount() {
+      if ( this.lightboxAmount===0 ) return; 
+      this.lightboxAmount -= 1;
+    },
+    PlusLightboxAmount() {
+      this.lightboxAmount += 1
     },
     SubmitProjectSelect(project) {
       this.isProjectSelect = true;
