@@ -432,6 +432,7 @@ hr {
 }
 
 .more-card-img {
+  max-width: 193px;
   max-height: 100%;
 }
 
