@@ -1435,13 +1435,8 @@ hr {
 /* 700 up */
 @media screen and (min-width: 700px) {
   .header {
-    height: 101vh ;
+    height: 100vh ;
     padding: 10px 100px;
-    /* background: url(https://storage.googleapis.com/jackercleaning/assets/optImg/landing/landing-bedroom.png); */
-    background-image: url('../assest/img/header-img.jpg');
-    background-size: cover;
-    background-position: center -1px;
-    background-repeat: no-repeat;
   }
 
   .header-form-tab {
@@ -1465,6 +1460,10 @@ hr {
 @media screen and (min-width: 900px) {
   .header {
     height: 100vh;
+    background-image: url('../assest/img/header-img-revise.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 
   .booking-process-form {
@@ -1525,7 +1524,7 @@ hr {
 
 @media screen and (min-width: 1200px) {
   .header {
-    background-position: center -230px;
+    background-position: center;
   }
   .header-inner {
     max-width: 450px;
