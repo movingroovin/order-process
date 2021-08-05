@@ -286,6 +286,37 @@ hr {
   }
 }
 
+.more-card-category {
+  border-bottom: 1px solid #e8e8e8;
+  padding: 0 30px;
+  overflow-x: scroll;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.more-card-category::-webkit-scrollbar {
+  display: none;
+}
+
+.more-card-category-container {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.more-card-category-item {
+  padding: 10px 0;
+  margin-right: 30px;
+  cursor: pointer;
+}
+
+.more-card-head {
+  max-width: 1200px;
+  margin: auto;
+  text-align: left;
+  padding: 30px 5% 10px;
+}
+
 .more-card-container {
   max-width: 1200px;
   margin: auto;
@@ -1486,6 +1517,10 @@ hr {
 
   .process-form-plan {
     padding: 0 50px 20px!important;
+  }
+
+  .more-card-head {
+    padding: 30px 4% 10px;
   }
 
   .more-card-box {
