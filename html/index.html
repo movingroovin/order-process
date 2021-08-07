@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Helios Rebot</title>
+  <title>Helios Robot</title>
   <link rel="stylesheet" href="../css/index.css">
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
@@ -117,14 +117,56 @@
             <!-- <hr> -->
             <h3 class="filter-title">預約服務方案</h3>
             <div class="time-select-container">
-              <div class="mT10">
-                <a 
-                  class="btn time-btn"
+              <div class="time-select mT10">
+                <div
                   v-for="(ele, idx) in timeList"
                   :key="idx"
-                  :class="{ time_btn_selected: ele.isSelect }"
-                  @click="SubmitTimeSelect(ele)"
-                >{{ele.time}}</a>
+                  class="time-select-item">
+                  <a 
+                    class="btn time-btn"
+                    :class="{ time_btn_selected: ele.isSelect }"
+                    @click="SubmitTimeSelect(ele)"
+                  >{{ele.time}}</a>
+                  <div class="time-info">
+                    <div class="best-card-thumbnail mA">
+                      <div class="best-card-thumbnail_img">
+                        <img src="../assest/img/satellite.jpg" alt="" style="width: 100%;">
+                      </div>
+                    </div>
+                    <div class="color-secondary mT10 font-title-medium-small">
+                      方案說明1：
+                    </div>
+                    <p class="mT10">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </p>
+                    <div class="color-secondary font-title-medium-small pointer" @click="ToggleTimeCard(ele)">more</div>
+                  </div>
+                  <div class="time-card" v-show="ele.isCardOpen">
+                    <div class="time-img-container">
+                      <img src="../assest/img/house.jpeg" alt="" class="time-img w100">
+                    </div>
+                    <div class="color-secondary mT10 font-title-medium-small">{{ele.time}}</div>
+                    <div class="time-detail">
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                    </div>
+                    <div class="time-detail">
+                      <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                      <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                      <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                      <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                      <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -138,7 +180,7 @@
             <div class="best-card-bg"></div>
             <div class="best-card-content">
               <div class="best-card-info_wrapper">
-                <div class="best-card-thumbnail">
+                <div class="best-card-thumbnail translate-y30">
                   <div class="best-card-thumbnail_img"></div>
                 </div>
                 <div class="best-card-headline">
@@ -426,7 +468,7 @@
                     <div class="order-detail-content_thumbnail"></div>
                     <div class="order-detail-content_name_info">
                       <p>{{selectedProject.title}}</p>
-                      <p>{{selectedDateRange}} (日) x 24 + {{selectedTime.hour}} + {{selectedProject.hour}}<span class="force-right mR10">{{ subTotal }} hr</span></p>
+                      <p>{{selectedTime.hour}} + {{selectedProject.hour}}<span class="force-right mR10">{{ subTotal }} hr</span></p>
                     </div>
                   </div>
                   <hr>
@@ -434,12 +476,12 @@
                     <div class="order-detail-price-row">
                       <div class="order-detail-price-row_title"></div>
                       <div class="order-detail-price-row_subtitle"></div>
-                      <div class="order-detail-price-row_amount">小計: {{ selectedDateRange * 24 + selectedTime.hour + selectedProject.hour }} hr</div>
+                      <div class="order-detail-price-row_amount">小計: {{ selectedTime.hour + selectedProject.hour }} hr</div>
                     </div>
                     <div class="order-detail-price-row">
                       <div class="order-detail-price-row_title">服務時數</div>
-                      <div class="order-detail-price-row_subtitle">{{selectedDateRange}} (日) x 24 + {{selectedTime.hour}} + {{selectedProject.hour}}</div>
-                      <div class="order-detail-price-row_amount">{{ selectedDateRange * 24 + selectedTime.hour + selectedProject.hour }} hr</div>
+                      <div class="order-detail-price-row_subtitle">{{selectedTime.hour}} + {{selectedProject.hour}}</div>
+                      <div class="order-detail-price-row_amount">{{ selectedTime.hour + selectedProject.hour }} hr</div>
                     </div>
                     <div class="order-detail-price-row" v-if="planList.find(ele => ele.id === 1).isSelect">
                       <div class="order-detail-price-row_title">急件處理</div>
@@ -530,7 +572,7 @@
                 </div>
               </div>
               <div class="booking-process-form_titlebox">
-                <h5 class="booking-process-form_title"><i class="fas fa-map-marker-alt icon-w20 mR10"></i>打掃地址</h5>
+                <h5 class="booking-process-form_title"><i class="fas fa-map-marker-alt icon-w20 mR10"></i>聯絡地址</h5>
               </div>
               <div class="w100">
                 <div class="flexize">

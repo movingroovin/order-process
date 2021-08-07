@@ -120,7 +120,7 @@ hr {
 
 /* body-filter */
 .filter-container {
-  max-width: 700px;
+  max-width: 1200px;
   width: 97%;
   margin: auto;
   text-align: center;
@@ -129,6 +129,63 @@ hr {
 .filter-title {
   color: #b6b6b6;
   margin: 15px auto;
+}
+
+/* time-select-area */
+.time-select {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+}
+
+.time-select-item {
+  min-width: 25%;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.time-info {
+  width: 250px;
+  margin: 10px auto;
+  padding: 10px 0;
+  border: 1px solid gainsboro;
+  color: #808080;
+}
+
+.time-card {
+  width: 250px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #ffffff;
+  -webkit-box-shadow: 1px 2px 7px 7px rgb(229 229 229 / 50%);
+  box-shadow: 1px 2px 7px 7px rgb(229 229 229 / 50%);
+  -webkit-transition: .2s all ease-in-out;
+  transition: .2s all ease-in-out;
+}
+
+.time-img-container {
+  height: 80px;
+  overflow: hidden;
+}
+
+.time-img {
+  margin-top: -8%;
+}
+
+.time-detail {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 16px 16px;
+  text-align: left;
 }
 
 /* body-result */
@@ -188,9 +245,6 @@ hr {
   border-radius: 50%;
   overflow: hidden;
   border: 2px solid #ffffff;
-  -webkit-transform: translateY(-30px);
-  -ms-transform: translateY(-30px);
-  transform: translateY(-30px);
   background-color: #ffffff;
 }
 
@@ -1068,7 +1122,7 @@ hr {
 .flatpickr-input {
   display: none;
 }
-/* ----utlities---- */
+/* ----utilities---- */
 .font-size-26 {
   font-size: 26px;
 }
@@ -1133,6 +1187,11 @@ hr {
 
 .bg_color_primary {
   background-color: #36bbd9 
+}
+
+/* margin */
+.mA {
+  margin: auto;
 }
 
 .mT5 {
@@ -1229,6 +1288,12 @@ hr {
   float: right;
 }
 
+.translate-y30 {
+  -webkit-transform: translateY(-30px);
+  -ms-transform: translateY(-30px);
+  transform: translateY(-30px);
+}
+
 .icon-w14 {
   width: 14px;
 }
@@ -1241,8 +1306,13 @@ hr {
   text-align: center;
 }
 
+/* scroll / cursor */
 .noscroll { 
   overflow: hidden;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .flat-corner-l {
@@ -1388,7 +1458,7 @@ hr {
 }
 
 .time-btn {
-  width: 180px;
+  width: 250px;
   color: #36bbd9;
   border-color: #36bbd9;
   border-radius: 2px;

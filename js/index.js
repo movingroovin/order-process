@@ -37,9 +37,10 @@ const vueInstance = Vue.createApp({
         { label: '讓AI自己設計', value: '讓AI自己設計' },
       ],
       timeList: [
-        { time: '72小時 (快速評估)', hour: 72, isSelect: false },
-        { time: '200小時 (準確評估)', hour: 200, isSelect: false },
-        { time: '360小時 (高精度評估)', hour: 360, isSelect: false },
+        { time: '72小時 (快速評估)', hour: 72, isSelect: false, isCardOpen: false },
+        { time: '200小時 (準確評估)', hour: 200, isSelect: false, isCardOpen: false },
+        { time: '360小時 (高精度評估)', hour: 360, isSelect: false, isCardOpen: false },
+        { time: '月租年繳方案', hour: 8640, isSelect: false, isCardOpen: false },
       ],
       selectedProject: {},
       moreCardInfoList: [
@@ -140,6 +141,9 @@ const vueInstance = Vue.createApp({
           el.scrollIntoView({behavior: 'smooth'});
         });
       }
+    },
+    ToggleTimeCard(timeCard) {
+      timeCard.isCardOpen = !timeCard.isCardOpen;
     },
     SubmitTimeSelect(clickTime) {
       this.selectedTime = clickTime;
