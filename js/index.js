@@ -7,6 +7,11 @@ const vueInstance = Vue.createApp({
         { text: '加入會員', isSelect: false },
         // { text: '定期享優惠', isSelect: false },
       ],
+      introList: [
+        [1, 2],
+        [3, 4],
+        [5, 6],
+      ],
       isBasicInfo: false,
       isDateSelect: false,
       isTimeSelect: false,

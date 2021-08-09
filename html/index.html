@@ -54,7 +54,7 @@
             </a>
           </div>
           <div class="header-form-content">
-            <div>
+            <div class="header-form-1" v-show="tabList.find(el => el.text === '快速預約').isSelect === true">
               <div class="header-form-info">
                 <div class="mT20">
                   <select class="header-form-select" name="" id="" v-model="selectedService">
@@ -93,6 +93,85 @@
               </div>
               <div class="mT20 w100">
                 <button class="btn-primary w100" @click="SubmitBasicInfo">開始預約，查看服務價格</button>
+              </div>
+            </div>
+            <div class="header-form-2" v-show="tabList.find(el => el.text === '加入會員').isSelect === true">
+              <div class="header-form-2-card">
+                <div class="best-card-thumbnail mA">
+                  <div class="best-card-thumbnail_img">
+                    <img src="../assest/img/satellite.jpg" alt="" style="width: 100%;">
+                  </div>
+                </div>
+                <div class="font-title-medium mT10">定期服務</div>
+                <p class="color-subtitle font-title-small-400 mT15">適合長期且固定時間需要服務的客戶</p>
+                <button class="btn-primary-outline btn-round">預約定期</button>
+              </div>
+              <div class="header-form-2-card">
+                <div class="best-card-thumbnail mA">
+                  <div class="best-card-thumbnail_img">
+                    <img src="../assest/img/satellite.jpg" alt="" style="width: 100%;">
+                  </div>
+                </div>
+                <div class="font-title-medium mT10">Ｈ點優惠</div>
+                <p class="color-subtitle font-title-small-400 mT15">行程不固定，使用J點一樣輕鬆享優惠</p>
+                <button class="btn-primary-outline btn-round">購買Ｈ點</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Intro -->
+    <div class="intro">
+      <div v-for="(ele, idx) in introList" :key="idx" class="intro-sub">
+        <div v-for="(ele1, idx1) in ele" :key="idx1" class="intro-item mB25 mT10">
+          <div class="intro-img-container">
+            <img src="../assest/img/satellite.jpg" alt="" class="intro-img w100">
+          </div>
+          <div class="intro-container">
+            <div class="intro-title font-title-medium-small fw400">
+              <span>服務{{ele1}}</span>
+              <i class="fas fa-chevron-up"></i>
+            </div>
+            <div class="intro-content">
+              <div class="time-detail">
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+              </div>
+              <div class="time-detail">
+                <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+              </div>
+              <div class="intro-bottom">
+                <div class="intro-badge">
+                  <i class="far fa-clock" style="font-size: 34px;"></i>
+                  <span class="font-title-small-400">0.5~1.5</span>
+                </div>
+                <div class="intro-ruler">
+                  <div class="intro-title">
+                    <span class="font-title-small-400 color-subtitle">普通服務</span>
+                    <span class="font-title-small-400 color-subtitle">進階服務</span>
+                  </div>
+                  <div class="intro-ruler-hr">
+                    <hr class="ruler-hr" color="gray">
+                  </div>
+                  <div class="intro-title">
+                    <span class="font-title-small-400 color-subtitle">0.5hr</span>
+                    <span class="font-title-small-400 color-subtitle">1.5hr</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
