@@ -8,10 +8,11 @@ const vueInstance = Vue.createApp({
         // { text: '定期享優惠', isSelect: false },
       ],
       introList: [
-        [1, 2],
-        [3, 4],
-        [5, 6],
+        [ { name: '1', isContentOpen: false }, { name: '2', isContentOpen: false },],
+        [ { name: '3', isContentOpen: false }, { name: '4', isContentOpen: false },],
+        [ { name: '5', isContentOpen: false }, { name: '6', isContentOpen: false },],
       ],
+      isOrdering: false,
       isBasicInfo: false,
       isDateSelect: false,
       isTimeSelect: false,
@@ -79,6 +80,21 @@ const vueInstance = Vue.createApp({
       }
     }
   },
+  created() {
+    if (window.innerWidth > 1100) {
+      this.introList.forEach(ele => {
+        ele.forEach(ele1 => ele1.isContentOpen = true);
+      });
+    } else {
+      this.introList.forEach(ele => {
+        ele.forEach(ele1 => ele1.isContentOpen = false);
+      });
+    }
+    window.addEventListener('resize', this.onResize);
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onResize);
+  },
 
   computed: {
     subTotal() {
@@ -106,6 +122,17 @@ const vueInstance = Vue.createApp({
     }
   },
   methods: {
+    onResize() {
+      if (window.innerWidth > 1100) {
+        this.introList.forEach(ele => {
+          ele.forEach(ele1 => ele1.isContentOpen = true);
+        });
+      } else {
+        this.introList.forEach(ele => {
+          ele.forEach(ele1 => ele1.isContentOpen = false);
+        });
+      }
+    },
     ClickTab(tab) {
       this.tabList.forEach(ele => {
         ele.isSelect = false;
@@ -113,6 +140,7 @@ const vueInstance = Vue.createApp({
       this.tabList.find(ele => ele.text === tab.text).isSelect = true;
     },
     SubmitBasicInfo() {
+      this.isOrdering = true;
       this.isBasicInfo = true;
       const el = this.$refs.searchLayout;
       if (el) {
@@ -146,6 +174,9 @@ const vueInstance = Vue.createApp({
           el.scrollIntoView({behavior: 'smooth'});
         });
       }
+    },
+    ToggleIntroContent(intro) {
+      intro.isContentOpen = !intro.isContentOpen;
     },
     ToggleTimeCard(timeCard) {
       timeCard.isCardOpen = !timeCard.isCardOpen;

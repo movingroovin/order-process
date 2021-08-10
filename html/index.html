@@ -86,10 +86,6 @@
                     </option>
                   </select>
                 </div>
-                <!-- <div class="header-form-other mT20">
-                  <div>家中有無寵物</div>
-                  <div>有/無</div>
-                </div> -->
               </div>
               <div class="mT20 w100">
                 <button class="btn-primary w100" @click="SubmitBasicInfo">開始預約，查看服務價格</button>
@@ -122,745 +118,789 @@
       </div>
     </div>
 
-    <!-- Intro -->
-    <div class="intro">
-      <div v-for="(ele, idx) in introList" :key="idx" class="intro-sub">
-        <div v-for="(ele1, idx1) in ele" :key="idx1" class="intro-item mB25 mT10">
-          <div class="intro-img-container">
-            <img src="../assest/img/satellite.jpg" alt="" class="intro-img w100">
-          </div>
-          <div class="intro-container">
-            <div class="intro-title font-title-medium-small fw400">
-              <span>服務{{ele1}}</span>
-              <i class="fas fa-chevron-up"></i>
-            </div>
-            <div class="intro-content">
-              <div class="time-detail">
-                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-              </div>
-              <div class="time-detail">
-                <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
-                <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
-                <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
-                <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
-                <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
-              </div>
-              <div class="intro-bottom">
-                <div class="intro-badge">
-                  <i class="far fa-clock" style="font-size: 34px;"></i>
-                  <span class="font-title-small-400">0.5~1.5</span>
-                </div>
-                <div class="intro-ruler">
-                  <div class="intro-title">
-                    <span class="font-title-small-400 color-subtitle">普通服務</span>
-                    <span class="font-title-small-400 color-subtitle">進階服務</span>
-                  </div>
-                  <div class="intro-ruler-hr">
-                    <hr class="ruler-hr" color="gray">
-                  </div>
-                  <div class="intro-title">
-                    <span class="font-title-small-400 color-subtitle">0.5hr</span>
-                    <span class="font-title-small-400 color-subtitle">1.5hr</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div class="before-order" v-show="!isOrdering">
+      
+      <!-- Intro -->
+      <div class="pT20 bg_color_secondary">
+        <div class="text-center">
+          <div class="font-size-26 fw500">服務項目有哪些？時數怎麼計算？</div>
         </div>
-      </div>
-    </div>
-
-    <!-- BASIC SELECT -->
-    <div class="seach-layout" v-show="isBasicInfo && !isProjectSelect" ref="searchLayout">
-      <div class="body-filter">
-        <div class="filter-container">
-          <h3 class="filter-title">選擇預約日期</h3>
-          <div>
-            <flat-pickr 
-              v-model="selectedDate"
-              :config="calendarConfig"
-              @input="SubmitDateSelect">
-            </flat-pickr>
-            <div id="filter-calendar"></div>
-          </div>
-          <div class="mT20 w100" v-show="isDateSelect" ref="timeSelect">
-            <!-- <hr> -->
-            <h3 class="filter-title">預約服務方案</h3>
-            <div class="time-select-container">
-              <div class="time-select mT10">
-                <div
-                  v-for="(ele, idx) in timeList"
-                  :key="idx"
-                  class="time-select-item">
-                  <a 
-                    class="btn time-btn"
-                    :class="{ time_btn_selected: ele.isSelect }"
-                    @click="SubmitTimeSelect(ele)"
-                  >{{ele.time}}</a>
-                  <div class="time-info">
-                    <div class="best-card-thumbnail mA">
-                      <div class="best-card-thumbnail_img">
-                        <img src="../assest/img/satellite.jpg" alt="" style="width: 100%;">
+        <div class="intro">
+          <div v-for="(ele, idx) in introList" :key="idx" class="intro-sub">
+            <div v-for="(ele1, idx1) in ele" :key="idx1" class="intro-item mB25 mT10">
+              <div class="intro-img-container">
+                <img src="../assest/img/satellite.jpg" alt="" class="intro-img w100">
+              </div>
+              <div class="intro-container">
+                <div class="intro-title font-title-medium-small fw400">
+                  <span>服務{{ele1.name}}</span>
+                  <div class="intro_title_icon">
+                    <i class="fas fa-chevron-down intro_title_icon_close" :class="[{intro_title_icon_open: ele1.isContentOpen}]"  @click="ToggleIntroContent(ele1)"></i>
+                  </div>
+                </div>
+                <transition name="stretch">
+                  <div class="intro-content" v-show="ele1.isContentOpen">
+                    <div class="time-detail">
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                    </div>
+                    <div class="time-detail">
+                      <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                      <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                      <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                      <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                      <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                    </div>
+                    <div class="intro-bottom">
+                      <div class="intro-badge">
+                        <i class="far fa-clock" style="font-size: 34px;"></i>
+                        <span class="font-title-small-400">0.5~1.5</span>
+                      </div>
+                      <div class="intro-ruler">
+                        <div class="intro-title">
+                          <span class="font-title-small-400 color-subtitle">普通服務</span>
+                          <span class="font-title-small-400 color-subtitle">進階服務</span>
+                        </div>
+                        <div class="intro-ruler-hr">
+                          <hr class="ruler-hr" color="gray">
+                        </div>
+                        <div class="intro-title">
+                          <span class="font-title-small-400 color-subtitle">0.5hr</span>
+                          <span class="font-title-small-400 color-subtitle">1.5hr</span>
+                        </div>
                       </div>
                     </div>
-                    <div class="color-secondary mT10 font-title-medium-small">
-                      方案說明1：
-                    </div>
-                    <p class="mT10">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    </p>
-                    <div class="color-secondary font-title-medium-small pointer" @click="ToggleTimeCard(ele)">more</div>
                   </div>
-                  <div class="time-card" v-show="ele.isCardOpen">
-                    <div class="time-img-container">
-                      <img src="../assest/img/house.jpeg" alt="" class="time-img w100">
-                    </div>
-                    <div class="color-secondary mT10 font-title-medium-small">{{ele.time}}</div>
-                    <div class="time-detail">
-                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                      <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
-                    </div>
-                    <div class="time-detail">
-                      <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
-                      <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
-                      <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
-                      <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
-                      <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
-                    </div>
-                  </div>
-                </div>
+                </transition>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- v-show="isTimeSelect" -->
-      <div class="body-result"  ref="bodyResult">
-        <h3 class="filter-title best-title">推薦設計樣板</h3>
-        <div class="best-container">
-          <div class="best-card">
-            <div class="best-card-bg"></div>
-            <div class="best-card-content">
-              <div class="best-card-info_wrapper">
-                <div class="best-card-thumbnail translate-y30">
-                  <div class="best-card-thumbnail_img"></div>
-                </div>
-                <div class="best-card-headline">
-                  <div class="best-card-name">{{moreCardInfoList[0].title}}</div>
-                </div>
-                <div class="best-card-price">{{moreCardInfoList[0].hour}} hr</div>
-              </div>
-            </div>
-            <div class="best-footer">
-              <div class="best-footer-content">
-                The best you can find. Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit,
-                necessitatibus.
-              </div>
-            </div>
-          </div>
-          <div class="next-step">
-            <button class="w100 btn-primary btn-extra-large" @click="SubmitProjectSelect(moreCardInfoList[0])">下一步</button>
-            <div class="next-step-text mT20" @click="MoreCard">往下查看更多設計樣板</div>
-            <img src="https://storage.googleapis.com/jackercleaning/assets/optImg/icon/icon-arrowdown.svg" alt=""
-              class="next-step-icon">
-          </div>
+
+      <!-- no-service -->
+      <div class="pT20">
+        <div class="text-center">
+          <div class="font-size-26 fw500">其他未服務項目</div>
+          <p class="mT5 color-warning">基於人員與客戶安全、隱私等考量</p>
         </div>
-        <div class="more-card-category">
-          <div class="more-card-category-container">
-            <a class="more-card-category-item font-title-medium-small">經典牛排 ★ 買一送一</a>
-            <a class="more-card-category-item font-title-medium-small">5折-頂級和牛系列</a>
-            <a class="more-card-category-item font-title-medium-small">69折後「再享有」買 3 送 1</a>
-            <a class="more-card-category-item font-title-medium-small">新上市-日式家常味餐盒</a>
-            <a class="more-card-category-item font-title-medium-small">85折-義大利麵</a>
-            <a class="more-card-category-item font-title-medium-small">69折-牛排&排餐</a>
-            <a class="more-card-category-item font-title-medium-small">69折-和風御膳餐盒</a>
-            <a class="more-card-category-item font-title-medium-small">69折-招牌日式飯料理</a>
-            <a class="more-card-category-item font-title-medium-small">69折-沙拉</a>
+        <div class="no-service-content">
+          <div class="no-service-content-item">
+            <div>・移動或抬起超過10公斤的大型家具或重物</div>
+            <div>・天花板、高處窗戶及可觸及範圍外的表面清潔</div>
+            <div>・危險性外窗清潔及窗簾、紗窗清洗</div>
+            <div>・寵物排泄及重度汙染區域清潔</div>
+            <div>・危險化學物質處理</div>
           </div>
-        </div>
-        <!-- jacker style-->
-        <!-- <div class="more-card-container" ref="moreCard">
-          <div 
-            class="more-card" 
-            v-for="(ele, idx) in moreCardInfoList.slice(1, moreCardInfoList.length)"
-            :key="idx">
-            <div class="more-card-info">
-              <div class="more-card-info-thumbnail">
-                <div class="more-card-info-thumbnail_img"></div>
-              </div>
-              <div class="more-card-info-content">{{ele.title}} - {{ele.content}}</div>
-            </div>
-            <div class="more-card-action">
-              <div class="flex1 more-card-action_price">{{ele.hour}} hr</div>
-              <div class="flex1">
-                <a class="btn-primary-outline btn-large w100" @click="SubmitProjectSelect(ele)">預約此服務</a>
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <!-- inline style -->
-        <div class="more-card-head">
-          <p class="font-title-medium">經典牛排 ★ 買一送一</p>
-          <p class="mT10">連續25天「經典牛排買1送1」優惠，只要點購「菲力牛排」、「牛排海鮮鮮蔬拼排盤」、「香煎牛排干貝」或「沙朗牛排」任一餐點，即享第二份免費，主打低脂、低卡、低膽固醇的紐西蘭草飼沙朗牛排與菲力牛排，搭配香煎北海道大干貝或阿拉伯藍鑽蝦，一次即能品嚐海陸雙重美味，在家享用餐廳級的餐點。</p>
-        </div>
-        <div class="more-card-container" ref="moreCard">
-          <div 
-            class="more-card-box" 
-            v-for="(ele, idx) in moreCardInfoList.slice(1, moreCardInfoList.length)"
-            :key="idx"
-            @click="ToggleCardContent">
-            <div class="more-card-content">
-              <div>
-                <p class="font-title-medium-small">牛排買一送一 ★ 沙朗牛排拼盤組</p>
-                <div class="more-card-content-sub">兩份特價550元，原價1100~1050元；A區→沙朗牛排海鮮鮮蔬拼盤(牛排140g)，B區→沙朗牛排海鮮鮮蔬拼盤(牛排140g)、香煎牛排干貝(牛排180g)、十盎司沙朗牛排(牛排280g)三選一 (牛肉產地：紐西蘭)</div>
-              </div>
-              <div class="more-card-content-price">
-                <a class="font-title-medium"><i class="fas fa-plus-square"></i></a>
-                <span class="mL10 fw500">$1000</span>
-              </div>
-            </div>
-            <div class="img-container">
-              <img src="./../assest/img/menu/product1.jpeg" alt="" class="more-card-img">
-            </div>
-            <!-- <div class="more-card-info">
-              <div class="more-card-info-thumbnail">
-                <div class="more-card-info-thumbnail_img"></div>
-              </div>
-              <div class="more-card-info-content">{{ele.title}} - {{ele.content}}</div>
-            </div> -->
-            <!-- <div class="more-card-action">
-              <div class="flex1 more-card-action_price">{{ele.hour}} hr</div>
-              <div class="flex1">
-                <a class="btn-primary-outline btn-large w100" @click="SubmitProjectSelect(ele)">預約此服務</a>
-              </div>
-            </div> -->
+          <div class="no-service-content-item">
+            <div>・地毯深度清潔及清洗（基本除塵除外）</div>
+            <div>・各式陳年、染色汙點清潔</div>
+            <div>・除蟲害（例如：蜂窩、昆蟲…等）</div>
+            <div>・垃圾清運工作（不指使潔客將已包裝垃圾移至其他地方丟棄）</div>
+            <div>・室內惡臭環境</div>
+            <div>・車庫清潔（基本掃除除外）園藝或院子清潔。</div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="lightbox" v-if="isLightbox">
-      <div class="lightbox-inside">
-        <div class="btn-top-right font-size-26">
-          <i class="fas fa-times-circle" @click="ToggleCardContent"></i>
-        </div>
-        <div class="flex-row">
-          <img src="./../assest/img/menu/product1.jpeg" alt="" class="lightbox-img">
-          <div class="mL15 mR20">
-            <p class="font-title-large">牛排買一送一 ★ 沙朗牛排拼盤組</p>
-            <span class="font-title-medium">$0</span>
-          </div>
-        </div>
-        <p class="color-secondary mT25 mB25">
-          兩份特價550元，原價1100~1050元；A區→沙朗牛排海鮮鮮蔬拼盤(牛排140g)，B區→沙朗牛排海鮮鮮蔬拼盤(牛排140g)、香煎牛排干貝(牛排180g)、十盎司沙朗牛排(牛排280g)三選一 (牛肉產地：紐西蘭)
-        </p>
-        <div class="menu-section">
-          <div>
-            <div class="menu-section-title">
-              <p class="font-title-medium-small fw400 mB0">沙朗拼盤組，A區</p>
-              <span class="plan-detail_subtitle">必選 • 請選擇 1 項</span>
-            </div>
-          </div>
-          <div>
-            <span class="menu-section-content">
-              <label class="menu-section-content-label">
-                <input id="" type="radio" class="menu-section-content-choose">
-                <div class="menu-section-content-choose-text">
-                  <div class="font-title-medium-small fw300 mB0">沙朗牛排海鮮鮮蔬拼盤</div>
-                  <div>+$550</div>
-                </div>
-              </label>
-            </span>
-          </div>
-        </div>
-        <div class="menu-section">
-          <div>
-            <div class="menu-section-title">
-              <p class="font-title-medium-small fw400 mB0">A區牛排熟度</p>
-              <span class="plan-detail_subtitle">必選 • 請選擇 1 項</span>
-            </div>
-          </div>
-          <div>
-            <span class="menu-section-content">
-              <label class="menu-section-content-label">
-                <input id="" type="radio" class="menu-section-content-choose">
-                <div class="menu-section-content-choose-text">
-                  <div class="font-title-medium-small fw300 mB0">三分熟</div>
-                </div>
-              </label>
-            </span>
-            <span class="menu-section-content">
-              <label class="menu-section-content-label">
-                <input id="" type="radio" class="menu-section-content-choose">
-                <div class="menu-section-content-choose-text">
-                  <div class="font-title-medium-small fw300 mB0">五分熟</div>
-                </div>
-              </label>
-            </span>
-            <span class="menu-section-content">
-              <label class="menu-section-content-label">
-                <input id="" type="radio" class="menu-section-content-choose">
-                <div class="menu-section-content-choose-text">
-                  <div class="font-title-medium-small fw300 mB0">七分熟</div>
-                </div>
-              </label>
-            </span>
-            <span class="menu-section-content">
-              <label class="menu-section-content-label">
-                <input id="" type="radio" class="menu-section-content-choose">
-                <div class="menu-section-content-choose-text">
-                  <div class="font-title-medium-small fw300 mB0">全熟</div>
-                </div>
-              </label>
-            </span>
-          </div>
-        </div>
-        
-        <div class="menu-section">
-          <div>
-            <div class="menu-section-title">
-              <p class="font-title-medium-small fw400 mB0">沙朗拼盤組，B區</p>
-              <span class="plan-detail_subtitle">必選 • 請選擇 1 項</span>
-            </div>
-          </div>
-          <div>
-            <span class="menu-section-content">
-              <label class="menu-section-content-label">
-                <input id="" type="radio" class="menu-section-content-choose">
-                <div class="menu-section-content-choose-text">
-                  <div class="font-title-medium-small fw300 mB0">沙朗牛排海鮮鮮蔬拼盤</div>
-                </div>
-              </label>
-            </span>
-            <span class="menu-section-content">
-              <label class="menu-section-content-label">
-                <input id="" type="radio" class="menu-section-content-choose">
-                <div class="menu-section-content-choose-text">
-                  <div class="font-title-medium-small fw300 mB0">香煎牛排干貝</div>
-                </div>
-              </label>
-            </span>
-            <span class="menu-section-content">
-              <label class="menu-section-content-label">
-                <input id="" type="radio" class="menu-section-content-choose">
-                <div class="menu-section-content-choose-text">
-                  <div class="font-title-medium-small fw300 mB0">十盎司沙朗牛排</div>
-                </div>
-              </label>
-            </span>
-          </div>
-        </div>
-        <div class="menu-section">
-          <div>
-            <div class="menu-section-title">
-              <p class="font-title-medium-small fw400 mB0">B區牛排熟度</p>
-              <span class="plan-detail_subtitle">必選 • 請選擇 1 項</span>
-            </div>
-          </div>
-          <div>
-            <span class="menu-section-content">
-              <label class="menu-section-content-label">
-                <input id="" type="radio" class="menu-section-content-choose">
-                <div class="menu-section-content-choose-text">
-                  <div class="font-title-medium-small fw300 mB0">三分熟</div>
-                </div>
-              </label>
-            </span>
-            <span class="menu-section-content">
-              <label class="menu-section-content-label">
-                <input id="" type="radio" class="menu-section-content-choose">
-                <div class="menu-section-content-choose-text">
-                  <div class="font-title-medium-small fw300 mB0">五分熟</div>
-                </div>
-              </label>
-            </span>
-            <span class="menu-section-content">
-              <label class="menu-section-content-label">
-                <input id="" type="radio" class="menu-section-content-choose">
-                <div class="menu-section-content-choose-text">
-                  <div class="font-title-medium-small fw300 mB0">七分熟</div>
-                </div>
-              </label>
-            </span>
-            <span class="menu-section-content">
-              <label class="menu-section-content-label">
-                <input id="" type="radio" class="menu-section-content-choose">
-                <div class="menu-section-content-choose-text">
-                  <div class="font-title-medium-small fw300 mB0">全熟</div>
-                </div>
-              </label>
-            </span>
-          </div>
-        </div>
-        <div class="menu-footer">
-          <div class="menu-footer-group justify-between">
-            <div class="flex-row menu-footer-amount">
-              <button class="w25 btn-secondary-outline font-title-large flat-corner-r" :disabled="lightboxAmount<1" @click="MinusLightboxAmount">-</button>
-              <span class="w50 font-title-medium text-center menu-footer-amount-text">{{lightboxAmount}}</span>
-              <button class="w25 btn-secondary-outline font-title-large flat-corner-l" @click="PlusLightboxAmount">+</button>
-            </div>
-            <button class="menu-footer-cart font-title-medium-large btn-primary" :disabled="lightboxAmount<1">
-              加入購物車
-            </button>
-          </div>
-        </div>
-      </div>
+      
     </div>
 
-    <!-- ORDER PROCESS -->
-    <div class="checkout-layout" v-show="isProjectSelect" ref="checkLayout">
-      <div class="booking-header">
-        <a class="booking-last-step" @click="ReselectProject">
-          <i class="fas fa-angle-left"></i> 選擇其他設計樣板
-        </a>
+    <div class="at-order" v-show="isOrdering">
+      <!-- BASIC SELECT -->
+      <div class="seach-layout" v-show="isBasicInfo && !isProjectSelect" ref="searchLayout">
+        <div class="body-filter">
+          <div class="filter-container">
+            <h3 class="filter-title">選擇預約日期</h3>
+            <div>
+              <flat-pickr 
+                v-model="selectedDate"
+                :config="calendarConfig"
+                @input="SubmitDateSelect">
+              </flat-pickr>
+              <div id="filter-calendar"></div>
+            </div>
+            <div class="mT20 w100" v-show="isDateSelect" ref="timeSelect">
+              <!-- <hr> -->
+              <h3 class="filter-title">預約服務方案</h3>
+              <div class="time-select-container">
+                <div class="time-select mT10">
+                  <div
+                    v-for="(ele, idx) in timeList"
+                    :key="idx"
+                    class="time-select-item">
+                    <a 
+                      class="btn time-btn"
+                      :class="{ time_btn_selected: ele.isSelect }"
+                      @click="SubmitTimeSelect(ele)"
+                    >{{ele.time}}</a>
+                    <div class="time-info">
+                      <div class="best-card-thumbnail mA">
+                        <div class="best-card-thumbnail_img">
+                          <img src="../assest/img/satellite.jpg" alt="" style="width: 100%;">
+                        </div>
+                      </div>
+                      <div class="color-secondary mT10 font-title-medium-small">
+                        方案說明1：
+                      </div>
+                      <p class="mT10">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      </p>
+                      <div class="color-secondary font-title-medium-small pointer" @click="ToggleTimeCard(ele)">more</div>
+                    </div>
+                    <div class="time-card" v-show="ele.isCardOpen">
+                      <div class="time-img-container">
+                        <img src="../assest/img/house.jpeg" alt="" class="time-img w100">
+                      </div>
+                      <div class="color-secondary mT10 font-title-medium-small">{{ele.time}}</div>
+                      <div class="time-detail">
+                        <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                        <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                        <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                        <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                        <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                        <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                        <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                        <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                        <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                        <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                      </div>
+                      <div class="time-detail">
+                        <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                        <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                        <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                        <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                        <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- v-show="isTimeSelect" -->
+        <div class="body-result"  ref="bodyResult">
+          <h3 class="filter-title best-title">推薦設計樣板</h3>
+          <div class="best-container">
+            <div class="best-card">
+              <div class="best-card-bg"></div>
+              <div class="best-card-content">
+                <div class="best-card-info_wrapper">
+                  <div class="best-card-thumbnail translate-y30">
+                    <div class="best-card-thumbnail_img"></div>
+                  </div>
+                  <div class="best-card-headline">
+                    <div class="best-card-name">{{moreCardInfoList[0].title}}</div>
+                  </div>
+                  <div class="best-card-price">{{moreCardInfoList[0].hour}} hr</div>
+                </div>
+              </div>
+              <div class="best-footer">
+                <div class="best-footer-content">
+                  The best you can find. Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit,
+                  necessitatibus.
+                </div>
+              </div>
+            </div>
+            <div class="next-step">
+              <button class="w100 btn-primary btn-extra-large" @click="SubmitProjectSelect(moreCardInfoList[0])">下一步</button>
+              <div class="next-step-text mT20" @click="MoreCard">往下查看更多設計樣板</div>
+              <img src="https://storage.googleapis.com/jackercleaning/assets/optImg/icon/icon-arrowdown.svg" alt=""
+                class="next-step-icon">
+            </div>
+          </div>
+          <div class="more-card-category">
+            <div class="more-card-category-container">
+              <a class="more-card-category-item font-title-medium-small">經典牛排 ★ 買一送一</a>
+              <a class="more-card-category-item font-title-medium-small">5折-頂級和牛系列</a>
+              <a class="more-card-category-item font-title-medium-small">69折後「再享有」買 3 送 1</a>
+              <a class="more-card-category-item font-title-medium-small">新上市-日式家常味餐盒</a>
+              <a class="more-card-category-item font-title-medium-small">85折-義大利麵</a>
+              <a class="more-card-category-item font-title-medium-small">69折-牛排&排餐</a>
+              <a class="more-card-category-item font-title-medium-small">69折-和風御膳餐盒</a>
+              <a class="more-card-category-item font-title-medium-small">69折-招牌日式飯料理</a>
+              <a class="more-card-category-item font-title-medium-small">69折-沙拉</a>
+            </div>
+          </div>
+          <!-- jacker style-->
+          <!-- <div class="more-card-container" ref="moreCard">
+            <div 
+              class="more-card" 
+              v-for="(ele, idx) in moreCardInfoList.slice(1, moreCardInfoList.length)"
+              :key="idx">
+              <div class="more-card-info">
+                <div class="more-card-info-thumbnail">
+                  <div class="more-card-info-thumbnail_img"></div>
+                </div>
+                <div class="more-card-info-content">{{ele.title}} - {{ele.content}}</div>
+              </div>
+              <div class="more-card-action">
+                <div class="flex1 more-card-action_price">{{ele.hour}} hr</div>
+                <div class="flex1">
+                  <a class="btn-primary-outline btn-large w100" @click="SubmitProjectSelect(ele)">預約此服務</a>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <!-- inline style -->
+          <div class="more-card-head">
+            <p class="font-title-medium">經典牛排 ★ 買一送一</p>
+            <p class="mT10">連續25天「經典牛排買1送1」優惠，只要點購「菲力牛排」、「牛排海鮮鮮蔬拼排盤」、「香煎牛排干貝」或「沙朗牛排」任一餐點，即享第二份免費，主打低脂、低卡、低膽固醇的紐西蘭草飼沙朗牛排與菲力牛排，搭配香煎北海道大干貝或阿拉伯藍鑽蝦，一次即能品嚐海陸雙重美味，在家享用餐廳級的餐點。</p>
+          </div>
+          <div class="more-card-container" ref="moreCard">
+            <div 
+              class="more-card-box" 
+              v-for="(ele, idx) in moreCardInfoList.slice(1, moreCardInfoList.length)"
+              :key="idx"
+              @click="ToggleCardContent">
+              <div class="more-card-content">
+                <div>
+                  <p class="font-title-medium-small">牛排買一送一 ★ 沙朗牛排拼盤組</p>
+                  <div class="more-card-content-sub">兩份特價550元，原價1100~1050元；A區→沙朗牛排海鮮鮮蔬拼盤(牛排140g)，B區→沙朗牛排海鮮鮮蔬拼盤(牛排140g)、香煎牛排干貝(牛排180g)、十盎司沙朗牛排(牛排280g)三選一 (牛肉產地：紐西蘭)</div>
+                </div>
+                <div class="more-card-content-price">
+                  <a class="font-title-medium"><i class="fas fa-plus-square"></i></a>
+                  <span class="mL10 fw500">$1000</span>
+                </div>
+              </div>
+              <div class="img-container">
+                <img src="./../assest/img/menu/product1.jpeg" alt="" class="more-card-img">
+              </div>
+              <!-- <div class="more-card-info">
+                <div class="more-card-info-thumbnail">
+                  <div class="more-card-info-thumbnail_img"></div>
+                </div>
+                <div class="more-card-info-content">{{ele.title}} - {{ele.content}}</div>
+              </div> -->
+              <!-- <div class="more-card-action">
+                <div class="flex1 more-card-action_price">{{ele.hour}} hr</div>
+                <div class="flex1">
+                  <a class="btn-primary-outline btn-large w100" @click="SubmitProjectSelect(ele)">預約此服務</a>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="booking-body-container">
-        <div class="booking-body">
-          <div class="booking-body-detail">
-            <div class="order-detail">
-              <div class="order-detail_card">
-                <div class="order-detail-content">
-                  <div class="order-detail-content_top">
-                    <p><i class="fas fa-clock icon-w14 mR5 text-center" style="color: lightgray;"></i> {{selectedDate}}</p>
-                    <p><i class="fas fa-clock icon-w14 mR5 text-center" style="color: lightgray;"></i> {{selectedTime.time}}</p>
-                    <p><i class="fas fa-tasks icon-w14 mR5 text-center" style="color: lightgray;"></i> {{selectedService.label}}</p>
-                    <p><i class="fas fa-broadcast-tower icon-w14 mR5 text-center" style="color: lightgray;"></i> {{selectedDesign.label}}</p>
-                    <p><i class="fas fa-atom icon-w14 mR5 text-center" style="color: lightgray;"></i> {{selectedWorker.label}}</p>
+      <div class="lightbox" v-if="isLightbox">
+        <div class="lightbox-inside">
+          <div class="btn-top-right font-size-26">
+            <i class="fas fa-times-circle" @click="ToggleCardContent"></i>
+          </div>
+          <div class="flex-row">
+            <img src="./../assest/img/menu/product1.jpeg" alt="" class="lightbox-img">
+            <div class="mL15 mR20">
+              <p class="font-title-large">牛排買一送一 ★ 沙朗牛排拼盤組</p>
+              <span class="font-title-medium">$0</span>
+            </div>
+          </div>
+          <p class="color-secondary mT25 mB25">
+            兩份特價550元，原價1100~1050元；A區→沙朗牛排海鮮鮮蔬拼盤(牛排140g)，B區→沙朗牛排海鮮鮮蔬拼盤(牛排140g)、香煎牛排干貝(牛排180g)、十盎司沙朗牛排(牛排280g)三選一 (牛肉產地：紐西蘭)
+          </p>
+          <div class="menu-section">
+            <div>
+              <div class="menu-section-title">
+                <p class="font-title-medium-small fw400 mB0">沙朗拼盤組，A區</p>
+                <span class="plan-detail_subtitle">必選 • 請選擇 1 項</span>
+              </div>
+            </div>
+            <div>
+              <span class="menu-section-content">
+                <label class="menu-section-content-label">
+                  <input id="" type="radio" class="menu-section-content-choose">
+                  <div class="menu-section-content-choose-text">
+                    <div class="font-title-medium-small fw300 mB0">沙朗牛排海鮮鮮蔬拼盤</div>
+                    <div>+$550</div>
                   </div>
-                  <div class="order-detail-content_name mT20">
-                    <div class="order-detail-content_thumbnail"></div>
-                    <div class="order-detail-content_name_info">
-                      <p>{{selectedProject.title}}</p>
-                      <p>{{selectedTime.hour}} + {{selectedProject.hour}}<span class="force-right mR10">{{ subTotal }} hr</span></p>
-                    </div>
+                </label>
+              </span>
+            </div>
+          </div>
+          <div class="menu-section">
+            <div>
+              <div class="menu-section-title">
+                <p class="font-title-medium-small fw400 mB0">A區牛排熟度</p>
+                <span class="plan-detail_subtitle">必選 • 請選擇 1 項</span>
+              </div>
+            </div>
+            <div>
+              <span class="menu-section-content">
+                <label class="menu-section-content-label">
+                  <input id="" type="radio" class="menu-section-content-choose">
+                  <div class="menu-section-content-choose-text">
+                    <div class="font-title-medium-small fw300 mB0">三分熟</div>
                   </div>
-                  <hr>
-                  <div class="order-detail-content_price">
-                    <div class="order-detail-price-row">
-                      <div class="order-detail-price-row_title"></div>
-                      <div class="order-detail-price-row_subtitle"></div>
-                      <div class="order-detail-price-row_amount">小計: {{ selectedTime.hour + selectedProject.hour }} hr</div>
-                    </div>
-                    <div class="order-detail-price-row">
-                      <div class="order-detail-price-row_title">服務時數</div>
-                      <div class="order-detail-price-row_subtitle">{{selectedTime.hour}} + {{selectedProject.hour}}</div>
-                      <div class="order-detail-price-row_amount">{{ selectedTime.hour + selectedProject.hour }} hr</div>
-                    </div>
-                    <div class="order-detail-price-row" v-if="planList.find(ele => ele.id === 1).isSelect">
-                      <div class="order-detail-price-row_title">急件處理</div>
-                      <div class="order-detail-price-row_subtitle"></div>
-                      <div class="order-detail-price-row_amount">+ 24 hr</div>
-                    </div>
-                    <div class="order-detail-price-row" v-if="planList.find(ele => ele.id === 2).isSelect">
-                      <div class="order-detail-price-row_title">購買版權</div>
-                      <div class="order-detail-price-row_subtitle"></div>
-                      <div class="order-detail-price-row_amount">總時數 x 2</div>
-                    </div>
-                    <div class="order-detail-price-row" v-if="planList.find(ele => ele.id === 3).isSelect">
-                      <div class="order-detail-price-row_title">下載3D資料</div>
-                      <div class="order-detail-price-row_subtitle"></div>
-                      <div class="order-detail-price-row_amount">總時數 x 1.5</div>
-                    </div>
+                </label>
+              </span>
+              <span class="menu-section-content">
+                <label class="menu-section-content-label">
+                  <input id="" type="radio" class="menu-section-content-choose">
+                  <div class="menu-section-content-choose-text">
+                    <div class="font-title-medium-small fw300 mB0">五分熟</div>
                   </div>
-                  <div class="order-detail-content_total">
+                </label>
+              </span>
+              <span class="menu-section-content">
+                <label class="menu-section-content-label">
+                  <input id="" type="radio" class="menu-section-content-choose">
+                  <div class="menu-section-content-choose-text">
+                    <div class="font-title-medium-small fw300 mB0">七分熟</div>
+                  </div>
+                </label>
+              </span>
+              <span class="menu-section-content">
+                <label class="menu-section-content-label">
+                  <input id="" type="radio" class="menu-section-content-choose">
+                  <div class="menu-section-content-choose-text">
+                    <div class="font-title-medium-small fw300 mB0">全熟</div>
+                  </div>
+                </label>
+              </span>
+            </div>
+          </div>
+          
+          <div class="menu-section">
+            <div>
+              <div class="menu-section-title">
+                <p class="font-title-medium-small fw400 mB0">沙朗拼盤組，B區</p>
+                <span class="plan-detail_subtitle">必選 • 請選擇 1 項</span>
+              </div>
+            </div>
+            <div>
+              <span class="menu-section-content">
+                <label class="menu-section-content-label">
+                  <input id="" type="radio" class="menu-section-content-choose">
+                  <div class="menu-section-content-choose-text">
+                    <div class="font-title-medium-small fw300 mB0">沙朗牛排海鮮鮮蔬拼盤</div>
+                  </div>
+                </label>
+              </span>
+              <span class="menu-section-content">
+                <label class="menu-section-content-label">
+                  <input id="" type="radio" class="menu-section-content-choose">
+                  <div class="menu-section-content-choose-text">
+                    <div class="font-title-medium-small fw300 mB0">香煎牛排干貝</div>
+                  </div>
+                </label>
+              </span>
+              <span class="menu-section-content">
+                <label class="menu-section-content-label">
+                  <input id="" type="radio" class="menu-section-content-choose">
+                  <div class="menu-section-content-choose-text">
+                    <div class="font-title-medium-small fw300 mB0">十盎司沙朗牛排</div>
+                  </div>
+                </label>
+              </span>
+            </div>
+          </div>
+          <div class="menu-section">
+            <div>
+              <div class="menu-section-title">
+                <p class="font-title-medium-small fw400 mB0">B區牛排熟度</p>
+                <span class="plan-detail_subtitle">必選 • 請選擇 1 項</span>
+              </div>
+            </div>
+            <div>
+              <span class="menu-section-content">
+                <label class="menu-section-content-label">
+                  <input id="" type="radio" class="menu-section-content-choose">
+                  <div class="menu-section-content-choose-text">
+                    <div class="font-title-medium-small fw300 mB0">三分熟</div>
+                  </div>
+                </label>
+              </span>
+              <span class="menu-section-content">
+                <label class="menu-section-content-label">
+                  <input id="" type="radio" class="menu-section-content-choose">
+                  <div class="menu-section-content-choose-text">
+                    <div class="font-title-medium-small fw300 mB0">五分熟</div>
+                  </div>
+                </label>
+              </span>
+              <span class="menu-section-content">
+                <label class="menu-section-content-label">
+                  <input id="" type="radio" class="menu-section-content-choose">
+                  <div class="menu-section-content-choose-text">
+                    <div class="font-title-medium-small fw300 mB0">七分熟</div>
+                  </div>
+                </label>
+              </span>
+              <span class="menu-section-content">
+                <label class="menu-section-content-label">
+                  <input id="" type="radio" class="menu-section-content-choose">
+                  <div class="menu-section-content-choose-text">
+                    <div class="font-title-medium-small fw300 mB0">全熟</div>
+                  </div>
+                </label>
+              </span>
+            </div>
+          </div>
+          <div class="menu-footer">
+            <div class="menu-footer-group justify-between">
+              <div class="flex-row menu-footer-amount">
+                <button class="w25 btn-secondary-outline font-title-large flat-corner-r" :disabled="lightboxAmount<1" @click="MinusLightboxAmount">-</button>
+                <span class="w50 font-title-medium text-center menu-footer-amount-text">{{lightboxAmount}}</span>
+                <button class="w25 btn-secondary-outline font-title-large flat-corner-l" @click="PlusLightboxAmount">+</button>
+              </div>
+              <button class="menu-footer-cart font-title-medium-large btn-primary" :disabled="lightboxAmount<1">
+                加入購物車
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ORDER PROCESS -->
+      <div class="checkout-layout" v-show="isProjectSelect" ref="checkLayout">
+        <div class="booking-header">
+          <a class="booking-last-step" @click="ReselectProject">
+            <i class="fas fa-angle-left"></i> 選擇其他設計樣板
+          </a>
+        </div>
+        <div class="booking-body-container">
+          <div class="booking-body">
+            <div class="booking-body-detail">
+              <div class="order-detail">
+                <div class="order-detail_card">
+                  <div class="order-detail-content">
+                    <div class="order-detail-content_top">
+                      <p><i class="fas fa-clock icon-w14 mR5 text-center" style="color: lightgray;"></i> {{selectedDate}}</p>
+                      <p><i class="fas fa-clock icon-w14 mR5 text-center" style="color: lightgray;"></i> {{selectedTime.time}}</p>
+                      <p><i class="fas fa-tasks icon-w14 mR5 text-center" style="color: lightgray;"></i> {{selectedService.label}}</p>
+                      <p><i class="fas fa-broadcast-tower icon-w14 mR5 text-center" style="color: lightgray;"></i> {{selectedDesign.label}}</p>
+                      <p><i class="fas fa-atom icon-w14 mR5 text-center" style="color: lightgray;"></i> {{selectedWorker.label}}</p>
+                    </div>
+                    <div class="order-detail-content_name mT20">
+                      <div class="order-detail-content_thumbnail"></div>
+                      <div class="order-detail-content_name_info">
+                        <p>{{selectedProject.title}}</p>
+                        <p>{{selectedTime.hour}} + {{selectedProject.hour}}<span class="force-right mR10">{{ subTotal }} hr</span></p>
+                      </div>
+                    </div>
                     <hr>
-                    <div class="order-detail-price-row color-secondary bold">
-                      <div class="order-detail-price-row_title">總計</div>
-                      <div class="order-detail-price-row_subtitle"></div>
-                      <div class="order-detail-price-row_amount">{{ totalHour }}hr</div>
+                    <div class="order-detail-content_price">
+                      <div class="order-detail-price-row">
+                        <div class="order-detail-price-row_title"></div>
+                        <div class="order-detail-price-row_subtitle"></div>
+                        <div class="order-detail-price-row_amount">小計: {{ selectedTime.hour + selectedProject.hour }} hr</div>
+                      </div>
+                      <div class="order-detail-price-row">
+                        <div class="order-detail-price-row_title">服務時數</div>
+                        <div class="order-detail-price-row_subtitle">{{selectedTime.hour}} + {{selectedProject.hour}}</div>
+                        <div class="order-detail-price-row_amount">{{ selectedTime.hour + selectedProject.hour }} hr</div>
+                      </div>
+                      <div class="order-detail-price-row" v-if="planList.find(ele => ele.id === 1).isSelect">
+                        <div class="order-detail-price-row_title">急件處理</div>
+                        <div class="order-detail-price-row_subtitle"></div>
+                        <div class="order-detail-price-row_amount">+ 24 hr</div>
+                      </div>
+                      <div class="order-detail-price-row" v-if="planList.find(ele => ele.id === 2).isSelect">
+                        <div class="order-detail-price-row_title">購買版權</div>
+                        <div class="order-detail-price-row_subtitle"></div>
+                        <div class="order-detail-price-row_amount">總時數 x 2</div>
+                      </div>
+                      <div class="order-detail-price-row" v-if="planList.find(ele => ele.id === 3).isSelect">
+                        <div class="order-detail-price-row_title">下載3D資料</div>
+                        <div class="order-detail-price-row_subtitle"></div>
+                        <div class="order-detail-price-row_amount">總時數 x 1.5</div>
+                      </div>
+                    </div>
+                    <div class="order-detail-content_total">
+                      <hr>
+                      <div class="order-detail-price-row color-secondary bold">
+                        <div class="order-detail-price-row_title">總計</div>
+                        <div class="order-detail-price-row_subtitle"></div>
+                        <div class="order-detail-price-row_amount">{{ totalHour }}hr</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="order-detail-footer">
-                  <p><i class="fas fa-info-circle icon-w14 mR5"></i> 注意事項</p>
-                  <div class="order-detail-footer_text">
-                    <span class="order-detail-footer_text-info">取消及更改服務政策、加購用具相關政策...</span>
-                    <span class="order-detail-footer_text-pop">查看完整資訊</span>
+                  <div class="order-detail-footer">
+                    <p><i class="fas fa-info-circle icon-w14 mR5"></i> 注意事項</p>
+                    <div class="order-detail-footer_text">
+                      <span class="order-detail-footer_text-info">取消及更改服務政策、加購用具相關政策...</span>
+                      <span class="order-detail-footer_text-pop">查看完整資訊</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="booking-body-process">
-            <div class="booking-process-progressbar">
-              <div class="progrssbar-step">
-                <span class="progrssbar-step_label" :class="{ bg_color_primary: orderStep.isStep1 || orderStep.isStep2 || orderStep.isStep3 || orderStep.isStep4}">1</span>
-                <span class="progrssbar-step_text">填寫資料</span>
-              </div>
-              <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);" :class="{ bg_color_primary: orderStep.isStep2 || orderStep.isStep3 || orderStep.isStep4 }"></span>
+            <div class="booking-body-process">
+              <div class="booking-process-progressbar">
+                <div class="progrssbar-step">
+                  <span class="progrssbar-step_label" :class="{ bg_color_primary: orderStep.isStep1 || orderStep.isStep2 || orderStep.isStep3 || orderStep.isStep4}">1</span>
+                  <span class="progrssbar-step_text">填寫資料</span>
+                </div>
+                <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);" :class="{ bg_color_primary: orderStep.isStep2 || orderStep.isStep3 || orderStep.isStep4 }"></span>
 
-              <div class="progrssbar-step">
-                <span class="progrssbar-step_label" :class="{ bg_color_primary: orderStep.isStep2 || orderStep.isStep3 || orderStep.isStep4 }">2</span>
-                <span class="progrssbar-step_text">加價服務</span>
-              </div>
-              <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);" :class="{ bg_color_primary: orderStep.isStep3 || orderStep.isStep4 }"></span>
+                <div class="progrssbar-step">
+                  <span class="progrssbar-step_label" :class="{ bg_color_primary: orderStep.isStep2 || orderStep.isStep3 || orderStep.isStep4 }">2</span>
+                  <span class="progrssbar-step_text">加價服務</span>
+                </div>
+                <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);" :class="{ bg_color_primary: orderStep.isStep3 || orderStep.isStep4 }"></span>
 
-              <div class="progrssbar-step">
-                <span class="progrssbar-step_label" :class="{ bg_color_primary: orderStep.isStep3 || orderStep.isStep4 }">3</span>
-                <span class="progrssbar-step_text">付款確認</span>
-              </div>
-              <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);" :class="{ bg_color_primary: orderStep.isStep4 }"></span>
+                <div class="progrssbar-step">
+                  <span class="progrssbar-step_label" :class="{ bg_color_primary: orderStep.isStep3 || orderStep.isStep4 }">3</span>
+                  <span class="progrssbar-step_text">付款確認</span>
+                </div>
+                <span class="progrssbar-bar" style="width: calc((100% - 140px) / 3);" :class="{ bg_color_primary: orderStep.isStep4 }"></span>
 
-              <div class="progrssbar-step">
-                <span class="progrssbar-step_label" :class="{ bg_color_primary: orderStep.isStep4 }">4</span>
-                <span class="progrssbar-step_text">預約完成</span>
+                <div class="progrssbar-step">
+                  <span class="progrssbar-step_label" :class="{ bg_color_primary: orderStep.isStep4 }">4</span>
+                  <span class="progrssbar-step_text">預約完成</span>
+                </div>
               </div>
-            </div>
 
-            <!-- step 1 -->
-            <div class="booking-process-form" v-show="orderStep.isStep1">
-              <div class="booking-process-form_titlebox">
-                <h5 class="booking-process-form_title"><i class="fas fa-phone-alt icon-w20 mR10"></i>聯絡資訊</h5>
-              </div>
-              <div class="booking-process-form_content">
-                <div class="flexize">
-                  <div class="flexize-item_half">
-                    <p>姓名</p>
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="王小民">
+              <!-- step 1 -->
+              <div class="booking-process-form" v-show="orderStep.isStep1">
+                <div class="booking-process-form_titlebox">
+                  <h5 class="booking-process-form_title"><i class="fas fa-phone-alt icon-w20 mR10"></i>聯絡資訊</h5>
+                </div>
+                <div class="booking-process-form_content">
+                  <div class="flexize">
+                    <div class="flexize-item_half">
+                      <p>姓名</p>
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="王小民">
+                      </div>
+                    </div>
+                    <div class="flexize-item_half">
+                      <p>手機</p>
+                      <div class="form-group">
+                        <input type="tel" class="form-control" placeholder="0912345678">
+                      </div>
                     </div>
                   </div>
-                  <div class="flexize-item_half">
-                    <p>手機</p>
+                  <div>
+                    <p>E-mail</p>
                     <div class="form-group">
-                      <input type="tel" class="form-control" placeholder="0912345678">
+                      <input type="email" class="form-control" placeholder="service@heliosrobot.com">
                     </div>
                   </div>
+                </div>
+                <div class="booking-process-form_titlebox">
+                  <h5 class="booking-process-form_title"><i class="fas fa-map-marker-alt icon-w20 mR10"></i>聯絡地址</h5>
+                </div>
+                <div class="w100">
+                  <div class="flexize">
+                    <div class="flexize-item_half">
+                      <div class="address-flex mB10">
+                        <select disabled="disabled" name="county" class="form-control mR5">
+                          <!-- <option value="選擇城市">選擇城市</option> -->
+                          <option value="台北市">台北市</option>
+                        </select>
+                        <select disabled="disabled" name="county" class="form-control">
+                          <option value="中正區">中正區</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="flexize-item_half">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="忠孝東路一段">
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+
+                <div class="booking-process-form_titlebox">
+                  <h5 class="booking-process-form_title"><i class="far fa-comment-dots icon-w20 mR10"></i>訂單備註</h5>
+                </div>
+                <input type="text" class="form-control" placeholder="這裡可以留下備註、注意事項">
+                <div class="w100 mT20 text-center">
+                  <button class="btn-primary btn-large mR10" @click="ReselectProject">上一步</button>
+                  <button class="btn-primary btn-large mR10" @click="NextStep(2)">下一步</button>
+                </div>
+              </div>
+
+              <!-- step 2 -->
+              <div class="booking-process-form process-form-plan" v-show="orderStep.isStep2">
+                <div class="booking-process-form_titlebox title-flex-center">
+                  <h4 class="booking-process-form_title color-secondary font-title-medium"><span class="mR5">可選擇以下加價服務</span><i class="fas fa-question-circle"></i></h4>
+                </div>
+                <div class="process-form-plan-content">
+                  <div
+                    class="process-form-plan-content_option"
+                    :class="{ process_form_plan_content_option_selected: ele.isSelect }"
+                    v-for="(ele, idx) in planList"
+                    :key="idx"
+                    @click="SelectPlan(ele)">
+                    <div class="process-content-option-badge" v-show="!ele.isSimple">{{ele.tag}}</div>
+                    <div class="process-content-option-icon" v-show="!ele.isSimple"><i class="far fa-calendar-alt" style="font-size: 40px;"></i></div>
+                    <div v-show="!ele.isSimple">
+                      <div class="process-content-option-title font-title-medium">{{ele.name}}</div>
+                      <div class="plan-detail_subtitle">{{ele.subtitle}}</div>
+                    </div>
+                    <div class="process-content-option-check" v-show="!ele.isSimple"><i class="fas fa-check-circle color-primary" v-show="ele.isSelect"></i></div>
+
+                    <div class="process-content-option-title_single" v-show="ele.isSimple">{{ele.name}}<span class="plan-detail_subtitle">原價</span></div>
+                    <div class="process-content-option-check" style="bottom: 15px;" v-show="ele.isSimple"><i class="fas fa-check-circle color-primary" v-show="ele.isSelect"></i></div>
+                  </div>
+                </div>
+                <!-- <div class="process-form-plan-detail" v-show="planList.find(ele => ele.isSelect) && !planList.find(ele => ele.isSelect).isSimple"> -->
+                <div class="process-form-plan-detail">
+                  <div class="plan-detail_title font-title-medium">每兩週定期幫您預約打掃</div>
+                  <div class="plan-detail_subtitle">每次只要$1755，省$195</div>
+                  <div class="plan-detail_time mT10">
+                    <div class="plan-detail_timeinfo">
+                      <div><i class="far fa-clock icon-w20 mR5 color-subtitle"></i></div>
+                      <div class="font-title-smal color-primary mR5">3小時</div>
+                      <div class="font-title-smal color-primary mR5">18:00 - 21:00</div>
+                    </div>
+                    <div class="plan-detail_timeinfo">
+                      <div><i class="far fa-calendar-alt icon-w20 mR5 color-subtitle"></i></div>
+                      <div class="font-title-smal color-primary mR5">週六</div>
+                      <div class="font-title-smal color-primary mR5">7/31、8/14、8/28....</div>
+                    </div>
+                  </div>
+                  <div class="plan-detail_notice">*每隔兩週系統將自動幫您預約週六同一時間</div>
+                  <div class="plan-detail_tips plan-detail_subtitle">
+                    <div><i class="fas fa-check color-secondary mR10"></i>以相同潔客為主，您也可自由更換</div>
+                    <div class="mT5"><i class="fas fa-check color-secondary mR10"></i>每次服務前十四天自動扣款</div>
+                    <div class="mT5"><i class="fas fa-check color-secondary mR10"></i>您可隨時取消後續服務</div>
+                  </div>
+                  <div class="plan-detail_faq">
+                    <div class="plan-detail_subtitle">常見問題<i class="fas fa-question-circle icon-w20"></i></div>
+                  </div>
+                </div>
+                <div class="w100 mT20 text-center">
+                  <button class="btn-primary btn-large mR10" @click="LastStep(1)">上一步</button>
+                  <button class="btn-primary btn-large mR10" @click="NextStep(3)">下一步</button>
+                </div>
+              </div>
+
+              <!-- step 3 -->
+              <div class="booking-process-form" v-show="orderStep.isStep3">
+                <div class="booking-process-form_titlebox">
+                  <h5 class="booking-process-form_title"><i class="fas fa-ticket-alt icon-w20 mR10"></i>優惠券<span class="font-title-small-400">（禮物卡/好友邀請）</span></h5>
                 </div>
                 <div>
-                  <p>E-mail</p>
-                  <div class="form-group">
-                    <input type="email" class="form-control" placeholder="service@heliosrobot.com">
-                  </div>
-                </div>
-              </div>
-              <div class="booking-process-form_titlebox">
-                <h5 class="booking-process-form_title"><i class="fas fa-map-marker-alt icon-w20 mR10"></i>聯絡地址</h5>
-              </div>
-              <div class="w100">
-                <div class="flexize">
-                  <div class="flexize-item_half">
-                    <div class="address-flex mB10">
-                      <select disabled="disabled" name="county" class="form-control mR5">
-                        <!-- <option value="選擇城市">選擇城市</option> -->
-                        <option value="台北市">台北市</option>
-                      </select>
-                      <select disabled="disabled" name="county" class="form-control">
-                        <option value="中正區">中正區</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="flexize-item_half">
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="忠孝東路一段">
-                    </div>
+                  <p class="color-primary font-title-medium-small">優惠券代碼</p>
+                  <div class="coupon-input">
+                    <input type="text" class="form-control font-title-small-400 w75" placeholder="優惠券代碼/禮物卡代碼/好友邀請代碼">
+                    <button class="btn-primary-outline w20">使用</button>
                   </div>
                 </div>
                 
+                <div class="booking-process-form_titlebox">
+                  <h5 class="booking-process-form_title"><i class="fas fa-h-square icon-w20 mR10"></i>Ｈ點支付</h5>
+                </div>
+                <div>
+                  <p class="color-primary font-title-medium-small">Ｈ點折抵</p>
+                </div>
+                <p>使用或購買H點，請<button class="btn-primary-outline btn-round">登入會員</button>(購買H點，就送清潔現金券)</p>
               </div>
 
-              <div class="booking-process-form_titlebox">
-                <h5 class="booking-process-form_title"><i class="far fa-comment-dots icon-w20 mR10"></i>訂單備註</h5>
-              </div>
-              <input type="text" class="form-control" placeholder="這裡可以留下備註、注意事項">
-              <div class="w100 mT20 text-center">
-                <button class="btn-primary btn-large mR10" @click="ReselectProject">上一步</button>
-                <button class="btn-primary btn-large mR10" @click="NextStep(2)">下一步</button>
-              </div>
-            </div>
-
-            <!-- step 2 -->
-            <div class="booking-process-form process-form-plan" v-show="orderStep.isStep2">
-              <div class="booking-process-form_titlebox title-flex-center">
-                <h4 class="booking-process-form_title color-secondary font-title-medium"><span class="mR5">可選擇以下加價服務</span><i class="fas fa-question-circle"></i></h4>
-              </div>
-              <div class="process-form-plan-content">
-                <div
-                  class="process-form-plan-content_option"
-                  :class="{ process_form_plan_content_option_selected: ele.isSelect }"
-                  v-for="(ele, idx) in planList"
-                  :key="idx"
-                  @click="SelectPlan(ele)">
-                  <div class="process-content-option-badge" v-show="!ele.isSimple">{{ele.tag}}</div>
-                  <div class="process-content-option-icon" v-show="!ele.isSimple"><i class="far fa-calendar-alt" style="font-size: 40px;"></i></div>
-                  <div v-show="!ele.isSimple">
-                    <div class="process-content-option-title font-title-medium">{{ele.name}}</div>
-                    <div class="plan-detail_subtitle">{{ele.subtitle}}</div>
-                  </div>
-                  <div class="process-content-option-check" v-show="!ele.isSimple"><i class="fas fa-check-circle color-primary" v-show="ele.isSelect"></i></div>
-
-                  <div class="process-content-option-title_single" v-show="ele.isSimple">{{ele.name}}<span class="plan-detail_subtitle">原價</span></div>
-                  <div class="process-content-option-check" style="bottom: 15px;" v-show="ele.isSimple"><i class="fas fa-check-circle color-primary" v-show="ele.isSelect"></i></div>
+              <div class="booking-process-form" v-show="orderStep.isStep3">
+                <div class="booking-process-form_titlebox">
+                  <h5 class="booking-process-form_title"><i class="far fa-credit-card icon-w20 mR10"></i>付款方式</h5>
+                </div>
+                <div class="payment-group">
+                  <label for="payment1" class="payment-label">
+                    <input type="radio" name="payment" id="payment1" class="payment-choose">
+                    <div class="payment-choose-text">
+                      <span class="fw500 mR10">線上刷卡</span>
+                      <span class="plan-detail_subtitle">(可接受VISA, Master Card, JCB)</span>
+                    </div>
+                  </label>
+                  <label for="payment2" class="payment-label">
+                    <input type="radio" name="payment" id="payment2" class="payment-choose">
+                    <div class="payment-choose-text">
+                      <span class="fw500 mR10">線上ATM轉帳</span>
+                      <span class="plan-detail_subtitle">(需有讀卡機，部分銀行只支援Windows系統)</span>
+                    </div>
+                  </label>
+                  <label for="payment3" class="payment-label">
+                    <input type="radio" name="payment" id="payment3" class="payment-choose">
+                    <div class="payment-choose-text">
+                      <span class="fw500 mR10">實體ATM轉帳</span>
+                      <span class="plan-detail_subtitle">(請於一天內轉帳，訂單只保留一天)</span>
+                    </div>
+                  </label>
+                  <label for="payment4" class="payment-label">
+                    <input type="radio" name="payment" id="payment4" class="payment-choose">
+                    <div class="payment-choose-text">
+                      <span class="fw500 mR10">超商代碼繳費</span>
+                      <span class="plan-detail_subtitle">(請於1天內至四大超商輸入代碼繳費，訂單只保留一天)</span>
+                    </div>
+                  </label>
+                </div>
+                
+                <div class="booking-process-form_titlebox">
+                  <h5 class="booking-process-form_title"><i class="fas fa-receipt icon-w20 mR10"></i>發票選項</h5>
+                </div>
+                <div class="mB10">
+                  <select class="header-form-select" name="" id="">
+                    <option value="個人電子發票">個人電子發票</option>
+                    <option value="載具發票">載具發票</option>
+                    <option value="捐贈">捐贈</option>
+                    <option value="三聯式發票（統編）">三聯式發票（統編）</option>
+                  </select>
+                </div>
+                <div>
+                  <p class="plan-detail_subtitle">由潔客幫自動為您兌獎，中獎後將主動通知您並掛號寄出紙本發票。</p>
+                  <p class="plan-detail_subtitle">提醒您，個人電子發票一旦開立，不得任意更改或改開三聯式發票(統編)。</p>
+                </div>
+                <hr>
+                <div class="payment-group">
+                  <label for="payment-terms-1" class="payment-label">
+                    <input type="checkbox" name="paymentTerms1" id="payment-terms-1" class="payment-choose">
+                    <div class="payment-choose-text">
+                      <span class="fw500 mR10">我同意如果原預約的潔客有狀況不能服務，請潔客幫自動找尋別的潔客替代。</span>
+                    </div>
+                  </label>
+                  <label for="payment-terms-2" class="payment-label">
+                    <input type="checkbox" name="paymentTerms2" id="payment-terms-2" class="payment-choose" v-model="paymentTerms2Checked">
+                    <div class="payment-choose-text">
+                      <span class="fw500 mR10">我已閱讀 <a>未清潔範圍</a> 、 <a>取消或更改服務政策</a> 、 <a>服務條款</a> 及 <a>隱私權政策</a></span>
+                    </div>
+                  </label>
+                </div>
+                <div class="w100 mT20 text-center">
+                  <button class="btn-primary btn-large mR10" @click="LastStep(2)">上一步</button>
+                  <button class="btn-primary btn-large mR10" :disabled="!paymentTerms2Checked" @click="NextStep(4)">進行付款預約</button>
                 </div>
               </div>
-              <!-- <div class="process-form-plan-detail" v-show="planList.find(ele => ele.isSelect) && !planList.find(ele => ele.isSelect).isSimple"> -->
-              <div class="process-form-plan-detail">
-                <div class="plan-detail_title font-title-medium">每兩週定期幫您預約打掃</div>
-                <div class="plan-detail_subtitle">每次只要$1755，省$195</div>
-                <div class="plan-detail_time mT10">
-                  <div class="plan-detail_timeinfo">
-                    <div><i class="far fa-clock icon-w20 mR5 color-subtitle"></i></div>
-                    <div class="font-title-smal color-primary mR5">3小時</div>
-                    <div class="font-title-smal color-primary mR5">18:00 - 21:00</div>
-                  </div>
-                  <div class="plan-detail_timeinfo">
-                    <div><i class="far fa-calendar-alt icon-w20 mR5 color-subtitle"></i></div>
-                    <div class="font-title-smal color-primary mR5">週六</div>
-                    <div class="font-title-smal color-primary mR5">7/31、8/14、8/28....</div>
-                  </div>
-                </div>
-                <div class="plan-detail_notice">*每隔兩週系統將自動幫您預約週六同一時間</div>
-                <div class="plan-detail_tips plan-detail_subtitle">
-                  <div><i class="fas fa-check color-secondary mR10"></i>以相同潔客為主，您也可自由更換</div>
-                  <div class="mT5"><i class="fas fa-check color-secondary mR10"></i>每次服務前十四天自動扣款</div>
-                  <div class="mT5"><i class="fas fa-check color-secondary mR10"></i>您可隨時取消後續服務</div>
-                </div>
-                <div class="plan-detail_faq">
-                  <div class="plan-detail_subtitle">常見問題<i class="fas fa-question-circle icon-w20"></i></div>
-                </div>
-              </div>
-              <div class="w100 mT20 text-center">
-                <button class="btn-primary btn-large mR10" @click="LastStep(1)">上一步</button>
-                <button class="btn-primary btn-large mR10" @click="NextStep(3)">下一步</button>
-              </div>
-            </div>
 
-            <!-- step 3 -->
-            <div class="booking-process-form" v-show="orderStep.isStep3">
-              <div class="booking-process-form_titlebox">
-                <h5 class="booking-process-form_title"><i class="fas fa-ticket-alt icon-w20 mR10"></i>優惠券<span class="font-title-small-400">（禮物卡/好友邀請）</span></h5>
-              </div>
-              <div>
-                <p class="color-primary font-title-medium-small">優惠券代碼</p>
-                <div class="coupon-input">
-                  <input type="text" class="form-control font-title-small-400 w75" placeholder="優惠券代碼/禮物卡代碼/好友邀請代碼">
-                  <button class="btn-primary-outline w20">使用</button>
+              <!-- step 4 -->
+              <div class="booking-process-form" v-show="orderStep.isStep4">
+                <div class="booking-process-form_titlebox title-flex-center">
+                  <h4 class="booking-process-form_title color-secondary font-title-medium"><span>預約完成，訂單已成立！</span></h4>
                 </div>
-              </div>
-              
-              <div class="booking-process-form_titlebox">
-                <h5 class="booking-process-form_title"><i class="fas fa-h-square icon-w20 mR10"></i>Ｈ點支付</h5>
-              </div>
-              <div>
-                <p class="color-primary font-title-medium-small">Ｈ點折抵</p>
-              </div>
-              <p>使用或購買H點，請<button class="btn-primary-outline btn-round">登入會員</button>(購買H點，就送清潔現金券)</p>
-            </div>
-
-            <div class="booking-process-form" v-show="orderStep.isStep3">
-              <div class="booking-process-form_titlebox">
-                <h5 class="booking-process-form_title"><i class="far fa-credit-card icon-w20 mR10"></i>付款方式</h5>
-              </div>
-              <div class="payment-group">
-                <label for="payment1" class="payment-label">
-                  <input type="radio" name="payment" id="payment1" class="payment-choose">
-                  <div class="payment-choose-text">
-                    <span class="fw500 mR10">線上刷卡</span>
-                    <span class="plan-detail_subtitle">(可接受VISA, Master Card, JCB)</span>
-                  </div>
-                </label>
-                <label for="payment2" class="payment-label">
-                  <input type="radio" name="payment" id="payment2" class="payment-choose">
-                  <div class="payment-choose-text">
-                    <span class="fw500 mR10">線上ATM轉帳</span>
-                    <span class="plan-detail_subtitle">(需有讀卡機，部分銀行只支援Windows系統)</span>
-                  </div>
-                </label>
-                <label for="payment3" class="payment-label">
-                  <input type="radio" name="payment" id="payment3" class="payment-choose">
-                  <div class="payment-choose-text">
-                    <span class="fw500 mR10">實體ATM轉帳</span>
-                    <span class="plan-detail_subtitle">(請於一天內轉帳，訂單只保留一天)</span>
-                  </div>
-                </label>
-                <label for="payment4" class="payment-label">
-                  <input type="radio" name="payment" id="payment4" class="payment-choose">
-                  <div class="payment-choose-text">
-                    <span class="fw500 mR10">超商代碼繳費</span>
-                    <span class="plan-detail_subtitle">(請於1天內至四大超商輸入代碼繳費，訂單只保留一天)</span>
-                  </div>
-                </label>
-              </div>
-              
-              <div class="booking-process-form_titlebox">
-                <h5 class="booking-process-form_title"><i class="fas fa-receipt icon-w20 mR10"></i>發票選項</h5>
-              </div>
-              <div class="mB10">
-                <select class="header-form-select" name="" id="">
-                  <option value="個人電子發票">個人電子發票</option>
-                  <option value="載具發票">載具發票</option>
-                  <option value="捐贈">捐贈</option>
-                  <option value="三聯式發票（統編）">三聯式發票（統編）</option>
-                </select>
-              </div>
-              <div>
-                <p class="plan-detail_subtitle">由潔客幫自動為您兌獎，中獎後將主動通知您並掛號寄出紙本發票。</p>
-                <p class="plan-detail_subtitle">提醒您，個人電子發票一旦開立，不得任意更改或改開三聯式發票(統編)。</p>
-              </div>
-              <hr>
-              <div class="payment-group">
-                <label for="payment-terms-1" class="payment-label">
-                  <input type="checkbox" name="paymentTerms1" id="payment-terms-1" class="payment-choose">
-                  <div class="payment-choose-text">
-                    <span class="fw500 mR10">我同意如果原預約的潔客有狀況不能服務，請潔客幫自動找尋別的潔客替代。</span>
-                  </div>
-                </label>
-                <label for="payment-terms-2" class="payment-label">
-                  <input type="checkbox" name="paymentTerms2" id="payment-terms-2" class="payment-choose" v-model="paymentTerms2Checked">
-                  <div class="payment-choose-text">
-                    <span class="fw500 mR10">我已閱讀 <a>未清潔範圍</a> 、 <a>取消或更改服務政策</a> 、 <a>服務條款</a> 及 <a>隱私權政策</a></span>
-                  </div>
-                </label>
-              </div>
-              <div class="w100 mT20 text-center">
-                <button class="btn-primary btn-large mR10" @click="LastStep(2)">上一步</button>
-                <button class="btn-primary btn-large mR10" :disabled="!paymentTerms2Checked" @click="NextStep(4)">進行付款預約</button>
-              </div>
-            </div>
-
-            <!-- step 4 -->
-            <div class="booking-process-form" v-show="orderStep.isStep4">
-              <div class="booking-process-form_titlebox title-flex-center">
-                <h4 class="booking-process-form_title color-secondary font-title-medium"><span>預約完成，訂單已成立！</span></h4>
-              </div>
-              <div class="process-img">
-                <img src="./../assest/img/building.svg" alt="">
-              </div>
-              <div class="booking-process-form_titlebox title-flex-center mT20">
-                <p class="font-title-small">您的訂單編號：{{Math.random().toString(36).substring(5)}}</p>
-              </div>
-              <div class="booking-process-form_titlebox title-flex-center">
-                <p class="font-title-small-400">您可利用訂單編號及聯絡資訊來電客服查詢，依照不同服務系統，系統稍後將會寄送訂單相關資訊至您的Email信箱，請詳加確認。</p>
-              </div>
-              <div class="w100 mT20 text-center">
-                <button class="w100 btn-primary btn-large">查看訂單紀錄</button>
-              </div>
-              <div class="mT20">
-                <p class="plan-detail_subtitle">提醒您，取消或更改服務酌收手續費如下：</p>
-                <p class="plan-detail_subtitle">1. 於服務前一日取消或更改服務時間將酌收整體服務費用30％</p>
-                <p class="plan-detail_subtitle">2. 已於開始服務時間取消或更改服務時間將酌收整體服務費用50％</p>
+                <div class="process-img">
+                  <img src="./../assest/img/building.svg" alt="">
+                </div>
+                <div class="booking-process-form_titlebox title-flex-center mT20">
+                  <p class="font-title-small">您的訂單編號：{{Math.random().toString(36).substring(5)}}</p>
+                </div>
+                <div class="booking-process-form_titlebox title-flex-center">
+                  <p class="font-title-small-400">您可利用訂單編號及聯絡資訊來電客服查詢，依照不同服務系統，系統稍後將會寄送訂單相關資訊至您的Email信箱，請詳加確認。</p>
+                </div>
+                <div class="w100 mT20 text-center">
+                  <button class="w100 btn-primary btn-large">查看訂單紀錄</button>
+                </div>
+                <div class="mT20">
+                  <p class="plan-detail_subtitle">提醒您，取消或更改服務酌收手續費如下：</p>
+                  <p class="plan-detail_subtitle">1. 於服務前一日取消或更改服務時間將酌收整體服務費用30％</p>
+                  <p class="plan-detail_subtitle">2. 已於開始服務時間取消或更改服務時間將酌收整體服務費用50％</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    
+
+    
   </div>
 </body>
 
