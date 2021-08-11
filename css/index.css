@@ -304,11 +304,68 @@ hr {
   -webkit-box-pack: space-evenly;
   -ms-flex-pack: space-evenly;
   justify-content: space-evenly;
-  margin: 10px 10%;
+  margin: 25px 10%;
 }
 
 .no-service-content-item {
   width: 50%;
+}
+
+/* customer rate */
+.customer-rate {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: start;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+}
+
+.customer-rate-card {
+  width: 320px;
+  background-color: #ffffff;
+  -webkit-box-shadow: 0 1px 4px 0 rgb(229 229 229 / 50%);
+  box-shadow: 0 1px 4px 0 rgb(229 229 229 / 50%);
+  border-radius: 4px;
+  padding: 10px 16px;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  cursor: pointer;
+  margin: 10px auto;
+}
+
+.customer-rate-card:hover {
+  -webkit-box-shadow: 1px 7px 8px 0 rgb(154 154 154 / 50%);
+  box-shadow: 1px 7px 8px 0 rgb(154 154 154 / 50%);
+}
+
+.customer-rate-card-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.customer-rate-card-content {
+  padding: 16px 0px 8px;
+  line-height: 2.14;
+}
+
+.customer-rate .customer-rate-card:last-child {
+  display: none;
 }
 
 /* body-filter */
@@ -1366,6 +1423,10 @@ hr {
   color: #d83c37;
 }
 
+.color-shining {
+  color: gold;
+}
+
 .bold {
   font-weight: bold !important;
 }
@@ -1439,6 +1500,10 @@ hr {
   margin-bottom: 0;
 }
 
+.mB5 {
+  margin-bottom: 5px;
+}
+
 .mB10 {
   margin-bottom: 10px;
 }
@@ -1461,6 +1526,10 @@ hr {
 
 .pB5 {
   padding-bottom: 5px;
+}
+
+.pB20 {
+  padding-bottom: 20px;
 }
 
 .w100 {
@@ -1509,6 +1578,11 @@ hr {
 
 .icon-w20 {
   width: 20px;
+}
+
+.img-s90 {
+  width: 90px;
+  height: 90px;
 }
 
 .text-center {
@@ -1767,6 +1841,12 @@ hr {
     flex-direction: row;
   }
 
+  .customer-rate {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+
   .booking-body-detail, .booking-process-progressbar, .booking-process-form {
     margin-right: 30px;
   }
@@ -1810,6 +1890,10 @@ hr {
 
   .no-service-content-item {
     width: 40%;
+  }
+
+  .customer-rate .customer-rate-card:last-child {
+    display: block;
   }
 
   .process-form-plan {

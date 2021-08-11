@@ -93,7 +93,7 @@
             </div>
             <div class="header-form-2" v-show="tabList.find(el => el.text === '加入會員').isSelect === true">
               <div class="header-form-2-card">
-                <div class="best-card-thumbnail mA">
+                <div class="best-card-thumbnail img-s90 mA">
                   <div class="best-card-thumbnail_img">
                     <img src="../assest/img/satellite.jpg" alt="" style="width: 100%;">
                   </div>
@@ -103,7 +103,7 @@
                 <button class="btn-primary-outline btn-round">預約定期</button>
               </div>
               <div class="header-form-2-card">
-                <div class="best-card-thumbnail mA">
+                <div class="best-card-thumbnail img-s90 mA">
                   <div class="best-card-thumbnail_img">
                     <img src="../assest/img/satellite.jpg" alt="" style="width: 100%;">
                   </div>
@@ -194,19 +194,92 @@
         </div>
         <div class="no-service-content">
           <div class="no-service-content-item">
-            <div>・移動或抬起超過10公斤的大型家具或重物</div>
-            <div>・天花板、高處窗戶及可觸及範圍外的表面清潔</div>
-            <div>・危險性外窗清潔及窗簾、紗窗清洗</div>
-            <div>・寵物排泄及重度汙染區域清潔</div>
-            <div>・危險化學物質處理</div>
+            <div> • 移動或抬起超過10公斤的大型家具或重物</div>
+            <div> • 天花板、高處窗戶及可觸及範圍外的表面清潔</div>
+            <div> • 危險性外窗清潔及窗簾、紗窗清洗</div>
+            <div> • 寵物排泄及重度汙染區域清潔</div>
+            <div> • 危險化學物質處理</div>
           </div>
           <div class="no-service-content-item">
-            <div>・地毯深度清潔及清洗（基本除塵除外）</div>
-            <div>・各式陳年、染色汙點清潔</div>
-            <div>・除蟲害（例如：蜂窩、昆蟲…等）</div>
-            <div>・垃圾清運工作（不指使潔客將已包裝垃圾移至其他地方丟棄）</div>
-            <div>・室內惡臭環境</div>
-            <div>・車庫清潔（基本掃除除外）園藝或院子清潔。</div>
+            <div> • 地毯深度清潔及清洗（基本除塵除外）</div>
+            <div> • 各式陳年、染色汙點清潔</div>
+            <div> • 除蟲害（例如：蜂窩、昆蟲…等）</div>
+            <div> • 垃圾清運工作（不指使潔客將已包裝垃圾移至其他地方丟棄）</div>
+            <div> • 室內惡臭環境</div>
+            <div> • 車庫清潔（基本掃除除外）園藝或院子清潔。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- customer-rate -->
+      <div class="pT20 pB20 bg_color_secondary">
+        <div class="text-center">
+          <div class="font-size-26 fw500">顧客評價</div>
+        </div>
+        <div class="customer-rate mT20">
+          <div class="customer-rate-card">
+            <div class="customer-rate-card-header font-title-small-400 color-subtitle">
+              <div>
+                <div class="mB5 color-shining">★★★★★</div>
+                <div class="mB5">Region A</div>
+                <div class="mB5">訂單編號：{{Math.random().toString(36).substring(5)}}</div>
+                <div class="mB5">2021-08-01</div>
+              </div>
+              <div class="best-card-thumbnail img-s90">
+                <div class="best-card-thumbnail_img">
+                  <img src="../assest/img/blue-car.jpeg" alt="" style="width: 100%;">
+                </div>
+              </div>
+            </div>
+            <div class="customer-rate-card-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita similique non ad enim reprehenderit veniam.</div>
+          </div>
+          <div class="customer-rate-card">
+            <div class="customer-rate-card-header font-title-small-400 color-subtitle">
+              <div>
+                <div class="mB5 color-shining">★★★★★</div>
+                <div class="mB5">Region A</div>
+                <div class="mB5">訂單編號：{{Math.random().toString(36).substring(5)}}</div>
+                <div class="mB5">2021-08-01</div>
+              </div>
+              <div class="best-card-thumbnail img-s90">
+                <div class="best-card-thumbnail_img">
+                  <img src="../assest/img/rocket.jpeg" alt="" style="width: 100%;">
+                </div>
+              </div>
+            </div>
+            <div class="customer-rate-card-content">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel similique ipsum ratione, voluptates illum inventore ut ad repellat vero ea.</div>
+          </div>
+          <div class="customer-rate-card">
+            <div class="customer-rate-card-header font-title-small-400 color-subtitle">
+              <div>
+                <div class="mB5 color-shining">★★★★★</div>
+                <div class="mB5">Region A</div>
+                <div class="mB5">訂單編號：{{Math.random().toString(36).substring(5)}}</div>
+                <div class="mB5">2021-08-01</div>
+              </div>
+              <div class="best-card-thumbnail img-s90">
+                <div class="best-card-thumbnail_img">
+                  <img src="../assest/img/drone.jpeg" alt="" style="width: 100%;">
+                </div>
+              </div>
+            </div>
+            <div class="customer-rate-card-content">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel similique ipsum ratione, voluptates illum inventore ut ad repellat vero ea.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="pT20">
+        <div class="text-center">
+          <div class="font-size-26 fw500">常見問題</div>
+        </div>
+        <div class="no-service-content">
+          <div class="font-title-medium">
+            <div class="mB10"> • 需要準備清潔用具給清潔人員嗎？</div>
+            <div class="mB10"> • 突然有事我可以延期或取消嗎？</div>
+            <div class="mB10"> • 居家清潔做不完可以加時嗎？</div>
+            <div class="mB10"> • 服務過程中，我一定要在家嗎？</div>
+            <div class="mB10"> • 除螨、抽油煙機、洗衣機清潔等其他服務可以和鐘點清潔安排同一天嗎？</div>
           </div>
         </div>
       </div>
