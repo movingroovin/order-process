@@ -12,6 +12,23 @@ const vueInstance = Vue.createApp({
         [ { name: '3', isContentOpen: false }, { name: '4', isContentOpen: false },],
         [ { name: '5', isContentOpen: false }, { name: '6', isContentOpen: false },],
       ],
+      faqList: [
+        { isContentOpen: false, title: '需要準備清潔用具給清潔人員嗎？', content: '原則上，潔客會自行攜帶清潔用具提供服務，無須額外支付費用。（每位潔客攜帶之用具略有不同，完整性也屬服務評價的考量標準！）若有額外特殊需求，可在預約時加購全新專屬用具，費用於服務當日以現金支付給潔客。' },
+        { isContentOpen: false, title: '突然有事我可以延期或取消嗎？', content: '1. 取消服務退款將酌收整體費用5%為服務手續費用<br>2. 服務開始前一日18:00後取消或更改酌收當次服務費用30%<br>3. 已於開始服務時間取消服務則酌收當次服務費用50%' },
+        { isContentOpen: false, title: '居家清潔做不完可以加時嗎？', content: '如果當天服務有需要加時的狀況，可與在場的服務人員（潔客）協調，可否配合加時。若潔客無法配合加時，則請您再預訂下一次的清潔服務，當天並不保證一定能夠加時。加時費用將會比照該潔客之鐘點費（每位潔客之鐘點費不同）計算，以0.5小時為單位，未滿半小時以半小時計算，並可將加時的費用直接交給潔客。' },
+        { isContentOpen: false, title: '服務過程中，我一定要在家嗎？', content: '潔客無義務代為保管鑰匙，同時到府清潔屬於安全、財產較敏感之服務型態，因此建議您清潔開始與結束時，至少在場開、關門，或請交由第三方（例：大樓警衛）開、關門。也建議您於服務開始與結束前10分鐘在場，才能與當天的潔客溝通、檢查當天清潔後狀況。' },
+        { isContentOpen: false, title: '除螨、抽油煙機、洗衣機清潔等其他服務可以和鐘點清潔安排同一天嗎？', content: '居家清潔、洗衣機、除塵螨基本上都是不同的清潔人員或專業團隊來提供服務，通常會比較難讓您預約排在同一天。' },
+      ],
+      preserveList: [
+        [ { name: '01', label: '選擇地區、時數', icon: '<i class="fas fa-map-marker-alt"></i>' }, 
+          { name: '02', label: '選擇日期、時間', icon: '<i class="fas fa-calendar-check"></i>' },
+          { name: '03', label: '選擇清潔人員', icon: '<i class="far fa-id-badge"></i>' },
+          { name: '04', label: '填寫資料', icon: '<i class="fas fa-file-invoice-dollar"></i>' },],
+        [ { name: '05', label: '付款下訂', icon: '<i class="far fa-credit-card"></i>' },
+          { name: '06', label: '服務前一天聯絡', icon: '<i class="fas fa-phone-alt"></i>' },
+          { name: '07', label: '到府清潔', icon: '<i class="fas fa-microchip"></i>' },
+          { name: '08', label: '完成驗收', icon: '<i class="fas fa-tasks"></i>' },],
+      ],
       isOrdering: false,
       isBasicInfo: false,
       isDateSelect: false,
@@ -138,6 +155,10 @@ const vueInstance = Vue.createApp({
         ele.isSelect = false;
       });
       this.tabList.find(ele => ele.text === tab.text).isSelect = true;
+    },
+    ToggleFaqContent(ele) {
+      this.faqList.forEach(el => el.isContentOpen = false);
+      ele.isContentOpen = !ele.isContentOpen;
     },
     SubmitBasicInfo() {
       this.isOrdering = true;

@@ -274,12 +274,32 @@
           <div class="font-size-26 fw500">常見問題</div>
         </div>
         <div class="no-service-content">
-          <div class="font-title-medium">
-            <div class="mB10"> • 需要準備清潔用具給清潔人員嗎？</div>
-            <div class="mB10"> • 突然有事我可以延期或取消嗎？</div>
-            <div class="mB10"> • 居家清潔做不完可以加時嗎？</div>
-            <div class="mB10"> • 服務過程中，我一定要在家嗎？</div>
-            <div class="mB10"> • 除螨、抽油煙機、洗衣機清潔等其他服務可以和鐘點清潔安排同一天嗎？</div>
+          <div class="faq-container">
+            <div class="mB10 pointer" v-for="(faq, idx) in faqList" :key="idx">
+              <div class="font-title-medium color-secondary flex-row" @click="ToggleFaqContent(faq)">
+                <div class="mR5"><i class="fas fa-caret-right" :class="[{faq_icon_open: faq.isContentOpen}]"></i></div>
+                <div>{{faq.title}}</div>
+              </div>
+              <p class="mT5 faq-content" v-html="faq.content" v-show="faq.isContentOpen"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRESERVE -->
+      <div class="pT20 bg_color_secondary">
+        <div class="text-center">
+          <div class="font-size-26 fw500">預約服務流程</div>
+        </div>
+        <div class="preserve-container">
+          <div v-for="(ele, idx) in preserveList" :key="idx" class="preserve-outitem">
+            <div v-for="(ele1, idx1) in ele" :key="idx1" class="preserve-card">
+              <div class="preserve-icon" v-html="ele1.icon"></div>
+              <div>
+                <div class="preserve-index fw500">{{ele1.name}}</div>
+                <div class="preserve-label fw500">{{ele1.label}}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

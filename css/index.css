@@ -62,7 +62,7 @@ hr {
 .header-title {
   color: #eeece1;
   font-weight: bold;
-  margin-bottom: 50px;
+  margin: 50px 0 55px;
   letter-spacing: 3px;
 }
 
@@ -366,6 +366,84 @@ hr {
 
 .customer-rate .customer-rate-card:last-child {
   display: none;
+}
+
+/* faq */
+.faq-container {
+  width: 100%;
+  max-width: 945px;
+}
+
+.faq-content {
+  color: #4a4a4a;
+  padding: 0px 12px;
+  font-weight: 400;
+  overflow: hidden;
+  -webkit-transition: 0.4s height ease;
+  transition: 0.4s height ease;
+}
+
+.faq_icon_close {
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+  -webkit-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+
+.faq_icon_open {
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+/* PRESERVE */
+.preserve-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 28px 0;
+}
+
+.preserve-container .preserve-outitem:first-child {
+  margin-right: 12px;
+}
+
+.preserve-card {
+  width: 170px;
+  margin-bottom: 12px;
+  padding: 4px 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  background-color: #ffffff;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 2px 4px 2px rgb(229 229 229 / 50%);
+  box-shadow: 0 2px 4px 2px rgb(229 229 229 / 50%);
+}
+
+.preserve-icon {
+  color: #36bbd9;
+  font-size: 34px;
+  margin: 0 10px;
+}
+
+.preserve-index {
+  font-size: 14px;
+}
+.preserve-label {
+  font-size: 12px;
 }
 
 /* body-filter */
@@ -1847,6 +1925,27 @@ hr {
     flex-direction: row;
   }
 
+  .preserve-container .preserve-outitem:first-child {
+    margin-right: 20px;
+  }
+
+  .preserve-card {
+    width: 275px;
+    margin-bottom: 20px;
+  }
+
+  .preserve-icon {
+    font-size: 60px;
+    margin: 0 20px;
+  }
+
+  .preserve-index {
+    font-size: 28px;
+  }
+  .preserve-label {
+    font-size: 18px;
+  }
+
   .booking-body-detail, .booking-process-progressbar, .booking-process-form {
     margin-right: 30px;
   }
@@ -1894,6 +1993,10 @@ hr {
 
   .customer-rate .customer-rate-card:last-child {
     display: block;
+  }
+
+  .faq-container {
+    width: 70%;
   }
 
   .process-form-plan {
