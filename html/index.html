@@ -270,18 +270,28 @@
 
       <!-- FAQ -->
       <div class="pT20">
-        <div class="text-center">
-          <div class="font-size-26 fw500">常見問題</div>
+        <div class="text-center mB10">
+          <div class="font-size-26 fw500">全台唯一</div>
+          <div class="font-size-26 fw500">挑人員，評價直接看！</div>
         </div>
-        <div class="no-service-content">
-          <div class="faq-container">
-            <div class="mB10 pointer" v-for="(faq, idx) in faqList" :key="idx">
-              <div class="font-title-medium color-secondary flex-row" @click="ToggleFaqContent(faq)">
-                <div class="mR5"><i class="fas fa-caret-right" :class="[{faq_icon_open: faq.isContentOpen}]"></i></div>
-                <div>{{faq.title}}</div>
+        <div class="recommend-card-container">
+          <div v-for="(ele, idx) in recommendList" :key="idx" class="recommend-card">
+            <div class="best-card-thumbnail img-s90">
+              <div class="best-card-thumbnail_img">
+                <img src="../assest/img/blue-car.jpeg" alt="" style="width: 100%;">
               </div>
-              <p class="mT5 faq-content" v-html="faq.content" v-show="faq.isContentOpen"></p>
             </div>
+            <div>{{ele.region}}</div>
+            <div>{{ele.name}}</div>
+            <div class="mB5 color-shining">{{ele.rate}}</div>
+            <div>{{ele.time}} hr</div>
+          </div>
+        </div>
+        <div class="recommend-content-container mT20">
+          <div>
+              <div class="mB25"><i class="recommend-icon far fa-id-badge"></i>人員具良民證、清潔證照</div>
+              <div class="mB25"><i class="recommend-icon fas fa-calendar-check"></i>今天訂明天掃，即時預約超方便</div>
+              <div class="mB25"><i class="recommend-icon fas fa-file-invoice-dollar"></i>價錢、履歷、評價透明公開</div>
           </div>
         </div>
       </div>
@@ -299,6 +309,24 @@
                 <div class="preserve-index fw500">{{ele1.name}}</div>
                 <div class="preserve-label fw500">{{ele1.label}}</div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="pT20">
+        <div class="text-center">
+          <div class="font-size-26 fw500">常見問題</div>
+        </div>
+        <div class="no-service-content">
+          <div class="faq-container">
+            <div class="mB10 pointer" v-for="(faq, idx) in faqList" :key="idx">
+              <div class="font-title-medium color-secondary flex-row" @click="ToggleFaqContent(faq)">
+                <div class="mR5"><i class="fas fa-caret-right" :class="[{faq_icon_open: faq.isContentOpen}]"></i></div>
+                <div>{{faq.title}}</div>
+              </div>
+              <p class="mT5 faq-content" v-html="faq.content" v-show="faq.isContentOpen"></p>
             </div>
           </div>
         </div>
