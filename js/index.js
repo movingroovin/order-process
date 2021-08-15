@@ -28,9 +28,8 @@ const vueInstance = Vue.createApp({
         { name: 'Service F', region: 'Region F', rate: '★★★★★', time: 150 },
         { name: 'Service G', region: 'Region G', rate: '★★★★★', time: 160 },
         { name: 'Service H', region: 'Region H', rate: '★★★★★', time: 170 },
-        { name: 'Service I', region: 'Region I', rate: '★★★★★', time: 180 },
-        { name: 'Service J', region: 'Region J', rate: '★★★★★', time: 190 },
-        { name: 'Service K', region: 'Region K', rate: '★★★★★', time: 200 },
+        // { name: 'Service I', region: 'Region I', rate: '★★★★★', time: 180 },
+        // { name: 'Service J', region: 'Region J', rate: '★★★★★', time: 190 },
       ],
       preserveList: [
         [ { name: '01', label: '選擇地區、時數', icon: '<i class="fas fa-map-marker-alt"></i>' }, 
@@ -172,6 +171,9 @@ const vueInstance = Vue.createApp({
     ToggleFaqContent(ele) {
       this.faqList.forEach(el => el.isContentOpen = false);
       ele.isContentOpen = !ele.isContentOpen;
+    },
+    BackToIntro() {
+      this.isOrdering = false;
     },
     SubmitBasicInfo() {
       this.isOrdering = true;

@@ -37,7 +37,7 @@
 
 <body>
   <div id="app">
-    <div class="header">
+    <div class="header" v-show="!isOrdering">
       <div class="header-inner">
         <div class="header-title">
           <h1>線上AI天線模擬服務</h1>
@@ -268,30 +268,37 @@
         </div>
       </div>
 
-      <!-- FAQ -->
+      <!-- recommend area -->
       <div class="pT20">
-        <div class="text-center mB10">
+        <div class="recommend-small-title text-center mB10">
           <div class="font-size-26 fw500">全台唯一</div>
           <div class="font-size-26 fw500">挑人員，評價直接看！</div>
         </div>
-        <div class="recommend-card-container">
-          <div v-for="(ele, idx) in recommendList" :key="idx" class="recommend-card">
-            <div class="best-card-thumbnail img-s90">
-              <div class="best-card-thumbnail_img">
-                <img src="../assest/img/blue-car.jpeg" alt="" style="width: 100%;">
+        <div class="recommend-area">
+          <div class="recommend-card-container">
+            <div v-for="(ele, idx) in recommendList" :key="idx" class="recommend-card">
+              <div class="best-card-thumbnail img-s90">
+                <div class="best-card-thumbnail_img">
+                  <img src="../assest/img/blue-car.jpeg" alt="" style="width: 100%;">
+                </div>
               </div>
+              <div>{{ele.region}}</div>
+              <div>{{ele.name}}</div>
+              <div class="mB5 color-shining">{{ele.rate}}</div>
+              <div>{{ele.time}} hr</div>
             </div>
-            <div>{{ele.region}}</div>
-            <div>{{ele.name}}</div>
-            <div class="mB5 color-shining">{{ele.rate}}</div>
-            <div>{{ele.time}} hr</div>
           </div>
-        </div>
-        <div class="recommend-content-container mT20">
-          <div>
-              <div class="mB25"><i class="recommend-icon far fa-id-badge"></i>人員具良民證、清潔證照</div>
-              <div class="mB25"><i class="recommend-icon fas fa-calendar-check"></i>今天訂明天掃，即時預約超方便</div>
-              <div class="mB25"><i class="recommend-icon fas fa-file-invoice-dollar"></i>價錢、履歷、評價透明公開</div>
+          <div class="recommend-content-container mT20">
+            <div class="recommend-big-title text-center mB10">
+              <div style="font-size: 72px;">全台唯一</div>
+              <div style="font-size: 36px;">挑人員，評價直接看！</div>
+            </div>
+            <hr class="recommend-hr">
+            <div>
+                <div class="mB25"><i class="recommend-icon far fa-id-badge"></i>人員具良民證、清潔證照</div>
+                <div class="mB25"><i class="recommend-icon fas fa-calendar-check"></i>今天訂明天掃，即時預約超方便</div>
+                <div class="mB25"><i class="recommend-icon fas fa-file-invoice-dollar"></i>價錢、履歷、評價透明公開</div>
+            </div>
           </div>
         </div>
       </div>
@@ -337,6 +344,11 @@
     <div class="at-order" v-show="isOrdering">
       <!-- BASIC SELECT -->
       <div class="seach-layout" v-show="isBasicInfo && !isProjectSelect" ref="searchLayout">
+        <div class="booking-header">
+          <a class="booking-last-step" @click="BackToIntro">
+            <i class="fas fa-angle-left"></i> 服務項目介紹
+          </a>
+        </div>
         <div class="body-filter">
           <div class="filter-container">
             <h3 class="filter-title">選擇預約日期</h3>

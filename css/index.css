@@ -447,11 +447,32 @@ hr {
 }
 
 /* recommend-card */
+.recommend-big-title {
+  display: none;
+}
+
+.recommend-hr {
+  display: none;
+  width: 70%;
+  border-top: 2px solid #333;
+}
+
+.recommend-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
 .recommend-card-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   margin-left: 30px;
+  overflow: hidden;
 }
 
 .recommend-card{
@@ -1026,6 +1047,9 @@ hr {
 }
 
 /* checkout-layout */
+.checkout-layout {
+  height: 100vh;
+}
 .booking-header {
   height: 44px;
   position: -webkit-sticky;
@@ -1069,6 +1093,7 @@ hr {
   justify-content: space-between;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  min-height: 100vh;
 }
 
 .booking-body-detail {
@@ -2113,5 +2138,40 @@ hr {
   .header-inner {
     max-width: 450px;
     margin: auto;
+  }
+
+  .recommend-small-title {
+    display: none;
+  }
+
+  .recommend-big-title {
+    display: block;
+  }
+
+  .recommend-hr {
+    display: block;
+  }
+
+  .recommend-area {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+  }
+
+  .recommend-content-container {
+    width: 50%;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+
+  .recommend-card-container {
+    width: 50%;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    max-height: 455px;
+    margin-bottom: 5px;
   }
 }
