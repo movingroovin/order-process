@@ -101,9 +101,13 @@ const vueInstance = Vue.createApp({
         { id: 3, name: '下載3D資料', subtitle: '下載3D資料，總時數 x 1.5', tag: 'hr x 1.5', isSimple: false, isSelect: false },
       ],
       paymentTerms2Checked: false,
-      calendarConfig: {
+      calendarConfigInline: {
         inline: true,
         mode: "range",
+        minDate: "today",
+        locale: "zh_tw",
+      },
+      calendarConfig: {
         minDate: "today",
         locale: "zh_tw",
       }
@@ -185,6 +189,7 @@ const vueInstance = Vue.createApp({
         });
       }
     },
+    // directly select date range on inline calendar
     SubmitDateSelect() {
       this.calenderClickTime += 1; // add calendar click time
       
@@ -211,6 +216,11 @@ const vueInstance = Vue.createApp({
         });
       }
     },
+
+    SubmitStartDate() {
+      this.selectedDate = this.selectedStartDate;
+      this.isDateSelect = true;
+    },
     ToggleIntroContent(intro) {
       intro.isContentOpen = !intro.isContentOpen;
     },
@@ -224,6 +234,10 @@ const vueInstance = Vue.createApp({
       });
       this.timeList.find(ele => ele.time === clickTime.time).isSelect = true;
       this.isTimeSelect = true;
+      
+      //
+      this.selectedDate = this.selectedStartDate + '至' + '2021-08-31'
+
       const el = this.$refs.bodyResult;
       if (el) {
         this.$nextTick(() => {

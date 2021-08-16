@@ -1,0 +1,239 @@
+/* ----utilities---- */
+.font-size-26 {
+  font-size: 26px;
+}
+
+.font-title-large {
+  font-size: 24px!important;
+  font-weight: 500;
+}
+
+.font-title-medium-large {
+  font-size: 20px!important;
+  font-weight: 500;
+}
+
+.font-title-medium {
+  font-size: 18px!important;
+  font-weight: 500;
+}
+
+.font-title-medium-small {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.font-title-small {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.font-title-small-400 {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.color-primary {
+  color: #36bbd9;
+}
+
+.color-secondary {
+  color: #3e4459;
+}
+
+.color-subtitle {
+  color: #808080;
+}
+
+.color-warning {
+  color: #d83c37;
+}
+
+.color-shining {
+  color: gold;
+}
+
+.bold {
+  font-weight: bold !important;
+}
+
+.fw500 {
+  font-weight: 500;
+}
+
+.fw400 {
+  font-weight: 400;
+}
+
+.fw300 {
+  font-weight: 300;
+}
+
+.bg_color_primary {
+  background-color: #36bbd9 
+}
+
+.bg_color_secondary {
+  background-color: #f5f3f4;
+}
+
+/* margin */
+.mA {
+  margin: auto;
+}
+
+.mT5 {
+  margin-top: 5px;
+}
+
+.mT10 {
+  margin-top: 10px;
+}
+
+.mT15 {
+  margin-top: 15px!important;
+}
+
+.mT20 {
+  margin-top: 20px;
+}
+
+.mT25 {
+  margin-top: 25px;
+}
+
+.mR10 {
+  margin-right: 10px;
+}
+
+.mR20 {
+  margin-right: 20px;
+}
+
+.mR5 {
+  margin-right: 5px;
+}
+
+.mL10 {
+  margin-left: 10px;
+}
+
+.mL15 {
+  margin-left: 15px;
+}
+
+.mB0 {
+  margin-bottom: 0;
+}
+
+.mB5 {
+  margin-bottom: 5px;
+}
+
+.mB10 {
+  margin-bottom: 10px;
+}
+
+.mB25 {
+  margin-bottom: 25px;
+}
+
+.pR15 {
+  padding-right: 15px;
+}
+
+.pT5 {
+  padding-top: 5px;
+}
+
+.pT20 {
+  padding-top: 20px;
+}
+
+.pB5 {
+  padding-bottom: 5px;
+}
+
+.pB20 {
+  padding-bottom: 20px;
+}
+
+.w100 {
+  width: 100% !important;
+}
+
+.w75 {
+  width: 75% !important;
+}
+
+.w50 {
+  width: 50% !important;
+}
+
+.w20 {
+  width: 20% !important;
+}
+
+.w25 {
+  width: 25% !important;
+}
+
+.flex1 {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.force-left {
+  float: left;
+}
+
+.force-right {
+  float: right;
+}
+
+.translate-y30 {
+  -webkit-transform: translateY(-30px);
+  -ms-transform: translateY(-30px);
+  transform: translateY(-30px);
+}
+
+.icon-w14 {
+  width: 14px;
+}
+
+.icon-w20 {
+  width: 20px;
+}
+
+.img-s90 {
+  width: 90px;
+  height: 90px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+/* scroll / cursor */
+.noscroll { 
+  overflow: hidden;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.flat-corner-l {
+  border-top-left-radius: 0px!important;
+  border-bottom-left-radius: 0px!important;
+}
+
+.flat-corner-r {
+  border-top-right-radius: 0px!important;
+  border-bottom-right-radius: 0px!important;
+}
