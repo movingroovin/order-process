@@ -344,8 +344,8 @@
     </div>
 
     <div class="at-order" v-show="isOrdering">
-      <div class="float-order-info">
-        <div class="font-title-medium text-center">預約項目</div>
+      <div class="float-order-info order-detail_card" v-show="!isProjectSelect">
+        <div class="font-title-medium text-center color-subtitle">預約項目</div>
         <div class="w100 mT10">
           <div class="mT10">
             <select class="header-form-select" name="" id="" v-model="selectedService">
@@ -378,21 +378,48 @@
             </select>
           </div>
         </div>
-        <div class="font-title-medium text-center mT10">開始日期</div>
+        <div class="font-title-medium text-center mT10 color-subtitle">開始日期</div>
         <flat-pickr
           class="float-calendar"
           :config="calendarConfig"
           v-model="selectedStartDate"
           @input="SubmitStartDate">
         </flat-pickr>
+        <div class="font-title-medium text-center mT10 color-subtitle" v-show="selectedTime">服務方案</div>
+        <div class="flex-row justify-between pX5 mT10" v-show="selectedTime">
+          <div>{{selectedTime.time}}</div>
+          <div>{{selectedTime.hour}} hr</div>
+        </div>
+        <div class="flex-row justify-between pX5 mT10" v-show="selectedProject.title">
+          <div>{{selectedProject.title}}</div>
+          <div>{{selectedProject.hour}} hr</div>
+        </div>
+        <div class="flex-row justify-between pX5 mT10" v-if="planList.find(ele => ele.id === 1).isSelect">
+          <div>急件處理</div>
+          <div>+ 24 hr</div>
+        </div>
+        <div class="flex-row justify-between pX5 mT10" v-if="planList.find(ele => ele.id === 2).isSelect">
+          <div>購買版權</div>
+          <div>總時數 x 2</div>
+        </div>
+        <div class="flex-row justify-between pX5 mT10" v-if="planList.find(ele => ele.id === 3).isSelect">
+          <div>下載3D資料</div>
+          <div>總時數 x 1.5</div>
+        </div>
+        <hr v-show="selectedTime">
+        <div class="flex-row justify-between pX5 mT10 fw500" v-show="selectedTime">
+          <div>總計</div>
+          <div>{{totalHour}} hr</div>
+        </div>
       </div>
       <!-- BASIC SELECT -->
-      <div class="seach-layout" v-show="isBasicInfo && !isProjectSelect" ref="searchLayout">
-        <div class="booking-header">
-          <a class="booking-last-step" @click="BackToIntro">
-            <i class="fas fa-angle-left"></i> 服務項目介紹
-          </a>
-        </div>
+      <div class="booking-header">
+        <a class="booking-last-step" @click="BackToIntro">
+          <i class="fas fa-angle-left"></i> 服務項目介紹
+        </a>
+      </div>
+      <div class="search-layout" v-show="isBasicInfo && !isProjectSelect" ref="searchLayout">
+        
         <div class="body-filter">
           <div class="filter-container">
             <h3 class="filter-title">選擇預約日期</h3>

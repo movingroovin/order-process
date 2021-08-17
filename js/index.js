@@ -77,7 +77,7 @@ const vueInstance = Vue.createApp({
         { time: '360小時 (高精度評估)', hour: 360, isSelect: false, isCardOpen: false },
         { time: '月租年繳方案', hour: 8640, isSelect: false, isCardOpen: false },
       ],
-      selectedProject: {},
+      selectedProject: { hour: 0 },
       moreCardInfoList: [
         { title: 'Project 0', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', hour: 400, isSelect: true },
         { title: 'Project 1', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, aliquam!', hour: 100, isSelect: false },
@@ -131,15 +131,15 @@ const vueInstance = Vue.createApp({
 
   computed: {
     subTotal() {
-      if (this.selectedDateRange && this.selectedTime && this.selectedProject) {
-        return (this.selectedDateRange * 24 + this.selectedTime.hour + this.selectedProject.hour);
+      if (this.selectedTime && this.selectedProject) {
+        return (this.selectedTime.hour + this.selectedProject.hour);
       }
       return 0;
     },
     totalHour() {
       let subTotal = 0;
-      if (this.selectedDateRange && this.selectedTime && this.selectedProject) {
-        subTotal = (this.selectedDateRange * 24 + this.selectedTime.hour + this.selectedProject.hour);
+      if (this.selectedTime && this.selectedProject) {
+        subTotal = (this.selectedTime.hour + this.selectedProject.hour);
         if (this.planList.find(ele => ele.id === 1).isSelect) {
           subTotal = subTotal + 24;
         }
@@ -276,6 +276,7 @@ const vueInstance = Vue.createApp({
       if (el) {
         this.$nextTick(() => {
           el.scrollIntoView({behavior: 'smooth'});
+          window.scrollTo(0,0);
         });
       }
       if (project) {
