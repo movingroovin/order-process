@@ -35,6 +35,9 @@
   <!-- moment.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+  <!-- fabric.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/451/fabric.min.js" integrity="sha512-qeu8RcLnpzoRnEotT3r1CxB17JtHrBqlfSTOm4MQzb7efBdkcL03t343gyRmI6OTUW6iI+hShiysszISQ/IahA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="../js/fabricCanvas.js"></script>
 </head>
 
 <body>
@@ -339,6 +342,11 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div id="fabricCanvas" class="pT20 bg_color_secondary">
+        <button class="mL15" id="drawing-mode">繪畫模式</button>
+        <canvas id="canvas" width="300" height="300"></canvas>
       </div>
       
     </div>

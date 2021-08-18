@@ -363,6 +363,11 @@
   margin: 0 10px;
 }
 
+/* fabricCanvas */
+#fabricCanvas {
+  width: 100%;
+}
+
 @media screen and (min-width: 700px) {
   .intro-item {
     width: 500px;
