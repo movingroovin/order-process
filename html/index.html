@@ -393,6 +393,8 @@
           v-model="selectedStartDate"
           @input="SubmitStartDate">
         </flat-pickr>
+        <div class="font-title-medium text-center mT10 color-subtitle" v-show="selectedEndDate">結束日期</div>
+        <input type="text" readonly="readonly" class="float-calendar" v-show="selectedEndDate" v-model="selectedEndDate" />
         <div class="font-title-medium text-center mT10 color-subtitle" v-show="selectedTime">服務方案</div>
         <div class="flex-row justify-between pX5 mT10" v-show="selectedTime">
           <div>{{selectedTime.time}}</div>
@@ -430,7 +432,7 @@
         
         <div class="body-filter">
           <div class="filter-container">
-            <h3 class="filter-title">選擇預約日期</h3>
+            <h3 class="filter-title">請從左方選擇預約日期</h3>
             <div class="filter-calendar">
               <flat-pickr 
                 v-model="selectedDate"
@@ -497,7 +499,7 @@
           </div>
         </div>
         <!-- v-show="isTimeSelect" -->
-        <div class="body-result"  ref="bodyResult" v-show="isTimeSelect">
+        <div class="body-result" ref="bodyResult" v-show="isTimeSelect">
           <h3 class="filter-title best-title">推薦設計樣板</h3>
           <div class="best-container">
             <div class="best-card">
@@ -521,7 +523,10 @@
               </div>
             </div>
             <div class="next-step">
-              <button class="w100 btn-primary btn-extra-large" @click="SubmitProjectSelect(moreCardInfoList[0])">下一步</button>
+              <div class="flex-row w100">
+                <button class="w100 btn-secondary-outline btn-extra-large mR10" @click="ResetTimeSelect">重新選擇服務方案</button>
+                <button class="w100 btn-primary btn-extra-large mL10" @click="SubmitProjectSelect(moreCardInfoList[0])">下一步</button>
+              </div>
               <div class="next-step-text mT20" @click="MoreCard">往下查看更多設計樣板</div>
               <img src="https://storage.googleapis.com/jackercleaning/assets/optImg/icon/icon-arrowdown.svg" alt=""
                 class="next-step-icon">

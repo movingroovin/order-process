@@ -75,7 +75,7 @@ const vueInstance = Vue.createApp({
         { time: '72小時 (快速評估)', hour: 72, isSelect: false, isCardOpen: false },
         { time: '200小時 (準確評估)', hour: 200, isSelect: false, isCardOpen: false },
         { time: '360小時 (高精度評估)', hour: 360, isSelect: false, isCardOpen: false },
-        { time: '月租年繳方案', hour: 8640, isSelect: false, isCardOpen: false },
+        { time: '月租年繳方案', hour: 8760, isSelect: false, isCardOpen: false },
       ],
       selectedProject: { hour: 0 },
       moreCardInfoList: [
@@ -220,6 +220,7 @@ const vueInstance = Vue.createApp({
     SubmitStartDate() {
       this.selectedDate = this.selectedStartDate;
       this.isDateSelect = true;
+      this.ResetTimeSelect();
     },
     ToggleIntroContent(intro) {
       intro.isContentOpen = !intro.isContentOpen;
@@ -235,8 +236,9 @@ const vueInstance = Vue.createApp({
       this.timeList.find(ele => ele.time === clickTime.time).isSelect = true;
       this.isTimeSelect = true;
       
-      //
-      this.selectedDate = this.selectedStartDate + '至' + '2021-08-31'
+      // set end date by add start date
+      this.selectedEndDate = moment(this.selectedStartDate).add(clickTime.hour, 'hours').format('YYYY-MM-DD');
+      this.selectedDate = [this.selectedStartDate,  this.selectedEndDate];
 
       const el = this.$refs.bodyResult;
       if (el) {
@@ -244,6 +246,21 @@ const vueInstance = Vue.createApp({
           el.scrollIntoView({behavior: 'smooth'});
         });
       }
+    },
+    ResetTimeSelect() {
+      // reset end date
+      this.selectedEndDate = '';
+      // reset selectd time
+      this.selectedTime = '';
+      this.timeList.forEach(ele => {
+        ele.isSelect = false;
+      });
+      this.isTimeSelect = false;
+
+      const el = this.$refs.timeSelect;
+      this.$nextTick(() => {
+        el.scrollIntoView({behavior: 'smooth'});
+      });
     },
     MoreCard() {
       const el = this.$refs.moreCard;
