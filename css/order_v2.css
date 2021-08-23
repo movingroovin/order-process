@@ -1,0 +1,19 @@
+#app {
+  padding: 30px;
+}
+
+.logo_container {
+  width: 180px;
+}
+
+.logo_img {
+  width: 100%;
+}
+
+.design_area {
+  margin: 15% 0;
+}
+
+.step_title {
+  margin: 15px 0;
+}

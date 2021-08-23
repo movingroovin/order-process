@@ -241,3 +241,124 @@
   border-top-right-radius: 0px!important;
   border-bottom-right-radius: 0px!important;
 }
+
+/* button */
+.btn-large {
+  padding: 8px 20px !important;
+}
+
+.btn-extra-large {
+  padding: 15px 20px !important;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  outline: none;
+  background: #36bbd9;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-primary:hover {
+  background: #2a99b3;
+}
+
+.btn-primary:disabled {
+  background-color: #e5e5e5;
+  color: #9b9b9b;
+  border: 1px solid transparent;
+  cursor: not-allowed;
+}
+
+.btn-round {
+  border-radius: 50px !important;
+  margin: 0 3px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.time-btn {
+  width: 250px;
+  color: #36bbd9;
+  border-color: #36bbd9;
+  border-radius: 2px;
+  padding: 10px;
+  margin: 0px 2.5px 5px;
+  -webkit-transition: 0.2s all cubic-bezier(0.3, -0.14, 0.38, 1.02);
+  transition: 0.2s all cubic-bezier(0.3, -0.14, 0.38, 1.02);
+}
+
+.time-btn:hover {
+  color: #eeeeee;
+  background-color: #36bbd9;
+}
+
+.time_btn_selected {
+  color: #eeeeee;
+  background-color: #36bbd9;
+}
+
+.btn-primary-outline {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  outline: none;
+  background: white;
+  color: #36bbd9;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #36bbd9;
+}
+
+.btn-primary-outline:hover {
+  color: #eeeeee;
+  background-color: #36bbd9;
+}
+
+.btn-secondary-outline {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  outline: none;
+  background: white;
+  color: #3e4459;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-secondary-outline:disabled {
+  background-color: #e5e5e5;
+  color: #9b9b9b;
+  border: 1px solid transparent;
+  cursor: not-allowed;
+}
