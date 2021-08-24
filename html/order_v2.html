@@ -46,23 +46,106 @@
       </div>
     </div>
 
-    <!-- step 1 -->
-    <div class="design_area" v-show="orderStep.isStep1">
-      <h2 class="mB25">機台尺寸</h2>
-      <div class="mB10">
-        <a class="btn-secondary-outline mB10 mR10" @click="ToStep(0)">上一步</a>
-        <a class="btn-primary mB10 mR10" @click="ToStep(2)">下一步</a>
+    <div class="design_group">
+      <!-- step 1 -->
+      <div class="design_area" v-show="orderStep.isStep1">
+        <h2 class="mB25">機台尺寸</h2>
+        <div class="input_step">
+          <div class="input_group">
+            <p>機殼長X (mm)</p>
+            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.caseX">
+          </div>
+          <div class="input_group">
+            <p>機殼寬Y (mm)</p>
+            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.caseY">
+          </div>
+          <div class="input_group">
+            <p>機殼材質</p>
+            <select class="input_select" name="" id="" v-model="orderDetail.selectedCaseMaterial">
+              <option
+                v-for="(ele, idx) in caseMaterialList"
+                :key="idx"
+                :value="ele">
+                {{ele.label}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="mB10">
+          <a class="btn-secondary-outline mB10 mR10" @click="ToStep(0)">上一步</a>
+          <a class="btn-primary mB10 mR10" @click="ToStep(2)">下一步</a>
+        </div>
       </div>
+      
+      <!-- step 2 -->
+      <div class="design_area" v-show="orderStep.isStep2">
+        <h2 class="mB25">窗戶尺寸</h2>
+        <div class="input_step">
+          <div class="input_group">
+            <p>窗戶長Xw (mm)</p>
+            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.windowX">
+          </div>
+          <div class="input_group">
+            <p>窗戶寬Yw (mm)</p>
+            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.windowY">
+          </div>
+          <div class="input_group">
+            <p>側邊長Xc (mm)</p>
+            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.windowXc">
+          </div>
+          <div class="input_group">
+            <p>窗戶材質</p>
+            <select class="input_select" name="" id="" v-model="orderDetail.selectedWindowMaterial">
+              <option
+                v-for="(ele, idx) in windowMaterialList"
+                :key="idx"
+                :value="ele">
+                {{ele.label}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="mB10">
+          <a class="btn-secondary-outline mB10 mR10" @click="ToStep(1)">上一步</a>
+          <a class="btn-primary mB10 mR10" @click="ToStep(3)">下一步</a>
+        </div>
+      </div>
+
+      <!-- step 3 -->
+      <div class="design_area" v-show="orderStep.isStep3">
+        <h2 class="mB25">天線尺寸</h2>
+        <div class="input_step">
+          <div class="input_group">
+            <p>天線長Xa (mm)</p>
+            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.antennaX">
+          </div>
+          <div class="input_group">
+            <p>天線寬Ya (mm)</p>
+            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.antennaY">
+          </div>
+        </div>
+        <div class="mB10">
+          <a class="btn-secondary-outline mB10 mR10" @click="ToStep(2)">上一步</a>
+          <a class="btn-primary mB10 mR10" @click="ToStep(4)">下一步</a>
+        </div>
+      </div>
+
+      <!-- step 4 -->
+      <div class="design_area" v-show="orderStep.isStep4">
+        <h2 class="mB25">天線數量與應用</h2>
+        <div class="input_step">
+          
+        </div>
+        <div class="mB10">
+          <a class="btn-secondary-outline mB10 mR10" @click="ToStep(3)">上一步</a>
+          <a class="btn-primary mB10 mR10" @click="ToStep(5)">下一步</a>
+        </div>
+      </div>
+
+      <div v-show="!orderStep.isStep0">picture</div>
     </div>
+
     
-    <!-- step 2 -->
-    <div class="design_area" v-show="orderStep.isStep2">
-      <h2 class="mB25">窗戶尺寸</h2>
-      <div class="mB10">
-        <a class="btn-secondary-outline mB10 mR10" @click="ToStep(1)">上一步</a>
-        <a class="btn-primary mB10 mR10" @click="ToStep(3)">下一步</a>
-      </div>
-    </div>
 
   </div>   
 </body>
