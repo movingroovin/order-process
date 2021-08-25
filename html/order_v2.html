@@ -17,13 +17,15 @@
   <!-- fabric.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/451/fabric.min.js" integrity="sha512-qeu8RcLnpzoRnEotT3r1CxB17JtHrBqlfSTOm4MQzb7efBdkcL03t343gyRmI6OTUW6iI+hShiysszISQ/IahA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
-  <!-- custom js -->
-  <script defer src="../js/order_v2.js"></script>
-
   <!-- custom style -->
   <link rel="stylesheet" href="../css/basic.css">
   <link rel="stylesheet" href="../css/utility.css">
   <link rel="stylesheet" href="../css/order_v2.css">
+
+  <!-- custom js -->
+  <script defer src="../js/order_v2.js"></script>
+  <script async src="../js/order_v2_fabric.js"></script>
+
 </head>
 <body>
   <div id="app">
@@ -50,20 +52,21 @@
       <!-- step 1 -->
       <div class="design_area" v-show="orderStep.isStep1">
         <h2 class="mB25">機台尺寸</h2>
+        <span class="color-subtitle font-title-small-400"><span class="color-warning">*</span>為必填欄位</span>
         <div class="input_step">
           <div class="input_group">
-            <p>機殼長X (mm)</p>
+            <p><span class="color-warning">*</span>機殼長X (mm)</p>
             <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.caseX">
           </div>
           <div class="input_group">
-            <p>機殼寬Y (mm)</p>
+            <p><span class="color-warning">*</span>機殼寬Y (mm)</p>
             <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.caseY">
           </div>
           <div class="input_group">
-            <p>機殼材質</p>
+            <p><span class="color-warning">*</span>機殼材質</p>
             <select class="input_select" name="" id="" v-model="orderDetail.selectedCaseMaterial">
               <option
-                v-for="(ele, idx) in caseMaterialList"
+                v-for="(ele, idx) in orderDetail.caseMaterialList"
                 :key="idx"
                 :value="ele">
                 {{ele.label}}
@@ -80,24 +83,25 @@
       <!-- step 2 -->
       <div class="design_area" v-show="orderStep.isStep2">
         <h2 class="mB25">窗戶尺寸</h2>
+        <span class="color-subtitle font-title-small-400"><span class="color-warning">*</span>為必填欄位</span>
         <div class="input_step">
           <div class="input_group">
-            <p>窗戶長Xw (mm)</p>
+            <p><span class="color-warning">*</span>窗戶長Xw (mm)</p>
             <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.windowX">
           </div>
           <div class="input_group">
-            <p>窗戶寬Yw (mm)</p>
+            <p><span class="color-warning">*</span>窗戶寬Yw (mm)</p>
             <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.windowY">
           </div>
           <div class="input_group">
-            <p>側邊長Xc (mm)</p>
+            <p><span class="color-warning">*</span>側邊長Xc (mm)</p>
             <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.windowXc">
           </div>
           <div class="input_group">
-            <p>窗戶材質</p>
+            <p><span class="color-warning">*</span>窗戶材質</p>
             <select class="input_select" name="" id="" v-model="orderDetail.selectedWindowMaterial">
               <option
-                v-for="(ele, idx) in windowMaterialList"
+                v-for="(ele, idx) in orderDetail.windowMaterialList"
                 :key="idx"
                 :value="ele">
                 {{ele.label}}
@@ -114,13 +118,14 @@
       <!-- step 3 -->
       <div class="design_area" v-show="orderStep.isStep3">
         <h2 class="mB25">天線尺寸</h2>
+        <span class="color-subtitle font-title-small-400"><span class="color-warning">*</span>為必填欄位</span>
         <div class="input_step">
           <div class="input_group">
-            <p>天線長Xa (mm)</p>
+            <p><span class="color-warning">*</span>天線長Xa (mm)</p>
             <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.antennaX">
           </div>
           <div class="input_group">
-            <p>天線寬Ya (mm)</p>
+            <p><span class="color-warning">*</span>天線寬Ya (mm)</p>
             <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.antennaY">
           </div>
         </div>
@@ -133,8 +138,33 @@
       <!-- step 4 -->
       <div class="design_area" v-show="orderStep.isStep4">
         <h2 class="mB25">天線數量與應用</h2>
+        <span class="color-subtitle font-title-small-400"><span class="color-warning">*</span>為必填欄位</span>
         <div class="input_step">
-          
+          <table>
+            <tr>
+              <th><span class="color-warning">*</span>天線應用</th>
+              <th><span class="color-warning">*</span>數量</th>
+              <th><span class="color-warning">*</span>操作頻段MHz</th>
+            </tr>
+            <tr 
+              v-for="(ele, idx) in orderDetail.antennaApps"
+              :key="idx">
+              <td>{{ele.name}}</td>
+              <td>
+                <input class="input_text" style="width: 50px;" placeholder="請填寫" type="text" v-model="ele.amount">
+              </td>
+              <td>
+                <select class="input_select" style="width: 120px;" name="" id="" v-model="ele.selectedFreq">
+                  <option
+                    v-for="(ele1, idx1) in ele.freqList"
+                    :key="idx1"
+                    :value="ele1">
+                    {{ele1}}
+                  </option>
+                </select>
+              </td>
+            </tr>
+          </table>
         </div>
         <div class="mB10">
           <a class="btn-secondary-outline mB10 mR10" @click="ToStep(3)">上一步</a>
@@ -142,7 +172,138 @@
         </div>
       </div>
 
-      <div v-show="!orderStep.isStep0">picture</div>
+      <!-- step 5 -->
+      <div class="design_area" v-show="orderStep.isStep5">
+        <h2 class="mB25">天線規格</h2>
+        <span class="color-subtitle font-title-small-400"><span class="color-warning">*</span>為必填欄位</span>
+        <div class="input_step">
+          <table>
+            <tr>
+              <th><span class="color-warning">*</span>頻率(MHz)</th>
+              <th style="width: 55px;"><span class="color-warning">*</span>效率規格(dB)</th>
+              <th style="width: 55px;"><span class="color-warning">*</span>|S11|規格(dB)</th>
+            </tr>
+            <tr 
+              v-for="(ele, idx) in orderDetail.anthennaSpec"
+              :key="idx">
+              <td>{{ele.freq}}</td>
+              <td>
+                <input class="input_text" style="width: 50px;" placeholder="請填寫" type="text" v-model="ele.power">
+              </td>
+              <td>
+                <input class="input_text" style="width: 50px;" placeholder="請填寫" type="text" v-model="ele.s11">
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="mB10">
+          <a class="btn-secondary-outline mB10 mR10" @click="ToStep(4)">上一步</a>
+          <a class="btn-primary mB10 mR10" @click="ToStep(6)">下一步</a>
+        </div>
+      </div>
+
+      <!-- step 6 -->
+      <div class="design_area" v-show="orderStep.isStep6">
+        <h2 class="mB25">補充資訊</h2>
+        <span class="color-subtitle font-title-small-400"><span class="color-warning">*</span>為必填欄位</span>
+        <div class="input_step">
+          <div class="input_group">
+            <p>規格書上傳</p>
+            <input type="file">
+          </div>
+          <div class="input_group">
+            <p>機構圖檔上傳</p>
+            <input type="file">
+          </div>
+          <div class="input_group">
+            <p>資料投影片上傳</p>
+            <input type="file">
+          </div>
+        </div>
+        <div class="mB10">
+          <a class="btn-secondary-outline mB10 mR10" @click="ToStep(5)">上一步</a>
+          <a class="btn-primary mB10 mR10" @click="ToStep(7)">下一步</a>
+        </div>
+      </div>
+
+      <div v-show="!orderStep.isStep0">
+        <div id="fabricCanvas" class="bg_color_secondary">
+          <canvas id="canvas"></canvas>
+        </div>
+      </div>
+      
+      <div v-show="!orderStep.isStep0" class="order_info">
+        <h3 class="mB10">訂單明細</h3>
+
+        <div class="order_detail_step">
+          <div class="order_detail_group">
+            <div>機殼長X (mm)</div>
+            <div>{{orderDetail.caseX}}</div>
+          </div>
+          <div class="order_detail_group">
+            <div>機殼長Y (mm)</div>
+            <div>{{orderDetail.caseY}}</div>
+          </div>
+          <div class="order_detail_group">
+            <div>機殼材質</div>
+            <div>{{orderDetail.selectedCaseMaterial.label}}</div>
+          </div>
+        </div>
+
+        <div class="order_detail_step">
+          <div class="order_detail_group">
+            <div>窗戶長Xw (mm)</div>
+            <div>{{orderDetail.windowX}}</div>
+          </div>
+          <div class="order_detail_group">
+            <div>窗戶寬Yw (mm)</div>
+            <div>{{orderDetail.windowY}}</div>
+          </div>
+          <div class="order_detail_group">
+            <div>側邊長Xc (mm)</div>
+            <div>{{orderDetail.windowXc}}</div>
+          </div>
+          <div class="order_detail_group">
+            <div>窗戶材質</div>
+            <div>{{orderDetail.selectedWindowMaterial.label}}</div>
+          </div>
+        </div>
+
+        <div class="order_detail_step">
+          <div class="order_detail_group">
+            <div>天線長Xa (mm)</div>
+            <div>{{orderDetail.antennaX}}</div>
+          </div>
+          <div class="order_detail_group">
+            <div>天線寬Ya (mm)</div>
+            <div>{{orderDetail.antennaY}}</div>
+          </div>
+        </div>
+
+        <div class="order_detail_step">
+          <div class="order_detail_group_long"
+            v-for="(ele, idx) in orderDetail.antennaApps"
+            :key="idx">
+            <div class="order_detail_group" style="margin-bottom: 0px;">
+              <div>{{ele.name}}</div>
+              <div>{{ele.amount}}件</div>
+            </div>
+            <div>操作頻率(MHz)：{{ele.selectedFreq}}</div>
+          </div>
+        </div>
+
+        <div class="order_detail_step">
+          <div class="order_detail_group_long"
+            v-for="(ele, idx) in orderDetail.anthennaSpec"
+            :key="idx">
+            <div>頻率(MHz)：{{ele.freq}}</div>
+            <div class="order_detail_group" style="margin-bottom: 0px;">
+              <div>效率規格(dB)：{{ele.power}}</div>
+              <div>|S11|規格(dB)：{{ele.s11}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     

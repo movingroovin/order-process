@@ -15,8 +15,6 @@
   padding-left: 5px;
 }
 
-
-
 .logo_container {
   width: 180px;
 }
@@ -29,18 +27,67 @@
   margin: 3vh 0;
 }
 
+.design_area .input_step {
+  margin: 5px 10px 30px 0;
+}
+
 .step_title {
   margin: 15px 0;
 }
 
 .design_group {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-}
-
-.input_step {
-  margin: 5px 10px 30px 0;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .input_group {
   margin-bottom: 10px;
 }
+
+.order_info {
+  background-color: lightgrey;
+  margin-top: 3vh;
+  width: 25%;
+  height: 100%;
+  max-height: 500px;
+  padding: 5px 10px;
+  overflow: auto;
+}
+
+.order_info .order_detail_step {
+  border-bottom: 2px solid #000;
+  margin-bottom: 5px;
+}
+
+.order_info .order_detail_step .order_detail_group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.order_info .order_detail_step .order_detail_group_long {
+  margin-bottom: 10px;
+}
+
+.order_info .order_detail_step .order_detail_group_long:not(:last-child) {
+  border-bottom: 1px solid grey;
+}
+
+#fabricCanvas {
+  display: block;
+  width: 55vw;
+  height: 500px;
+  margin: 3vh 10px;
+}
+/*# sourceMappingURL=order_v2.css.map */
