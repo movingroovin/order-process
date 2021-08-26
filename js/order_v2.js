@@ -50,9 +50,15 @@ const vueInstance = Vue.createApp({
           { label: '塑膠', value: '塑膠' }, 
         ]
       },
+      canvas: null,
+      anthennaRect: null,
+      windowRect: null
     }
   },
   created() {},
+  mounted() {
+    this.InitFabric();
+  }, 
   methods: {
     ToStep(toStep) {
       for (const key in this.orderStep) {
@@ -60,7 +66,68 @@ const vueInstance = Vue.createApp({
       }
       this.orderStep[`isStep${toStep}`] = true;
     },
+    InitFabric() {
+      // Canvas config
+      this.canvas = new fabric.Canvas('canvas');
+      this.canvas.setHeight(500);
+      this.canvas.setWidth(window.innerWidth*0.55);
+      this.canvas.renderAll();
+    
+      // anthenna
+      this.anthennaRect = new fabric.Rect({
+        top: 30,
+        left: 30,
+        width: window.innerWidth*0.55-60,
+        height: 500-60,
+        fill: '#36bbd9'
+      });
+      this.canvas.add(this.anthennaRect);
+
+      // window
+      this.windowRect = new fabric.Rect({
+        top: 30,
+        left: 30,
+        width: 20,
+        height: 10,
+        fill: '#f5f3f4'
+      });
+      this.canvas.add(this.windowRect);
+    },
+    // 設定機殼尺寸
+    SetCaseX() {
+      const scale = this.anthennaRect.getObjectScaling();
+      this.anthennaRect.set('width', this.orderDetail.caseX/ scale.scaleX);
+      this.anthennaRect.setCoords();
+      this.canvas.requestRenderAll();
+    },
+    SetCaseY() {
+      const scale = this.anthennaRect.getObjectScaling();
+      this.anthennaRect.set('height', this.orderDetail.caseY/ scale.scaleY);
+      this.anthennaRect.setCoords();
+      this.canvas.requestRenderAll();
+    },
+    // 設定窗戶尺寸
+    SetWindowX() {
+      const scale = this.windowRect.getObjectScaling();
+      this.windowRect.set('width', this.orderDetail.windowX/ scale.scaleX);
+      this.windowRect.setCoords();
+      this.canvas.requestRenderAll();
+    },
+    SetWindowY() {
+      const scale = this.windowRect.getObjectScaling();
+      this.windowRect.set('height', this.orderDetail.windowY/ scale.scaleY);
+      this.windowRect.setCoords();
+      this.canvas.requestRenderAll();
+    },
+    SetWindowXc() {
+      const scale = this.windowRect.getObjectScaling();
+      this.windowRect.set('left', (parseInt(this.orderDetail.windowXc)+30));
+      this.windowRect.setCoords();
+      this.canvas.requestRenderAll();
+    },
+
   },
 
 });
+vueInstance.config.globalProperties.window = window;
 const app = vueInstance.mount("#app");

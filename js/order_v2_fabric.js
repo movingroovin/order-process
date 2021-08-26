@@ -3,19 +3,16 @@ InitFabric();
 function InitFabric() {
   // Canvas config
   var canvas = new fabric.Canvas('canvas');
-  // let canvasWidth =  document.querySelector('#fabricCanvas').getBoundingClientRect().width;
-  // let canvasHeight =  document.querySelector('#fabricCanvas').getBoundingClientRect().height;
-  // console.log(canvasWidth, canvasHeight);
   canvas.setHeight(500);
-  // canvas.setWidth(canvasWidth);
+  canvas.setWidth(window.innerWidth*0.55);
   canvas.renderAll();
 
   // rectangle
   var rect = new fabric.Rect({
-    top: 100,
-    left: 100,
-    width: 60,
-    height: 70,
+    top: 30,
+    left: 30,
+    width: window.innerWidth*0.55-60,
+    height: 500-60,
     fill: '#36bbd9'
   });
   canvas.add(rect);
