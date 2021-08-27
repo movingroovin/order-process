@@ -14,8 +14,8 @@ const vueInstance = Vue.createApp({
       orderDetail: {
         caseX: 400, // 機殼X
         caseY: 400, // 機殼Y
-        windowX: null, // 窗戶X
-        windowY: null, // 窗戶Y
+        windowX: 50, // 窗戶X
+        windowY: 50, // 窗戶Y
         windowXc: null, // 側邊長Xc
         antennaX: null, // 天線X
         antennaY: null, // 天線Y
@@ -29,7 +29,7 @@ const vueInstance = Vue.createApp({
           { name: 'MIMO', amount: 0, selectedFreq: '3500', freqList: ['3500', '3500/4200'] },
           { name: 'GPS', amount: 0, selectedFreq: '1575', freqList: ['1575'] },
         ],
-        anthennaSpec: [
+        antennaSpec: [
           { freq: '617~698', power: -6.5, s11: '<-4' },
           { freq: '698-960', power: -6.5, s11: '<-6' },
           { freq: '1452-1496', power: -6.5, s11: '<-6' },
@@ -52,7 +52,8 @@ const vueInstance = Vue.createApp({
       },
       canvas: null,
       caseRect: null,
-      windowRect: null
+      windowRect: null,
+      antennaRect: null
     }
   },
   created() {},
@@ -65,6 +66,23 @@ const vueInstance = Vue.createApp({
         this.orderStep[key] = false;
       }
       this.orderStep[`isStep${toStep}`] = true;
+      
+      // set windowRect visible at step 2, antennaRect at step 3
+      switch (toStep) {
+        case 2:
+          this.SetFabricObjVisible(this.windowRect);
+          break;
+        case 3:
+          this.SyncWindowAthennaSize();
+          const scale = this.antennaRect.getObjectScaling();
+          this.antennaRect.set('width', this.orderDetail.windowX/scale.scaleX);
+          this.antennaRect.set('height', this.orderDetail.windowY/scale.scaleY);
+          this.windowRect.setCoords();
+          this.SetFabricObjVisible(this.antennaRect);
+          break;
+        default:
+          break;
+      }
     },
     InitFabric() {
       // Canvas config
@@ -74,24 +92,52 @@ const vueInstance = Vue.createApp({
       this.canvas.renderAll();
     
       // case
-      this.caseRect = new fabric.Rect({
+      this.AddFabricObj('caseRect', {
         top: 30,
         left: 30,
         width: this.orderDetail.caseX,
         height: this.orderDetail.caseY,
-        fill: '#36bbd9'
+        fill: '#36bbd9',
+        selectable: false,
       });
-      this.canvas.add(this.caseRect);
 
       // window
-      this.windowRect = new fabric.Rect({
+      this.AddFabricObj('windowRect', {
         top: 30,
         left: 30,
-        width: 20,
-        height: 10,
-        fill: '#f5f3f4'
+        width: this.orderDetail.windowX,
+        height: this.orderDetail.windowY,
+        fill: '#f5f3f4',
+        selectable: false,
+        visible: false
       });
-      this.canvas.add(this.windowRect);
+
+      // antenna
+      this.SyncWindowAthennaSize();
+      this.AddFabricObj('antennaRect', {
+        top: 30,
+        left: 30,
+        width: this.orderDetail.windowX,
+        height: this.orderDetail.windowY,
+        fill: '#598e9a',
+        stroke: '#333',
+        strokeWidth: 2,
+        selectable: false,
+        visible: false
+      });
+      
+    },
+    AddFabricObj(obj, option) {
+      this[obj] = new fabric.Rect(option);
+      this.canvas.add(this[obj]);
+    },
+    SetFabricObjVisible(obj) {
+      obj.set('visible', true);
+      this.canvas.requestRenderAll();
+    },
+    SyncWindowAthennaSize() {
+      this.orderDetail.antennaX = this.orderDetail.windowX;
+      this.orderDetail.antennaY = this.orderDetail.windowY;
     },
     // 設定機殼尺寸
     SetCaseX() {
@@ -111,18 +157,44 @@ const vueInstance = Vue.createApp({
       const scale = this.windowRect.getObjectScaling();
       this.windowRect.set('width', this.orderDetail.windowX/ scale.scaleX);
       this.windowRect.setCoords();
+
+      this.SyncWindowAthennaSize();
+      const scaleA = this.antennaRect.getObjectScaling();
+      this.antennaRect.set('width', this.orderDetail.windowX/ scaleA.scaleX);
+      this.antennaRect.setCoords();
+
       this.canvas.requestRenderAll();
     },
     SetWindowY() {
       const scale = this.windowRect.getObjectScaling();
       this.windowRect.set('height', this.orderDetail.windowY/ scale.scaleY);
       this.windowRect.setCoords();
+
+      this.SyncWindowAthennaSize();
+      const scaleA = this.antennaRect.getObjectScaling();
+      this.antennaRect.set('height', this.orderDetail.windowY/ scaleA.scaleY);
+      this.antennaRect.setCoords();
+
       this.canvas.requestRenderAll();
     },
     SetWindowXc() {
-      const scale = this.windowRect.getObjectScaling();
+      // const scale = this.windowRect.getObjectScaling();
       this.windowRect.set('left', (parseInt(this.orderDetail.windowXc)+30));
       this.windowRect.setCoords();
+      this.antennaRect.set('left', (parseInt(this.orderDetail.windowXc)+30));
+      this.antennaRect.setCoords();
+      this.canvas.requestRenderAll();
+    },
+    SetAntennaX() {
+      const scale = this.antennaRect.getObjectScaling();
+      this.antennaRect.set('width', this.orderDetail.antennaX/ scale.scaleX);
+      this.antennaRect.setCoords();
+      this.canvas.requestRenderAll();
+    },
+    SetAntennaY() {
+      const scale = this.antennaRect.getObjectScaling();
+      this.antennaRect.set('height', this.orderDetail.antennaY/ scale.scaleY);
+      this.antennaRect.setCoords();
       this.canvas.requestRenderAll();
     },
 

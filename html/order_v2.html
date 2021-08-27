@@ -122,11 +122,11 @@
         <div class="input_step">
           <div class="input_group">
             <p><span class="color-warning">*</span>天線長Xa (mm)</p>
-            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.antennaX">
+            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.antennaX" @input="SetAntennaX">
           </div>
           <div class="input_group">
             <p><span class="color-warning">*</span>天線寬Ya (mm)</p>
-            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.antennaY">
+            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.antennaY" @input="SetAntennaY">
           </div>
         </div>
         <div class="mB10">
@@ -184,7 +184,7 @@
               <th style="width: 55px;"><span class="color-warning">*</span>|S11|規格(dB)</th>
             </tr>
             <tr 
-              v-for="(ele, idx) in orderDetail.anthennaSpec"
+              v-for="(ele, idx) in orderDetail.antennaSpec"
               :key="idx">
               <td>{{ele.freq}}</td>
               <td>
@@ -296,7 +296,7 @@
 
         <div class="order_detail_step">
           <div class="order_detail_group_long"
-            v-for="(ele, idx) in orderDetail.anthennaSpec"
+            v-for="(ele, idx) in orderDetail.antennaSpec"
             :key="idx">
             <div>頻率(MHz)：{{ele.freq}}</div>
             <div class="order_detail_group" style="margin-bottom: 0px;">
