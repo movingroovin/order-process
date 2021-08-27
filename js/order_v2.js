@@ -12,8 +12,8 @@ const vueInstance = Vue.createApp({
         isStep7: false,
       },
       orderDetail: {
-        caseX: null, // 機殼X
-        caseY: null, // 機殼Y
+        caseX: 400, // 機殼X
+        caseY: 400, // 機殼Y
         windowX: null, // 窗戶X
         windowY: null, // 窗戶Y
         windowXc: null, // 側邊長Xc
@@ -51,7 +51,7 @@ const vueInstance = Vue.createApp({
         ]
       },
       canvas: null,
-      anthennaRect: null,
+      caseRect: null,
       windowRect: null
     }
   },
@@ -73,15 +73,15 @@ const vueInstance = Vue.createApp({
       this.canvas.setWidth(window.innerWidth*0.55);
       this.canvas.renderAll();
     
-      // anthenna
-      this.anthennaRect = new fabric.Rect({
+      // case
+      this.caseRect = new fabric.Rect({
         top: 30,
         left: 30,
-        width: window.innerWidth*0.55-60,
-        height: 500-60,
+        width: this.orderDetail.caseX,
+        height: this.orderDetail.caseY,
         fill: '#36bbd9'
       });
-      this.canvas.add(this.anthennaRect);
+      this.canvas.add(this.caseRect);
 
       // window
       this.windowRect = new fabric.Rect({
@@ -95,15 +95,15 @@ const vueInstance = Vue.createApp({
     },
     // 設定機殼尺寸
     SetCaseX() {
-      const scale = this.anthennaRect.getObjectScaling();
-      this.anthennaRect.set('width', this.orderDetail.caseX/ scale.scaleX);
-      this.anthennaRect.setCoords();
+      const scale = this.caseRect.getObjectScaling();
+      this.caseRect.set('width', this.orderDetail.caseX/ scale.scaleX);
+      this.caseRect.setCoords();
       this.canvas.requestRenderAll();
     },
     SetCaseY() {
-      const scale = this.anthennaRect.getObjectScaling();
-      this.anthennaRect.set('height', this.orderDetail.caseY/ scale.scaleY);
-      this.anthennaRect.setCoords();
+      const scale = this.caseRect.getObjectScaling();
+      this.caseRect.set('height', this.orderDetail.caseY/ scale.scaleY);
+      this.caseRect.setCoords();
       this.canvas.requestRenderAll();
     },
     // 設定窗戶尺寸

@@ -227,10 +227,11 @@
       </div>
 
       <div v-show="!orderStep.isStep0">
-        <span class="color-subtitle font-title-small-400">此區域尺寸為：{{Math.round(window.innerWidth*0.55)}} x {{500}}</span>
         <div id="fabricCanvas" class="bg_color_secondary">
           <canvas id="canvas"></canvas>
+          <span class="color-subtitle font-title-small-400">此區域尺寸為：{{Math.round(window.innerWidth*0.55)}} x {{500}}</span>
         </div>
+        
       </div>
       
       <div v-show="!orderStep.isStep0" class="order_info">
