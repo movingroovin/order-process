@@ -10,13 +10,16 @@ const vueInstance = Vue.createApp({
         isStep5: false,
         isStep6: false,
         isStep7: false,
+        isStep8: false,
+        isStep9: false,
+        isStep10: false,
       },
       orderDetail: {
         caseX: 400, // 機殼X
         caseY: 400, // 機殼Y
         windowX: 50, // 窗戶X
         windowY: 50, // 窗戶Y
-        windowXc: null, // 側邊長Xc
+        windowXc: 0, // 側邊長Xc
         antennaX: null, // 天線X
         antennaY: null, // 天線Y
         selectedCaseMaterial: { label: '金屬', value: '金屬' },
@@ -53,13 +56,28 @@ const vueInstance = Vue.createApp({
       canvas: null,
       caseRect: null,
       windowRect: null,
-      antennaRect: null
+      antennaRect: null,
+      templateList: [
+        { id: 1, title: 'Laptop Antenna I', isFree: false, img: '', features: ['Antenna size : 21 × 8 mm<sup>2</sup>', 'Ground plane size: 13” (260mm x 200mm)', 'Operation frequency:<br>2.4/5.2/5.8 GHz WLAN<br> 2.3/3.3/5.5 GHz WiMAX bands', 'ECC for MIMO: <0.04'], refLink: '#', isValid: true, rate: 5 },
+        { id: 2, title: 'Laptop Antenna II', isFree: true, img: '', features: ['Antenna size : 21 × 8 mm<sup>2</sup>', 'Ground plane size: 13” (260mm x 200mm)', 'Operation frequency:<br>2.4/5.2/5.8 GHz WLAN<br> 5.5 GHz WiMAX bands'], refLink: '#', isValid: true, rate: 5 },
+        { id: 3, title: 'Laptop Antenna III', isFree: true, img: '', features: ['Antenna size : 21 × 8 mm<sup>2</sup>', 'Ground plane size: 13” (260mm x 200mm)', 'Operation frequency:<br>2.4/5.2/5.8 GHz WLAN'], refLink: '#', isValid: true, rate: 4 }
+      ],
     }
   },
   created() {},
   mounted() {
     this.InitFabric();
-  }, 
+  },
+  computed: {
+    isCanvasShow() {
+      return (this.orderStep.isStep1 ||
+        this.orderStep.isStep2 || 
+        this.orderStep.isStep3 || 
+        this.orderStep.isStep4 || 
+        this.orderStep.isStep5 || 
+        this.orderStep.isStep6 );
+    }
+  },
   methods: {
     ToStep(toStep) {
       for (const key in this.orderStep) {

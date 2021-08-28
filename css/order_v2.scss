@@ -13,6 +13,7 @@
 .input_text {
   height: 39px;
   padding-left: 5px;
+  width: 100%;
 }
 
 .logo_container {
@@ -27,6 +28,7 @@
   margin: 3vh 0;
   .input_step {
     margin: 5px 10px 30px 0;
+    width: 22vw;
   }
 }
 
@@ -74,4 +76,23 @@
   width: 55vw;
   height: 500px;
   margin: 3vh 10px;
+}
+
+.template_container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 55vw;
+  .template_item {
+    width: calc(55vw/3 - 30px);
+    margin: 10px;
+    padding: 10px;
+    background-color: #f2e75d;
+    box-shadow: 0 1px 4px 0 rgba(229, 229, 229, 0.5);
+    border-radius: 4px;
+    transition: all .3s ease;
+    cursor: pointer;
+    &:hover {
+      box-shadow: 1px 7px 8px 0 rgba(154, 154, 154, 0.5);
+    }
+  }
 }

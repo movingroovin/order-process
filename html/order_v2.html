@@ -180,18 +180,18 @@
           <table>
             <tr>
               <th><span class="color-warning">*</span>頻率(MHz)</th>
-              <th style="width: 55px;"><span class="color-warning">*</span>效率規格(dB)</th>
-              <th style="width: 55px;"><span class="color-warning">*</span>|S11|規格(dB)</th>
+              <th style="width: 80px;"><span class="color-warning">*</span>效率規格(dB)</th>
+              <th style="width: 80px;"><span class="color-warning">*</span>|S11|規格(dB)</th>
             </tr>
             <tr 
               v-for="(ele, idx) in orderDetail.antennaSpec"
               :key="idx">
               <td>{{ele.freq}}</td>
               <td>
-                <input class="input_text" style="width: 50px;" placeholder="請填寫" type="text" v-model="ele.power">
+                <input class="input_text" placeholder="請填寫" type="text" v-model="ele.power">
               </td>
               <td>
-                <input class="input_text" style="width: 50px;" placeholder="請填寫" type="text" v-model="ele.s11">
+                <input class="input_text" placeholder="請填寫" type="text" v-model="ele.s11">
               </td>
             </tr>
           </table>
@@ -222,16 +222,51 @@
         </div>
         <div class="mB10">
           <a class="btn-secondary-outline mB10 mR10" @click="ToStep(5)">上一步</a>
-          <a class="btn-primary mB10 mR10" @click="ToStep(7)">下一步</a>
+          <a class="btn-primary mB10 mR10" @click="ToStep(7)">完成送出</a>
         </div>
       </div>
 
-      <div v-show="!orderStep.isStep0">
+      <!-- step 7 -->
+      <div class="design_area" v-show="orderStep.isStep7">
+        <h2 class="mB25">快速設計範本</h2>
+        <span class="color-subtitle font-title-small-400"><span class="color-warning">*</span>為必填欄位</span>
+        <div class="input_step">
+          <div class="mB10">根據您的選擇目前資料庫中有以下的幾個參考設計範本供您參考。</div>
+          <div class="mB10">您可從我們的資料庫中瀏覽更多合適的設計</div>
+          <div class="mB10">您可選擇直接付費下載layout回去修改，或是讓AI協助您進行客製化的設計</div>
+        </div>
+        <div class="mB10">
+          <a class="btn-secondary-outline mB10 mR10" @click="ToStep(6)">上一步</a>
+          <a class="btn-primary mB10 mR10" @click="ToStep(8)">下一步</a>
+        </div>
+      </div>
+
+      <div v-show="isCanvasShow">
         <div id="fabricCanvas" class="bg_color_secondary">
           <canvas id="canvas"></canvas>
           <span class="color-subtitle font-title-small-400">此區域尺寸為：{{Math.round(window.innerWidth*0.55)}} x {{500}}</span>
         </div>
-        
+      </div>
+
+      <div v-show="orderStep.isStep7">
+        <div class="template_container">
+          <div class="template_item">
+            <div>不使用設計範本，繼續進行客製化設計</div>
+          </div>
+          <div class="template_item"
+            v-for="(ele, idx) in templateList"
+            :key="idx">
+            <div class="template_isFree">{{ele.isFree ? '免費' : '付費'}}</div>
+            <img :src="ele.img" alt="Template Image">
+            <div>{{ele.title}}</div>
+            <ul>
+              <li v-for="(ele1, idx1) in ele.features" :key="idx1" v-html="ele1"></li>
+            </ul>
+            <span>Reference Link: {{ele.refLink}}</span>
+            <div>rate: {{ele.rate}}</div>
+            <div>{{ele.isValid ? 'xFDTD Validated' : ''}}</div>
+          </div>
+        </div>
       </div>
       
       <div v-show="!orderStep.isStep0" class="order_info">
