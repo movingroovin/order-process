@@ -241,6 +241,36 @@
         </div>
       </div>
 
+      <!-- step 8 -->
+      <div class="design_area" v-show="orderStep.isStep8">
+        <h2 class="mB25">客製化設計時數方案</h2>
+        <div class="input_step">
+          <div class="mB10">您可選擇不同的服務方案進行客製化的設計</div>
+        </div>
+        <div class="mB10">
+          <a class="btn-secondary-outline mB10 mR10" @click="ToStep(7)">上一步</a>
+          <a class="btn-primary mB10 mR10" @click="ToStep(9)">下一步</a>
+        </div>
+      </div>
+
+      <!-- step 9 -->
+      <div class="design_area" v-show="orderStep.isStep9">
+        <h2 class="mB25">方案比較</h2>
+        <div class="mB10">
+          <a class="btn-secondary-outline mB10 mR10" @click="ToStep(8)">上一步</a>
+          <a class="btn-primary mB10 mR10" @click="ToStep(10)">下一步</a>
+        </div>
+      </div>
+
+      <!-- step 10 -->
+      <div class="design_area" v-show="orderStep.isStep10">
+        <h2 class="mB25">是否需要實際製作</h2>
+        <div class="mB10">
+          <a class="btn-secondary-outline mB10 mR10" @click="ToStep(9)">上一步</a>
+          <a class="btn-primary mB10 mR10" @click="ToStep(11)">下一步</a>
+        </div>
+      </div>
+
       <div v-show="isCanvasShow">
         <div id="fabricCanvas" class="bg_color_secondary">
           <canvas id="canvas"></canvas>
@@ -250,12 +280,14 @@
 
       <div v-show="orderStep.isStep7">
         <div class="template_container">
-          <div class="template_item">
-            <div>不使用設計範本，繼續進行客製化設計</div>
+          <div class="template_item" :class="{ template_selected: templateList[0].isSelected }" @click="SelectTemplate(templateList[0])">
+            <div>{{templateList[0].title}}</div>
           </div>
           <div class="template_item"
-            v-for="(ele, idx) in templateList"
-            :key="idx">
+            v-for="(ele, idx) in templateList.filter(e => e.id !== 0)"
+            :key="idx"
+            :class="{ template_selected: ele.isSelected }"
+            @click="SelectTemplate(ele)">
             <div class="template_isFree">{{ele.isFree ? '免費' : '付費'}}</div>
             <img :src="ele.img" alt="Template Image">
             <div>{{ele.title}}</div>
@@ -267,6 +299,86 @@
             <div>{{ele.isValid ? 'xFDTD Validated' : ''}}</div>
           </div>
         </div>
+      </div>
+
+      <div v-show="orderStep.isStep8">
+        <div class="plan_container">
+          <div class="plan_item"
+            v-for="(ele, idx) in planList"
+            :key="idx">
+            <a 
+              class="btn time-btn"
+              :class="{ time_btn_selected: ele.isSelected }"
+              @click="SelectPlan(ele)"
+            >{{ele.title}}</a>
+            <div class="plan_info">
+              <div class="plan_thumbnail mA">
+                <div class="plan_thumbnail_img">
+                  <img src="../assest/img/satellite.jpg" alt="" style="width: 100%;">
+                </div>
+              </div>
+              <div class="color-secondary mT10 font-title-medium-small">
+                方案說明{{idx+1}}：
+              </div>
+              <p class="mT10">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </p>
+              <div class="color-secondary font-title-medium-small pointer mT10" @click="TogglePlanCard(ele)">more {{ele.isCardOpen ? '-' : '+'}}</div>
+            </div>
+            <div class="plan_card" v-show="ele.isCardOpen">
+              <div class="plan_img_container">
+                <img src="../assest/img/house.jpeg" alt="" class="plan_img w100">
+              </div>
+              <div class="color-secondary mT10 font-title-medium-small">{{ele.time}}</div>
+              <div class="plan_detail">
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+                <div class="w50"><i class="fas fa-check mR10"></i>detail 1</div>
+              </div>
+              <div class="plan_detail">
+                <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+                <div class="w50"><i class="fas fa-times mR10"></i> no-service</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-show="orderStep.isStep9">
+        <table>
+          <tr 
+            v-for="(ele, idx) in planCompare"
+            :key="idx">
+            <td 
+              v-for="(ele1, idx1) in ele"
+              :key="idx">{{ele[idx1]}}
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div v-show="orderStep.isStep10">
+        <table>
+          <tr 
+            v-for="(ele, idx) in vendorCompare"
+            :key="idx">
+            <td 
+              v-for="(ele1, idx1) in ele"
+              :key="idx">{{ele[idx1]}}
+            </td>
+          </tr>
+        </table>
+        <span class="color-subtitle font-title-small-400">備註:預估費用僅供快速參考，實際報價會略有出入</span>
       </div>
       
       <div v-show="!orderStep.isStep0" class="order_info">
