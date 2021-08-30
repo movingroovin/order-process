@@ -229,7 +229,6 @@
       <!-- step 7 -->
       <div class="design_area" v-show="orderStep.isStep7">
         <h2 class="mB25">快速設計範本</h2>
-        <span class="color-subtitle font-title-small-400"><span class="color-warning">*</span>為必填欄位</span>
         <div class="input_step">
           <div class="mB10">根據您的選擇目前資料庫中有以下的幾個參考設計範本供您參考。</div>
           <div class="mB10">您可從我們的資料庫中瀏覽更多合適的設計</div>
@@ -281,7 +280,7 @@
       <div v-show="orderStep.isStep7">
         <div class="template_container">
           <div class="template_item" :class="{ template_selected: templateList[0].isSelected }" @click="SelectTemplate(templateList[0])">
-            <div>{{templateList[0].title}}</div>
+            <div class="template_ignore">{{templateList[0].title}}</div>
           </div>
           <div class="template_item"
             v-for="(ele, idx) in templateList.filter(e => e.id !== 0)"
@@ -289,14 +288,14 @@
             :class="{ template_selected: ele.isSelected }"
             @click="SelectTemplate(ele)">
             <div class="template_isFree">{{ele.isFree ? '免費' : '付費'}}</div>
-            <img :src="ele.img" alt="Template Image">
-            <div>{{ele.title}}</div>
-            <ul>
-              <li v-for="(ele1, idx1) in ele.features" :key="idx1" v-html="ele1"></li>
+            <img :src="ele.img" alt="Template Image" class="w100">
+            <div class="font-title-medium mB5">{{ele.title}}</div>
+            <ul class="template_features">
+              <li v-for="(ele1, idx1) in ele.features" :key="idx1" v-html="ele1" class="template_feature color-subtitle font-title-small-400 mB5"></li>
             </ul>
-            <span>Reference Link: {{ele.refLink}}</span>
-            <div>rate: {{ele.rate}}</div>
-            <div>{{ele.isValid ? 'xFDTD Validated' : ''}}</div>
+            <a :href="ele.refLink">Reference Link</a>
+            <div class="mB10 mT10 color-shining">{{ele.rate}}</div>
+            <div class="color-subtitle font-title-small-400">{{ele.isValid ? 'xFDTD Validated' : ''}}</div>
           </div>
         </div>
       </div>
@@ -355,20 +354,22 @@
       </div>
 
       <div v-show="orderStep.isStep9">
-        <table>
+        <table class="style_table">
           <tr 
             v-for="(ele, idx) in planCompare"
             :key="idx">
             <td 
               v-for="(ele1, idx1) in ele"
-              :key="idx">{{ele[idx1]}}
+              :key="idx">
+              <div v-if="typeof ele[idx1] === 'boolean'">{{ele[idx1] ? '✔' : '❌'}}</div>
+              <div v-else>{{ele[idx1]}}</div>
             </td>
           </tr>
         </table>
       </div>
 
       <div v-show="orderStep.isStep10">
-        <table>
+        <table class="style_table">
           <tr 
             v-for="(ele, idx) in vendorCompare"
             :key="idx">

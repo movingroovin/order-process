@@ -59,9 +59,9 @@ const vueInstance = Vue.createApp({
       antennaRect: null,
       templateList: [
         { id: 0, isSelected: false, title: '不使用設計範本，繼續進行客製化設計' },
-        { id: 1, isSelected: false, title: 'Laptop Antenna I', isFree: false, img: '', features: ['Antenna size : 21 × 8 mm<sup>2</sup>', 'Ground plane size: 13” (260mm x 200mm)', 'Operation frequency:<br>2.4/5.2/5.8 GHz WLAN<br> 2.3/3.3/5.5 GHz WiMAX bands', 'ECC for MIMO: <0.04'], refLink: '#', isValid: true, rate: 5 },
-        { id: 2, isSelected: false, title: 'Laptop Antenna II', isFree: true, img: '', features: ['Antenna size : 21 × 8 mm<sup>2</sup>', 'Ground plane size: 13” (260mm x 200mm)', 'Operation frequency:<br>2.4/5.2/5.8 GHz WLAN<br> 5.5 GHz WiMAX bands'], refLink: '#', isValid: true, rate: 5 },
-        { id: 3, isSelected: false, title: 'Laptop Antenna III', isFree: true, img: '', features: ['Antenna size : 21 × 8 mm<sup>2</sup>', 'Ground plane size: 13” (260mm x 200mm)', 'Operation frequency:<br>2.4/5.2/5.8 GHz WLAN'], refLink: '#', isValid: true, rate: 4 }
+        { id: 1, isSelected: false, title: 'Laptop Antenna I', isFree: false, img: './../assest/img/antenna/img_1_1.jpeg', features: ['Antenna size : 21 × 8 mm<sup>2</sup>', 'Ground plane size: 13” (260mm x 200mm)', 'Operation frequency:<br>2.4/5.2/5.8 GHz WLAN<br> 2.3/3.3/5.5 GHz WiMAX bands', 'ECC for MIMO: <0.04'], refLink: '#', isValid: true, rate: '★★★★★' },
+        { id: 2, isSelected: false, title: 'Laptop Antenna II', isFree: true, img: './../assest/img/antenna/img_1_2.jpeg', features: ['Antenna size : 21 × 8 mm<sup>2</sup>', 'Ground plane size: 13” (260mm x 200mm)', 'Operation frequency:<br>2.4/5.2/5.8 GHz WLAN<br> 5.5 GHz WiMAX bands'], refLink: '#', isValid: true, rate: '★★★★★' },
+        { id: 3, isSelected: false, title: 'Laptop Antenna III', isFree: true, img: './../assest/img/antenna/img_1_2.jpeg', features: ['Antenna size : 21 × 8 mm<sup>2</sup>', 'Ground plane size: 13” (260mm x 200mm)', 'Operation frequency:<br>2.4/5.2/5.8 GHz WLAN'], refLink: '#', isValid: true, rate: '★★★★' }
       ],
       planList: [
         { id: 0, title: '72小時 (快速評估)', hour: 72, isSelected: false, isCardOpen: false },
