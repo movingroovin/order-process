@@ -76,7 +76,8 @@
         </div>
         <div class="mB10">
           <a class="btn-secondary-outline mB10 mR10" @click="ToStep(0)">上一步</a>
-          <a class="btn-primary mB10 mR10" @click="ToStep(2)">下一步</a>
+          <a class="btn-primary mB10 mR10" v-if="isStep1Finished" @click="ToStep(2)">下一步</a>
+          <button class="btn-primary mB10 mR10" disabled v-if="!isStep1Finished">下一步<button/>
         </div>
       </div>
       
@@ -111,7 +112,8 @@
         </div>
         <div class="mB10">
           <a class="btn-secondary-outline mB10 mR10" @click="ToStep(1)">上一步</a>
-          <a class="btn-primary mB10 mR10" @click="ToStep(3)">下一步</a>
+          <a class="btn-primary mB10 mR10" v-if="isStep2Finished" @click="ToStep(3)">下一步</a>
+          <button class="btn-primary mB10 mR10" disabled v-if="!isStep2Finished">下一步<button/>
         </div>
       </div>
 
@@ -131,7 +133,8 @@
         </div>
         <div class="mB10">
           <a class="btn-secondary-outline mB10 mR10" @click="ToStep(2)">上一步</a>
-          <a class="btn-primary mB10 mR10" @click="ToStep(4)">下一步</a>
+          <a class="btn-primary mB10 mR10" v-if="isStep3Finished" @click="ToStep(4)">下一步</a>
+          <button class="btn-primary mB10 mR10" disabled v-if="!isStep3Finished">下一步<button/>
         </div>
       </div>
 
@@ -142,7 +145,7 @@
         <div class="input_step">
           <table>
             <tr>
-              <th><span class="color-warning">*</span>天線應用</th>
+              <th>天線應用</th>
               <th><span class="color-warning">*</span>數量</th>
               <th><span class="color-warning">*</span>操作頻段MHz</th>
             </tr>
@@ -168,7 +171,8 @@
         </div>
         <div class="mB10">
           <a class="btn-secondary-outline mB10 mR10" @click="ToStep(3)">上一步</a>
-          <a class="btn-primary mB10 mR10" @click="ToStep(5)">下一步</a>
+          <a class="btn-primary mB10 mR10" v-if="isStep4Finished" @click="ToStep(5)">下一步</a>
+          <button class="btn-primary mB10 mR10" disabled v-if="!isStep4Finished">下一步<button/>
         </div>
       </div>
 
@@ -198,7 +202,8 @@
         </div>
         <div class="mB10">
           <a class="btn-secondary-outline mB10 mR10" @click="ToStep(4)">上一步</a>
-          <a class="btn-primary mB10 mR10" @click="ToStep(6)">下一步</a>
+          <a class="btn-primary mB10 mR10" v-if="isStep5Finished" @click="ToStep(6)">下一步</a>
+          <button class="btn-primary mB10 mR10" disabled v-if="!isStep5Finished">下一步<button/>
         </div>
       </div>
 
@@ -236,7 +241,8 @@
         </div>
         <div class="mB10">
           <a class="btn-secondary-outline mB10 mR10" @click="ToStep(6)">上一步</a>
-          <a class="btn-primary mB10 mR10" @click="ToStep(8)">下一步</a>
+          <a class="btn-primary mB10 mR10" v-if="isStep7Finished" @click="ToStep(8)">下一步</a>
+          <button class="btn-primary mB10 mR10" disabled v-if="!isStep7Finished">下一步<button/>
         </div>
       </div>
 
@@ -255,9 +261,16 @@
       <!-- step 9 -->
       <div class="design_area" v-show="orderStep.isStep9">
         <h2 class="mB25">方案比較</h2>
+        <div class="input_step">
+          <input type="checkbox" name="terms" id="plan-terms" class="terms_link_choose" v-model="termsCheck">
+          <div class="terms_link_text">
+            <div class="fw500 mR10">我已確認我清楚知道 <span class="terms_link" @click="ToggleTermsContent">免責條款</span></div>
+          </div>
+        </div>
         <div class="mB10">
           <a class="btn-secondary-outline mB10 mR10" @click="ToStep(8)">上一步</a>
-          <a class="btn-primary mB10 mR10" @click="ToStep(10)">下一步</a>
+          <a class="btn-primary mB10 mR10" v-if="termsCheck" @click="ToStep(10)">下一步</a>
+          <button class="btn-primary mB10 mR10" disabled v-if="!termsCheck">下一步<button/>
         </div>
       </div>
 
@@ -456,7 +469,21 @@
       </div>
     </div>
 
-    
+    <div class="lightbox" v-if="isLightbox">
+      <div class="lightbox-inside">
+        <div class="btn-top-right font-size-26">
+          <i class="fas fa-times-circle" @click="ToggleTermsContent"></i>
+        </div>
+        <div>
+          <div class="mL15 mR20">
+            <p class="font-title-large">免責條款</p>
+          </div>
+          <p class="color-secondary mT25 mB25">
+            免責條款免責條款免責條款免責條款免責條款免責條款免責條款免責條款免責條款免責條款免責條款
+          </p>
+        </div>
+      </div>
+    </div>
 
   </div>   
 </body>

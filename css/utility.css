@@ -265,6 +265,13 @@
   text-align: center;
 }
 
+.btn_primary_disabled {
+  background-color: #e5e5e5;
+  color: #9b9b9b;
+  border: 1px solid transparent;
+  cursor: not-allowed;
+}
+
 .btn-primary:hover {
   background: #2a99b3;
 }
@@ -361,4 +368,13 @@
   color: #9b9b9b;
   border: 1px solid transparent;
   cursor: not-allowed;
+}
+
+.btn-top-right{
+  /* parent element needs to be position: relative */
+  position: absolute; 
+  top: 0px;
+  right: 0px;
+  cursor: pointer;
+  padding: 20px;
 }

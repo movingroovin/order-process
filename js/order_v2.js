@@ -58,7 +58,7 @@ const vueInstance = Vue.createApp({
       windowRect: null,
       antennaRect: null,
       templateList: [
-        { id: 0, isSelected: false, title: '不使用設計範本，繼續進行客製化設計' },
+        { id: 0, isSelected: true, title: '不使用設計範本，繼續進行客製化設計' },
         { id: 1, isSelected: false, title: 'Laptop Antenna I', isFree: false, img: './../assest/img/antenna/img_1_1.jpeg', features: ['Antenna size : 21 × 8 mm<sup>2</sup>', 'Ground plane size: 13” (260mm x 200mm)', 'Operation frequency:<br>2.4/5.2/5.8 GHz WLAN<br> 2.3/3.3/5.5 GHz WiMAX bands', 'ECC for MIMO: <0.04'], refLink: '#', isValid: true, rate: '★★★★★' },
         { id: 2, isSelected: false, title: 'Laptop Antenna II', isFree: true, img: './../assest/img/antenna/img_1_2.jpeg', features: ['Antenna size : 21 × 8 mm<sup>2</sup>', 'Ground plane size: 13” (260mm x 200mm)', 'Operation frequency:<br>2.4/5.2/5.8 GHz WLAN<br> 5.5 GHz WiMAX bands'], refLink: '#', isValid: true, rate: '★★★★★' },
         { id: 3, isSelected: false, title: 'Laptop Antenna III', isFree: true, img: './../assest/img/antenna/img_1_2.jpeg', features: ['Antenna size : 21 × 8 mm<sup>2</sup>', 'Ground plane size: 13” (260mm x 200mm)', 'Operation frequency:<br>2.4/5.2/5.8 GHz WLAN'], refLink: '#', isValid: true, rate: '★★★★' }
@@ -84,6 +84,8 @@ const vueInstance = Vue.createApp({
         [ '交期', '-', '日', '日', '日'],
         [ '預估製作費用', '-', '$', '$', '$'],
       ],
+      termsCheck: false,
+      isLightbox: false,
     }
   },
   created() {},
@@ -98,6 +100,24 @@ const vueInstance = Vue.createApp({
         this.orderStep.isStep4 || 
         this.orderStep.isStep5 || 
         this.orderStep.isStep6 );
+    },
+    isStep1Finished() {
+      return this.orderDetail.caseX > 0 && this.orderDetail.caseY > 0 && this.orderDetail.selectedCaseMaterial;
+    },
+    isStep2Finished() {
+      return this.orderDetail.windowX > 0 && this.orderDetail.windowY > 0 && this.orderDetail.selectedWindowMaterial;
+    },
+    isStep3Finished() {
+      return this.orderDetail.antennaX > 0 && this.orderDetail.antennaY > 0;
+    },
+    isStep4Finished() {
+      return this.orderDetail.antennaApps.filter(ele => ele.amount > 0).length > 0;
+    },
+    isStep5Finished() {
+      return !this.orderDetail.antennaSpec.filter(ele => !ele.freq || !ele.power || !ele.s11 ).length > 0;
+    },
+    isStep7Finished() {
+      return this.templateList.find(ele => ele.isSelected).id === 0;
     }
   },
   methods: {
@@ -134,6 +154,16 @@ const vueInstance = Vue.createApp({
     },
     TogglePlanCard(planCard) {
       planCard.isCardOpen = !planCard.isCardOpen;
+    },
+    ToggleTermsContent() {
+      if (!this.isLightbox) { //open
+        document.documentElement.style.overflow = "hidden";
+      } else { //close
+        document.documentElement.style.overflow = "auto";
+        this.lightboxAmount = 1;
+      }
+      this.isLightbox = !this.isLightbox;
+      
     },
     InitFabric() {
       // Canvas config

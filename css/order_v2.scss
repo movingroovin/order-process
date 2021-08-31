@@ -181,6 +181,27 @@
   }
 }
 
+.terms_link {
+  color: #36bbd9;
+  cursor: pointer;
+}
+
+.terms_link_label {
+  cursor: pointer;
+  margin-bottom: 25px;
+  display: flex;
+}
+
+.terms_link_choose {
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.terms_link_text {
+  padding-left: 15px;
+  display: inline-block;
+}
+
 .style_table {
   border-collapse: collapse;
   margin: 25px 0;
@@ -201,5 +222,40 @@
   }
   td {
     padding: 12px 15px;
+  }
+}
+
+.lightbox {
+  z-index: 50;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  background-color: rgba(0, 0, 0, .5);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-inside {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 25px 0;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  position: relative;
+  overflow: scroll;
+  @media screen and (min-width: 900px) {
+      max-width: 640px;
+      max-height: 80%;
+      border-radius: 20px;
   }
 }
