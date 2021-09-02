@@ -17,6 +17,9 @@ const vueInstance = Vue.createApp({
       orderDetail: {
         caseX: 400, // 機殼X
         caseY: 400, // 機殼Y
+        windows: [
+          { id: 1, X: 50, Y: 50, Xc: 0, pos: { label: '左上', value: 'left_up' }, mat: { label: '塑膠', value: '塑膠' }, },
+        ],
         windowX: 50, // 窗戶X
         windowY: 50, // 窗戶Y
         windowXc: 0, // 側邊長Xc
@@ -51,6 +54,13 @@ const vueInstance = Vue.createApp({
         ],
         windowMaterialList: [
           { label: '塑膠', value: '塑膠' }, 
+        ],
+        posList: [
+          { label: '--請選擇--', value: null },
+          { label: '左上', value: 'left_up' }, 
+          { label: '右上', value: 'right_up' }, 
+          { label: '左下', value: 'left_down' }, 
+          { label: '右下', value: 'right_down' }, 
         ]
       },
       canvas: null,
@@ -105,7 +115,7 @@ const vueInstance = Vue.createApp({
       return this.orderDetail.caseX > 0 && this.orderDetail.caseY > 0 && this.orderDetail.selectedCaseMaterial;
     },
     isStep2Finished() {
-      return this.orderDetail.windowX > 0 && this.orderDetail.windowY > 0 && this.orderDetail.selectedWindowMaterial;
+      return this.orderDetail.windowX > 0 && this.orderDetail.windowY > 0 && this.orderDetail.windowXc > 0 && this.orderDetail.selectedWindowMaterial;
     },
     isStep3Finished() {
       return this.orderDetail.antennaX > 0 && this.orderDetail.antennaY > 0;
@@ -164,6 +174,14 @@ const vueInstance = Vue.createApp({
       }
       this.isLightbox = !this.isLightbox;
       
+    },
+    AddWindow() {
+      let newId = this.orderDetail.windows.length+1
+      this.orderDetail.windows.push({ id: newId, X: 50, Y: 50, Xc: 0, pos: { label: '--請選擇--', value: null }, mat: { label: '塑膠', value: '塑膠' }, });
+    },
+    DeleteWindow(window) {
+      let delIndex = this.orderDetail.windows.findIndex(ele => ele.id === window.id);
+      this.orderDetail.windows.splice(delIndex, 1);
     },
     InitFabric() {
       // Canvas config
