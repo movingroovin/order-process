@@ -85,7 +85,7 @@
       <div class="design_area" v-show="orderStep.isStep2">
         <h2 class="mB25">窗戶尺寸</h2>
         <span class="color-subtitle font-title-small-400"><span class="color-warning">*</span>為必填欄位</span>
-        <div class="input_step">
+        <!-- <div class="input_step">
           <div class="input_group">
             <p><span class="color-warning">*</span>窗戶長Xw (mm)</p>
             <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.windowX" @input="SetWindowX">
@@ -109,16 +109,16 @@
               </option>
             </select>
           </div>
-        </div>
+        </div> -->
         <!-- 窗戶1 -->
-        <div v-for="(window, widx) in orderDetail.windows" :key="widx">
-          <h3 class="mB5">[test]窗戶{{window.id}}</h3>
+        <div v-for="(win, widx) in orderDetail.windows" :key="widx">
+          <h3 class="mB5">窗戶{{win.id}}</h3>
           <button v-if="widx === orderDetail.windows.length-1 && widx !== 3" @click="AddWindow">增加窗戶</button>
           <button v-if="widx === orderDetail.windows.length-1 && widx !== 0" @click="DeleteWindow(window)">刪除窗戶</button>
-          <div class="input_step">
+          <div class="input_step" v-show="widx === orderDetail.windows.length-1">
             <div class="input_group">
               <p><span class="color-warning">*</span>窗戶位置</p>
-              <select class="input_select" name="" id="" v-model="window.pos">
+              <select class="input_select" name="" id="" v-model="win.pos">
                 <option
                   v-for="(ele, idx) in orderDetail.posList"
                   :key="idx"
@@ -130,19 +130,19 @@
             </div>
             <div class="input_group">
               <p><span class="color-warning">*</span>窗戶長Xw1 (mm)</p>
-              <input class="input_text" placeholder="請填寫" type="text" v-model="window.X">
+              <input class="input_text" placeholder="請填寫" type="text" v-model="win.X" @input="SetWindowsX(win.id)">
             </div>
             <div class="input_group">
               <p><span class="color-warning">*</span>窗戶寬Yw1 (mm)</p>
-              <input class="input_text" placeholder="請填寫" type="text" v-model="window.Y">
+              <input class="input_text" placeholder="請填寫" type="text" v-model="win.Y" @input="SetWindowsY(win.id)">
             </div>
             <div class="input_group">
               <p><span class="color-warning">*</span>側邊長Xc1 (mm)</p>
-              <input class="input_text" placeholder="請填寫" type="text" v-model="window.Xc">
+              <input class="input_text" placeholder="請填寫" type="text" v-model="win.Xc" @input="SetWindowsXc(win.id)">
             </div>
             <div class="input_group">
               <p><span class="color-warning">*</span>窗戶材質</p>
-              <select class="input_select" name="" id="" v-model="window.mat">
+              <select class="input_select" name="" id="" v-model="win.mat">
                 <option
                   v-for="(ele, idx) in orderDetail.windowMaterialList"
                   :key="idx"
@@ -152,6 +152,7 @@
               </select>
             </div>
           </div>
+          <span>{{win.pos.label}}/Xw{{win.id}}: {{win.X}}/Yw{{win.id}}: {{win.Y}}/Xc{{win.id}}: {{win.Xc}}/材質: {{win.mat.label}}</span>
       </div>
         <div class="mB10">
           <a class="btn-secondary-outline mB10 mR10" @click="ToStep(1)">上一步</a>

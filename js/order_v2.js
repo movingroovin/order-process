@@ -66,6 +66,10 @@ const vueInstance = Vue.createApp({
       canvas: null,
       caseRect: null,
       windowRect: null,
+      window1Rect: null,
+      window2Rect: null,
+      window3Rect: null,
+      window4Rect: null,
       antennaRect: null,
       templateList: [
         { id: 0, isSelected: true, title: '不使用設計範本，繼續進行客製化設計' },
@@ -140,7 +144,8 @@ const vueInstance = Vue.createApp({
       // set windowRect visible at step 2, antennaRect at step 3
       switch (toStep) {
         case 2:
-          this.SetFabricObjVisible(this.windowRect);
+          // this.SetFabricObjVisible(this.windowRect);
+          this.SetFabricObjVisible(this.window1Rect);
           break;
         case 3:
           this.SyncWindowAthennaSize();
@@ -176,8 +181,9 @@ const vueInstance = Vue.createApp({
       
     },
     AddWindow() {
-      let newId = this.orderDetail.windows.length+1
+      let newId = this.orderDetail.windows.length+1;
       this.orderDetail.windows.push({ id: newId, X: 50, Y: 50, Xc: 0, pos: { label: '--請選擇--', value: null }, mat: { label: '塑膠', value: '塑膠' }, });
+      this.SetFabricObjVisible(this[`window${newId}Rect`]);
     },
     DeleteWindow(window) {
       let delIndex = this.orderDetail.windows.findIndex(ele => ele.id === window.id);
@@ -201,11 +207,52 @@ const vueInstance = Vue.createApp({
       });
 
       // window
-      this.AddFabricObj('windowRect', {
+      // this.AddFabricObj('windowRect', {
+      //   top: 30,
+      //   left: 30,
+      //   width: this.orderDetail.windowX,
+      //   height: this.orderDetail.windowY,
+      //   fill: '#f5f3f4',
+      //   selectable: false,
+      //   visible: false
+      // });
+      
+      // windows 1
+      this.AddFabricObj('window1Rect', {
         top: 30,
         left: 30,
-        width: this.orderDetail.windowX,
-        height: this.orderDetail.windowY,
+        width: this.orderDetail.windows[0].X,
+        height: this.orderDetail.windows[0].Y,
+        fill: '#f5f3f4',
+        selectable: false,
+        visible: false
+      });
+      // windows 2
+      this.AddFabricObj('window2Rect', {
+        top: 30,
+        left: 30,
+        width: 50,
+        height: 50,
+        fill: '#f5f3f4',
+        selectable: false,
+        visible: false
+      });
+      // windows 3
+      this.AddFabricObj('window3Rect', {
+        top: 30,
+        left: 30,
+        width: 50,
+        height: 50,
+        fill: '#f5f3f4',
+        selectable: false,
+        visible: false
+      });
+      // windows 4
+      this.AddFabricObj('window4Rect', {
+        top: 30,
+        left: 30,
+        width: 50,
+        height: 50,
         fill: '#f5f3f4',
         selectable: false,
         visible: false
@@ -282,6 +329,28 @@ const vueInstance = Vue.createApp({
       this.windowRect.setCoords();
       this.antennaRect.set('left', (parseInt(this.orderDetail.windowXc)+30));
       this.antennaRect.setCoords();
+      this.canvas.requestRenderAll();
+    },
+    // 設定窗戶尺寸(多個窗戶)
+    SetWindowsX(id) {
+      const scale = this[`window${id}Rect`].getObjectScaling();
+      this[`window${id}Rect`].set('width', this.orderDetail.windows.find(ele => ele.id === id).X/ scale.scaleX);
+      this[`window${id}Rect`].setCoords();
+
+      this.canvas.requestRenderAll();
+    },
+    SetWindowsY(id) {
+      const scale = this[`window${id}Rect`].getObjectScaling();
+      this[`window${id}Rect`].set('height', this.orderDetail.windows.find(ele => ele.id === id).Y/ scale.scaleY);
+      this[`window${id}Rect`].setCoords();
+
+      this.canvas.requestRenderAll();
+    },
+    SetWindowsXc(id) {
+      this[`window${id}Rect`].set('left', (parseInt(this.orderDetail.windows.find(ele => ele.id === id).Xc)+30));
+      this[`window${id}Rect`].setCoords();
+      // this.antennaRect.set('left', (parseInt(this.orderDetail.windows.find(ele => ele.id === id).Xc)+30));
+      // this.antennaRect.setCoords();
       this.canvas.requestRenderAll();
     },
     SetAntennaX() {
