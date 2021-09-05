@@ -17,6 +17,7 @@ const vueInstance = Vue.createApp({
       orderDetail: {
         caseX: 400, // 機殼X
         caseY: 400, // 機殼Y
+        selectedType: { label: '窗戶', value: '窗戶' },
         windows: [
           { id: 1, X: 50, Y: 50, Xc: 0, pos: { label: '左上', value: 'left_up' }, mat: { label: '塑膠', value: '塑膠' }, },
         ],
@@ -51,6 +52,11 @@ const vueInstance = Vue.createApp({
         caseMaterialList: [
           { label: '金屬', value: '金屬' }, 
           { label: '塑膠', value: '塑膠' }, 
+        ],
+        typeList: [
+          { label: '窗戶', value: '窗戶' }, 
+          { label: '槽孔', value: '槽孔' }, 
+          { label: '套筒', value: '套筒' }, 
         ],
         windowMaterialList: [
           { label: '塑膠', value: '塑膠' }, 
@@ -116,10 +122,11 @@ const vueInstance = Vue.createApp({
         this.orderStep.isStep6 );
     },
     isStep1Finished() {
-      return this.orderDetail.caseX > 0 && this.orderDetail.caseY > 0 && this.orderDetail.selectedCaseMaterial;
+      return this.orderDetail.caseX > 0 && this.orderDetail.caseY > 0 && this.orderDetail.selectedCaseMaterial && this.orderDetail.selectedType;
     },
     isStep2Finished() {
-      return this.orderDetail.windowX > 0 && this.orderDetail.windowY > 0 && this.orderDetail.windowXc > 0 && this.orderDetail.selectedWindowMaterial;
+      // return this.orderDetail.windowX > 0 && this.orderDetail.windowY > 0 && this.orderDetail.windowXc > 0 && this.orderDetail.selectedWindowMaterial;
+      return this.orderDetail.windows.filter(win => win.X > 0 && win.Y > 0 && win.Xc > 0 && win.pos.value && win.mat.value).length === this.orderDetail.windows.length;
     },
     isStep3Finished() {
       return this.orderDetail.antennaX > 0 && this.orderDetail.antennaY > 0;
@@ -183,11 +190,14 @@ const vueInstance = Vue.createApp({
     AddWindow() {
       let newId = this.orderDetail.windows.length+1;
       this.orderDetail.windows.push({ id: newId, X: 50, Y: 50, Xc: 0, pos: { label: '--請選擇--', value: null }, mat: { label: '塑膠', value: '塑膠' }, });
-      this.SetFabricObjVisible(this[`window${newId}Rect`]);
+      this[`window${newId}Rect`].set('width', 50);
+      this[`window${newId}Rect`].set('height', 50);
+      // this.SetFabricObjVisible(this[`window${newId}Rect`]);
     },
-    DeleteWindow(window) {
-      let delIndex = this.orderDetail.windows.findIndex(ele => ele.id === window.id);
+    DeleteWindow(win) {
+      let delIndex = this.orderDetail.windows.findIndex(ele => ele.id === win.id);
       this.orderDetail.windows.splice(delIndex, 1);
+      this.SetFabricObjInvisible(this[`window${win.id}Rect`]);
     },
     InitFabric() {
       // Canvas config
@@ -281,6 +291,10 @@ const vueInstance = Vue.createApp({
       obj.set('visible', true);
       this.canvas.requestRenderAll();
     },
+    SetFabricObjInvisible(obj) {
+      obj.set('visible', false);
+      this.canvas.requestRenderAll();
+    },
     SyncWindowAthennaSize() {
       this.orderDetail.antennaX = this.orderDetail.windowX;
       this.orderDetail.antennaY = this.orderDetail.windowY;
@@ -333,25 +347,66 @@ const vueInstance = Vue.createApp({
     },
     // 設定窗戶尺寸(多個窗戶)
     SetWindowsX(id) {
+      let win = this.orderDetail.windows.find(ele => ele.id === id);
       const scale = this[`window${id}Rect`].getObjectScaling();
-      this[`window${id}Rect`].set('width', this.orderDetail.windows.find(ele => ele.id === id).X/ scale.scaleX);
+      this[`window${id}Rect`].set('width', win.X/ scale.scaleX);
+      this.SetWindowsPosition(id, win.pos.value);
       this[`window${id}Rect`].setCoords();
 
       this.canvas.requestRenderAll();
     },
     SetWindowsY(id) {
+      let win = this.orderDetail.windows.find(ele => ele.id === id);
       const scale = this[`window${id}Rect`].getObjectScaling();
-      this[`window${id}Rect`].set('height', this.orderDetail.windows.find(ele => ele.id === id).Y/ scale.scaleY);
+      this[`window${id}Rect`].set('height', win.Y/ scale.scaleY);
+      this.SetWindowsPosition(id, win.pos.value);
       this[`window${id}Rect`].setCoords();
 
       this.canvas.requestRenderAll();
     },
     SetWindowsXc(id) {
-      this[`window${id}Rect`].set('left', (parseInt(this.orderDetail.windows.find(ele => ele.id === id).Xc)+30));
+      let win = this.orderDetail.windows.find(ele => ele.id === id);
+      this.SetWindowsPosition(id, win.pos.value);
+      
+      // this[`window${id}Rect`].set('left', (parseInt(this.orderDetail.windows.find(ele => ele.id === id).Xc)+30));
       this[`window${id}Rect`].setCoords();
       // this.antennaRect.set('left', (parseInt(this.orderDetail.windows.find(ele => ele.id === id).Xc)+30));
       // this.antennaRect.setCoords();
       this.canvas.requestRenderAll();
+    },
+    SetWindowsPos(id, pos) {
+      this.SetWindowsPosition(id, pos);
+      this.SetFabricObjVisible(this[`window${id}Rect`]);
+      // this.antennaRect.set('left', (parseInt(this.orderDetail.windows.find(ele => ele.id === id).Xc)+30));
+      // this.antennaRect.setCoords();
+      this.canvas.requestRenderAll();
+    },
+    SetWindowsPosition(id, pos) {
+      let win = this.orderDetail.windows.find(ele => ele.id === id);
+      switch (pos) {
+        case 'left_up':
+          this[`window${id}Rect`].set('top', 30);
+          this[`window${id}Rect`].set('left', 30 + parseInt(win.Xc));
+          this[`window${id}Rect`].setCoords();
+          break;
+        case 'right_up':
+          this[`window${id}Rect`].set('left', 30 + parseInt(this.orderDetail.caseX) - parseInt(win.X) - parseInt(win.Xc));
+          this[`window${id}Rect`].set('top', 30);
+          this[`window${id}Rect`].setCoords();
+          break;
+        case 'left_down':
+          this[`window${id}Rect`].set('left', 30 + parseInt(win.Xc));
+          this[`window${id}Rect`].set('top', 30 + parseInt(this.orderDetail.caseY) - parseInt(win.Y));
+          this[`window${id}Rect`].setCoords();
+          break;
+        case 'right_down':
+          this[`window${id}Rect`].set('left', 30 + parseInt(this.orderDetail.caseX) - parseInt(win.X) - parseInt(win.Xc));
+          this[`window${id}Rect`].set('top', 30 + parseInt(this.orderDetail.caseY) - parseInt(win.Y));
+          this[`window${id}Rect`].setCoords();
+          break;
+        default:
+          break;
+      }
     },
     SetAntennaX() {
       const scale = this.antennaRect.getObjectScaling();
