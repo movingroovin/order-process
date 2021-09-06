@@ -121,7 +121,7 @@
             </select>
           </div>
         </div> -->
-        <!-- 窗戶1 -->
+        <!-- 窗戶 -->
         <div v-if="orderDetail.selectedType.value === '窗戶'">
           <div v-for="(win, widx) in orderDetail.windows" :key="widx">
             <h3 class="mB5">窗戶{{win.id}}</h3>
@@ -165,6 +165,56 @@
               </div>
             </div>
             <span>{{win.pos.label}}/Xw{{win.id}}: {{win.X}}/Yw{{win.id}}: {{win.Y}}/Xc{{win.id}}: {{win.Xc}}/材質: {{win.mat.label}}</span>
+          </div>
+        </div>
+        <!-- 槽孔 -->
+        <div v-if="orderDetail.selectedType.value === '槽孔'">
+          <div v-for="(slot, sidx) in orderDetail.slots" :key="sidx">
+            <h3 class="mB5">槽孔{{slot.id}}</h3>
+            <button v-if="sidx === orderDetail.slots.length-1 && sidx !== 3" @click="AddSlot">增加槽孔</button>
+            <button v-if="sidx === orderDetail.slots.length-1 && sidx !== 0" @click="DeleteSlot(slot)">刪除槽孔</button>
+            <div class="input_step" v-show="sidx === orderDetail.slots.length-1">
+              <div class="input_group">
+                <p><span class="color-warning">*</span>槽孔位置</p>
+                <select class="input_select" name="" id="" v-model="slot.pos" @change="SetSlotsPos(slot.id, slot.pos.value)">
+                  <option
+                    v-for="(ele, idx) in orderDetail.posList"
+                    :key="idx"
+                    :value="ele"
+                    :disabled="orderDetail.slots.map(w => w.pos).map(p => p.value).includes(ele.value) || !ele.value">
+                    {{ele.label}}
+                  </option>
+                </select>
+              </div>
+              <div class="input_group">
+                <p><span class="color-warning">*</span>槽孔長Xw1 (mm)</p>
+                <input class="input_text" placeholder="請填寫" type="text" v-model="slot.X" @input="SetSlotsX(slot.id)">
+              </div>
+              <div class="input_group">
+                <p><span class="color-warning">*</span>槽孔寬Yw1 (mm)</p>
+                <input class="input_text" placeholder="請填寫" type="text" v-model="slot.Y" @input="SetSlotsY(slot.id)">
+              </div>
+              <div class="input_group">
+                <p><span class="color-warning">*</span>側邊長Xc1 (mm)</p>
+                <input class="input_text" placeholder="請填寫" type="text" v-model="slot.Xc" @input="SetSlotsXc(slot.id)">
+              </div>
+              <div class="input_group">
+                <p><span class="color-warning">*</span>側邊寬Yc1 (mm)</p>
+                <input class="input_text" placeholder="請填寫" type="text" v-model="slot.Yc" @input="SetSlotsYc(slot.id)">
+              </div>
+              <div class="input_group">
+                <p><span class="color-warning">*</span>槽孔材質</p>
+                <select class="input_select" name="" id="" v-model="slot.mat">
+                  <option
+                    v-for="(ele, idx) in orderDetail.slotMaterialList"
+                    :key="idx"
+                    :value="ele">
+                    {{ele.label}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <span>{{slot.pos.label}}/Xw{{slot.id}}: {{slot.X}}/Yw{{slot.id}}: {{slot.Y}}/Xc{{slot.id}}: {{slot.Xc}}/Yc{{slot.id}}: {{slot.Yc}}/材質: {{slot.mat.label}}</span>
           </div>
         </div>
         <div class="mB10">

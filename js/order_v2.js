@@ -21,6 +21,9 @@ const vueInstance = Vue.createApp({
         windows: [
           { id: 1, X: 50, Y: 50, Xc: 0, pos: { label: '左上', value: 'left_up' }, mat: { label: '塑膠', value: '塑膠' }, },
         ],
+        slots: [
+          { id: 1, X: 50, Y: 50, Xc: 10, Yc: 10, pos: { label: '左上', value: 'left_up' }, mat: { label: '塑膠', value: '塑膠' }, },
+        ],
         windowX: 50, // 窗戶X
         windowY: 50, // 窗戶Y
         windowXc: 0, // 側邊長Xc
@@ -61,6 +64,9 @@ const vueInstance = Vue.createApp({
         windowMaterialList: [
           { label: '塑膠', value: '塑膠' }, 
         ],
+        slotMaterialList: [
+          { label: '塑膠', value: '塑膠' }, 
+        ],
         posList: [
           { label: '--請選擇--', value: null },
           { label: '左上', value: 'left_up' }, 
@@ -76,6 +82,10 @@ const vueInstance = Vue.createApp({
       window2Rect: null,
       window3Rect: null,
       window4Rect: null,
+      slot1Rect: null,
+      slot2Rect: null,
+      slot3Rect: null,
+      slot4Rect: null,
       antennaRect: null,
       templateList: [
         { id: 0, isSelected: true, title: '不使用設計範本，繼續進行客製化設計' },
@@ -126,7 +136,11 @@ const vueInstance = Vue.createApp({
     },
     isStep2Finished() {
       // return this.orderDetail.windowX > 0 && this.orderDetail.windowY > 0 && this.orderDetail.windowXc > 0 && this.orderDetail.selectedWindowMaterial;
-      return this.orderDetail.windows.filter(win => win.X > 0 && win.Y > 0 && win.Xc > 0 && win.pos.value && win.mat.value).length === this.orderDetail.windows.length;
+      if (this.orderDetail.selectedType.value === '窗戶') {
+        return this.orderDetail.windows.filter(win => win.X > 0 && win.Y > 0 && win.Xc > 0 && win.pos.value && win.mat.value).length === this.orderDetail.windows.length;
+      } else if (this.orderDetail.selectedType.value === '槽孔') {
+        return this.orderDetail.slots.filter(slot => slot.X > 0 && slot.Y > 0 && slot.Xc > 0 && slot.Yc > 0 && slot.pos.value && slot.mat.value).length === this.orderDetail.slots.length;
+      }
     },
     isStep3Finished() {
       return this.orderDetail.antennaX > 0 && this.orderDetail.antennaY > 0;
@@ -150,9 +164,23 @@ const vueInstance = Vue.createApp({
       
       // set windowRect visible at step 2, antennaRect at step 3
       switch (toStep) {
+        case 1:
+          this.orderDetail.windows.forEach(w => this.SetFabricObjInvisible(this[`window${w.id}Rect`]));
+          this.orderDetail.slots.forEach(s => this.SetFabricObjInvisible(this[`slot${s.id}Rect`]));
+          this.orderDetail.windows = [
+            { id: 1, X: 50, Y: 50, Xc: 0, pos: { label: '左上', value: 'left_up' }, mat: { label: '塑膠', value: '塑膠' }, },
+          ];
+          this.orderDetail.slots = [
+            { id: 1, X: 50, Y: 50, Xc: 10, Yc: 10, pos: { label: '左上', value: 'left_up' }, mat: { label: '塑膠', value: '塑膠' }, },
+          ];
+          break;
         case 2:
           // this.SetFabricObjVisible(this.windowRect);
-          this.SetFabricObjVisible(this.window1Rect);
+          if (this.orderDetail.selectedType.value === '窗戶') {
+            this.SetFabricObjVisible(this.window1Rect);
+          } else if (this.orderDetail.selectedType.value === '槽孔') {
+            this.SetFabricObjVisible(this.slot1Rect);
+          } 
           break;
         case 3:
           this.SyncWindowAthennaSize();
@@ -198,6 +226,17 @@ const vueInstance = Vue.createApp({
       let delIndex = this.orderDetail.windows.findIndex(ele => ele.id === win.id);
       this.orderDetail.windows.splice(delIndex, 1);
       this.SetFabricObjInvisible(this[`window${win.id}Rect`]);
+    },
+    AddSlot() {
+      let newId = this.orderDetail.slots.length+1;
+      this.orderDetail.slots.push({ id: newId, X: 50, Y: 50, Xc: 10, Yc: 10, pos: { label: '--請選擇--', value: null }, mat: { label: '塑膠', value: '塑膠' }, });
+      this[`slot${newId}Rect`].set('width', 50);
+      this[`slot${newId}Rect`].set('height', 50);
+    },
+    DeleteSlot(slot) {
+      let delIndex = this.orderDetail.slots.findIndex(ele => ele.id === slot.id);
+      this.orderDetail.slots.splice(delIndex, 1);
+      this.SetFabricObjInvisible(this[`slot${slot.id}Rect`]);
     },
     InitFabric() {
       // Canvas config
@@ -267,7 +306,46 @@ const vueInstance = Vue.createApp({
         selectable: false,
         visible: false
       });
-
+      // slot 1
+      this.AddFabricObj('slot1Rect', {
+        top: 40,
+        left: 40,
+        width: this.orderDetail.slots[0].X,
+        height: this.orderDetail.slots[0].Y,
+        fill: '#f5f3f4',
+        selectable: false,
+        visible: false
+      });
+      // slot 2
+      this.AddFabricObj('slot2Rect', {
+        top: 30,
+        left: 30,
+        width: 50,
+        height: 50,
+        fill: '#f5f3f4',
+        selectable: false,
+        visible: false
+      });
+      // slot 3
+      this.AddFabricObj('slot3Rect', {
+        top: 30,
+        left: 30,
+        width: 50,
+        height: 50,
+        fill: '#f5f3f4',
+        selectable: false,
+        visible: false
+      });
+      // slot 4
+      this.AddFabricObj('slot4Rect', {
+        top: 30,
+        left: 30,
+        width: 50,
+        height: 50,
+        fill: '#f5f3f4',
+        selectable: false,
+        visible: false
+      });
       // antenna
       this.SyncWindowAthennaSize();
       this.AddFabricObj('antennaRect', {
@@ -403,6 +481,71 @@ const vueInstance = Vue.createApp({
           this[`window${id}Rect`].set('left', 30 + parseInt(this.orderDetail.caseX) - parseInt(win.X) - parseInt(win.Xc));
           this[`window${id}Rect`].set('top', 30 + parseInt(this.orderDetail.caseY) - parseInt(win.Y));
           this[`window${id}Rect`].setCoords();
+          break;
+        default:
+          break;
+      }
+    },
+    // 設定槽孔尺寸(多個槽孔)
+    SetSlotsX(id) {
+      let slot = this.orderDetail.slots.find(ele => ele.id === id);
+      const scale = this[`slot${id}Rect`].getObjectScaling();
+      this[`slot${id}Rect`].set('width', slot.X/ scale.scaleX);
+      this.SetSlotsPosition(id, slot.pos.value);
+      this[`slot${id}Rect`].setCoords();
+
+      this.canvas.requestRenderAll();
+    },
+    SetSlotsY(id) {
+      let slot = this.orderDetail.slots.find(ele => ele.id === id);
+      const scale = this[`slot${id}Rect`].getObjectScaling();
+      this[`slot${id}Rect`].set('height', slot.Y/ scale.scaleY);
+      this.SetSlotsPosition(id, slot.pos.value);
+      this[`slot${id}Rect`].setCoords();
+
+      this.canvas.requestRenderAll();
+    },
+    SetSlotsXc(id) {
+      let slot = this.orderDetail.slots.find(ele => ele.id === id);
+      this.SetSlotsPosition(id, slot.pos.value);
+      
+      this[`slot${id}Rect`].setCoords();
+      this.canvas.requestRenderAll();
+    },
+    SetSlotsYc(id) {
+      let slot = this.orderDetail.slots.find(ele => ele.id === id);
+      this.SetSlotsPosition(id, slot.pos.value);
+      
+      this[`slot${id}Rect`].setCoords();
+      this.canvas.requestRenderAll();
+    },
+    SetSlotsPos(id, pos) {
+      this.SetSlotsPosition(id, pos);
+      this.SetFabricObjVisible(this[`slot${id}Rect`]);
+      this.canvas.requestRenderAll();
+    },
+    SetSlotsPosition(id, pos) {
+      let slot = this.orderDetail.slots.find(ele => ele.id === id);
+      switch (pos) {
+        case 'left_up':
+          this[`slot${id}Rect`].set('top', 30 + parseInt(slot.Yc));
+          this[`slot${id}Rect`].set('left', 30 + parseInt(slot.Xc));
+          this[`slot${id}Rect`].setCoords();
+          break;
+        case 'right_up':
+          this[`slot${id}Rect`].set('left', 30 + parseInt(this.orderDetail.caseX) - parseInt(slot.X) - parseInt(slot.Xc));
+          this[`slot${id}Rect`].set('top', 30 + parseInt(slot.Yc));
+          this[`slot${id}Rect`].setCoords();
+          break;
+        case 'left_down':
+          this[`slot${id}Rect`].set('left', 30 + parseInt(slot.Xc));
+          this[`slot${id}Rect`].set('top', 30 + parseInt(this.orderDetail.caseY) - parseInt(slot.Y) - parseInt(slot.Yc));
+          this[`slot${id}Rect`].setCoords();
+          break;
+        case 'right_down':
+          this[`slot${id}Rect`].set('left', 30 + parseInt(this.orderDetail.caseX) - parseInt(slot.X) - parseInt(slot.Xc));
+          this[`slot${id}Rect`].set('top', 30 + parseInt(this.orderDetail.caseY) - parseInt(slot.Y) - parseInt(slot.Yc));
+          this[`slot${id}Rect`].setCoords();
           break;
         default:
           break;
