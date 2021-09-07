@@ -94,7 +94,7 @@
       
       <!-- step 2 -->
       <div class="design_area" v-show="orderStep.isStep2">
-        <h2 class="mB25">窗戶尺寸</h2>
+        <h2 class="mB25">{{orderDetail.selectedType.value}}尺寸</h2>
         <span class="color-subtitle font-title-small-400"><span class="color-warning">*</span>為必填欄位</span>
         <!-- <div class="input_step">
           <div class="input_group">
@@ -217,6 +217,38 @@
             <span>{{slot.pos.label}}/Xw{{slot.id}}: {{slot.X}}/Yw{{slot.id}}: {{slot.Y}}/Xc{{slot.id}}: {{slot.Xc}}/Yc{{slot.id}}: {{slot.Yc}}/材質: {{slot.mat.label}}</span>
           </div>
         </div>
+        <!-- 套筒 -->
+        <div v-if="orderDetail.selectedType.value === '套筒'">
+          <div>
+            <h3 class="mB5">套筒</h3>
+            <div class="input_step">
+              <div class="input_group">
+                <p><span class="color-warning">*</span>套筒長X (mm)</p>
+                <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.sleeve.X" @input="SetSleeveSize('width')">
+              </div>
+              <div class="input_group">
+                <p><span class="color-warning">*</span>套筒寬Y (mm)</p>
+                <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.sleeve.Y" @input="SetSleeveSize('height')">
+              </div>
+              <div class="input_group">
+                <p><span class="color-warning">*</span>套筒厚Z (mm)</p>
+                <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.sleeve.Z">
+              </div>
+              <div class="input_group">
+                <p><span class="color-warning">*</span>套筒材質</p>
+                <select class="input_select" name="" id="" v-model="orderDetail.sleeve.mat">
+                  <option
+                    v-for="(ele, idx) in orderDetail.sleeveMaterialList"
+                    :key="idx"
+                    :value="ele">
+                    {{ele.label}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <span>X: {{orderDetail.sleeve.X}}/Y: {{orderDetail.sleeve.Y}}/Z: {{orderDetail.sleeve.Z}}/材質: {{orderDetail.sleeve.mat.label}}</span>
+          </div>
+        </div>
         <div class="mB10">
           <a class="btn-secondary-outline mB10 mR10" @click="ToStep(1)">上一步</a>
           <a class="btn-primary mB10 mR10" v-if="isStep2Finished" @click="ToStep(3)">下一步</a>
@@ -236,6 +268,10 @@
           <div class="input_group">
             <p><span class="color-warning">*</span>天線寬Ya (mm)</p>
             <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.antennaY" @input="SetAntennaY">
+          </div>
+          <div class="input_group">
+            <p><span class="color-warning">*</span>天線寬Za (mm)</p>
+            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.antennaZ">
           </div>
         </div>
         <div class="mB10">
