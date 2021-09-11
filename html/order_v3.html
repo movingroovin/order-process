@@ -102,11 +102,11 @@
         <!-- 窗戶 -->
         <div>
           <div>
-            <h3 class="mB5">窗戶{{orderDetail.editAttachment.id}}</h3>
+            <h3 class="mB5">{{orderDetail.editAttachment.typeName}}{{orderDetail.editAttachment.id}}</h3>
             <div class="input_step">
               <div class="input_group">
-                <p><span class="color-warning">*</span>窗戶位置</p>
-                <select class="input_select" name="" id="" v-model="orderDetail.editAttachment.pos">
+                <p><span class="color-warning">*</span>{{orderDetail.editAttachment.typeName}}位置</p>
+                <select class="input_select" name="" id="" v-model="orderDetail.editAttachment.pos" @change="SetAttachmentPos(orderDetail.editAttachment.id, orderDetail.editAttachment.pos.value)">
                   <option
                     v-for="(ele, idx) in orderDetail.posList"
                     :key="idx"
@@ -116,19 +116,26 @@
                 </select>
               </div>
               <div class="input_group">
-                <p><span class="color-warning">*</span>窗戶長Xw1 (mm)</p>
-                <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.X">
+                <p v-if="orderDetail.editAttachment.type === 'window'"><span class="color-warning">*</span>窗戶長Xw (mm)</p>
+                <p v-if="orderDetail.editAttachment.type === 'slot'"><span class="color-warning">*</span>槽孔長Xw (mm)</p>
+                <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.X" @input="SetAttachmentX(orderDetail.editAttachment.id)">
               </div>
               <div class="input_group">
-                <p><span class="color-warning">*</span>窗戶寬Yw1 (mm)</p>
-                <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.Y">
+                <p v-if="orderDetail.editAttachment.type === 'window'"><span class="color-warning">*</span>窗戶寬Yw (mm)</p>
+                <p v-if="orderDetail.editAttachment.type === 'slot'"><span class="color-warning">*</span>槽孔寬Yw (mm)</p>
+                <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.Y" @input="SetAttachmentY(orderDetail.editAttachment.id)">
               </div>
               <div class="input_group">
-                <p><span class="color-warning">*</span>側邊長Xc1 (mm)</p>
-                <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.Xc">
+                <p v-if="orderDetail.editAttachment.type === 'window'"><span class="color-warning">*</span>側邊長Xc (mm)</p>
+                <p v-if="orderDetail.editAttachment.type === 'slot'"><span class="color-warning">*</span>側邊長Xc (mm)</p>
+                <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.Xc" @input="SetAttachmentXc(orderDetail.editAttachment.id)">
+              </div>
+              <div class="input_group" v-if="orderDetail.editAttachment.type === 'slot'">
+                <p><span class="color-warning">*</span>側邊寬Yc (mm)</p>
+                <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.Yc">
               </div>
               <div class="input_group">
-                <p><span class="color-warning">*</span>窗戶材質</p>
+                <p><span class="color-warning">*</span>{{orderDetail.editAttachment.typeName}}材質</p>
                 <select class="input_select" name="" id="" v-model="orderDetail.editAttachment.mat">
                   <option
                     v-for="(ele, idx) in orderDetail.windowMaterialList"

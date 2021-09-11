@@ -247,10 +247,10 @@ const vueInstance = Vue.createApp({
       switch (selectedtype.value) {
         case 'window':
           newObj = {
-            type: selectedtype.value, id: newObjId, X: 30, Y: 30, Xc: 10, pos: { label: '左上', value: 'left_up' }, mat: { label: '塑膠', value: '塑膠' }, 
+            type: selectedtype.value, typeName: selectedtype.label, id: newObjId, X: 30, Y: 30, Xc: 10, pos: { label: '左上', value: 'left_up' }, mat: { label: '塑膠', value: '塑膠' }, 
           };
           this.orderDetail.attachment.push(newObj);
-          this.AddFabricObj(`rectWindow${newObjId}`, {
+          this.AddFabricObj(`rectAttachment${newObjId}`, {
             top: 30,
             left: 30,
             width: newObj.X,
@@ -265,10 +265,10 @@ const vueInstance = Vue.createApp({
           break;
         case 'slot':
           newObj = {
-            type: selectedtype.value, id: newObjId, X: 50, Y: 50, Xc: 10, Yc: 10, pos: { label: '左上', value: 'left_up' }, mat: { label: '塑膠', value: '塑膠' }, 
+            type: selectedtype.value, typeName: selectedtype.label, id: newObjId, X: 50, Y: 50, Xc: 10, Yc: 10, pos: { label: '左上', value: 'left_up' }, mat: { label: '塑膠', value: '塑膠' }, 
           };
           this.orderDetail.attachment.push(newObj);
-          this.AddFabricObj(`rectSlot${newObjId}`, {
+          this.AddFabricObj(`rectAttachment${newObjId}`, {
             top: 50,
             left: 50,
             width: newObj.X,
@@ -410,6 +410,27 @@ const vueInstance = Vue.createApp({
       this.sleeveRRect.set('top', 30 + this.orderDetail.caseY);
       this.canvas.requestRenderAll();
     },
+    SetAttachmentX(id) {
+      const scale = this[`rectAttachment${id}`].getObjectScaling();
+      this[`rectAttachment${id}`].set('width', this.orderDetail.editAttachment.X/ scale.scaleX);
+      // this.SetWindowsPosition(id, win.pos.value);
+      this[`rectAttachment${id}`].setCoords();
+
+      this.canvas.requestRenderAll();
+    },
+    SetAttachmentY(id) {
+      const scale = this[`rectAttachment${id}`].getObjectScaling();
+      this[`rectAttachment${id}`].set('height', this.orderDetail.editAttachment.Y/ scale.scaleY);
+      // this.SetWindowsPosition(id, win.pos.value);
+      this[`rectAttachment${id}`].setCoords();
+
+      this.canvas.requestRenderAll();
+    },
+    SetAttachmentXc(id) {
+      this.SetAttachmentPosition(id, this.orderDetail.editAttachment.pos.value);
+      this[`rectAttachment${id}`].setCoords();
+      this.canvas.requestRenderAll();
+    },
     // 設定窗戶尺寸
     SetWindowX() {
       const scale = this.windowRect.getObjectScaling();
@@ -478,6 +499,41 @@ const vueInstance = Vue.createApp({
       // this.antennaRect.set('left', (parseInt(this.orderDetail.windows.find(ele => ele.id === id).Xc)+30));
       // this.antennaRect.setCoords();
       this.canvas.requestRenderAll();
+    },
+    SetAttachmentPos(id, pos) {
+      this.SetAttachmentPosition(id, pos);
+      // this.SetFabricObjVisible(this[`window${id}Rect`]);
+      // this.antennaRect.set('left', (parseInt(this.orderDetail.windows.find(ele => ele.id === id).Xc)+30));
+      // this.antennaRect.setCoords();
+      this.canvas.requestRenderAll();
+    },
+    SetAttachmentPosition(id, pos) {
+      let win = this.orderDetail.editAttachment;
+      console.log(pos);
+      switch (pos) {
+        case 'left_up':
+          this[`rectAttachment${id}`].set('top', 30);
+          this[`rectAttachment${id}`].set('left', 30 + parseInt(win.Xc));
+          this[`rectAttachment${id}`].setCoords();
+          break;
+        case 'right_up':
+          this[`rectAttachment${id}`].set('left', 30 + parseInt(this.orderDetail.caseX) - parseInt(win.X) - parseInt(win.Xc));
+          this[`rectAttachment${id}`].set('top', 30);
+          this[`rectAttachment${id}`].setCoords();
+          break;
+        case 'left_down':
+          this[`rectAttachment${id}`].set('left', 30 + parseInt(win.Xc));
+          this[`rectAttachment${id}`].set('top', 30 + parseInt(this.orderDetail.caseY) - parseInt(win.Y));
+          this[`rectAttachment${id}`].setCoords();
+          break;
+        case 'right_down':
+          this[`rectAttachment${id}`].set('left', 30 + parseInt(this.orderDetail.caseX) - parseInt(win.X) - parseInt(win.Xc));
+          this[`rectAttachment${id}`].set('top', 30 + parseInt(this.orderDetail.caseY) - parseInt(win.Y));
+          this[`rectAttachment${id}`].setCoords();
+          break;
+        default:
+          break;
+      }
     },
     SetWindowsPosition(id, pos) {
       let win = this.orderDetail.windows.find(ele => ele.id === id);
