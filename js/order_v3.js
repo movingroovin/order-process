@@ -152,11 +152,12 @@ const vueInstance = Vue.createApp({
     },
     isStep2Finished() {
       // return this.orderDetail.windowX > 0 && this.orderDetail.windowY > 0 && this.orderDetail.windowXc > 0 && this.orderDetail.selectedWindowMaterial;
-      if (this.orderDetail.selectedType.value === '窗戶') {
-        return this.orderDetail.windows.filter(win => win.X > 0 && win.Y > 0 && win.Xc > 0 && win.pos.value && win.mat.value).length === this.orderDetail.windows.length;
-      } else if (this.orderDetail.selectedType.value === '槽孔') {
-        return this.orderDetail.slots.filter(slot => slot.X > 0 && slot.Y > 0 && slot.Xc > 0 && slot.Yc > 0 && slot.pos.value && slot.mat.value).length === this.orderDetail.slots.length;
-      } else if (this.orderDetail.selectedType.value === '套筒') {
+      
+      if (this.orderDetail.selectedType.value === 'window') {
+        return this.orderDetail.editAttachment.X > 0 && this.orderDetail.editAttachment.Y > 0 && this.orderDetail.editAttachment.Xc > 0 && this.orderDetail.editAttachment.pos.value && this.orderDetail.editAttachment.mat.value;
+      } else if (this.orderDetail.selectedType.value === 'slot') {
+        return this.orderDetail.editAttachment.X > 0 && this.orderDetail.editAttachment.Y > 0 && this.orderDetail.editAttachment.Xc > 0 && this.orderDetail.editAttachment.Yc > 0 && this.orderDetail.editAttachment.pos.value && this.orderDetail.editAttachment.mat.value;
+      } else if (this.orderDetail.selectedType.value === 'sleeve') {
         return this.orderDetail.sleeve.X > 0 && this.orderDetail.sleeve.Y > 0 && this.orderDetail.sleeve.Z > 0 && this.orderDetail.sleeve.mat.value;
       }
     },
@@ -183,30 +184,22 @@ const vueInstance = Vue.createApp({
       // set windowRect visible at step 2, antennaRect at step 3
       switch (toStep) {
         case 1:
-          this.orderDetail.windows.forEach(w => this.SetFabricObjInvisible(this[`window${w.id}Rect`]));
-          this.orderDetail.slots.forEach(s => this.SetFabricObjInvisible(this[`slot${s.id}Rect`]));
-          this.orderDetail.windows = [
-            { id: 1, X: 50, Y: 50, Xc: 0, pos: { label: '左上', value: 'left_up' }, mat: { label: '塑膠', value: '塑膠' }, },
-          ];
-          this.orderDetail.slots = [
-            { id: 1, X: 50, Y: 50, Xc: 10, Yc: 10, pos: { label: '左上', value: 'left_up' }, mat: { label: '塑膠', value: '塑膠' }, },
-          ];
-          this.SetFabricObjInvisible(this.sleeveLRect);
-          this.SetFabricObjInvisible(this.sleeveRRect);
+          console.log(this.orderDetail.editAttachment);
           break;
         case 2:
           // this.SetFabricObjVisible(this.windowRect);
-          if (this.orderDetail.selectedType.value === '窗戶') {
-            this.SetFabricObjVisible(this.window1Rect);
-          } else if (this.orderDetail.selectedType.value === '槽孔') {
-            this.SetFabricObjVisible(this.slot1Rect);
-          } else if (this.orderDetail.selectedType.value === '套筒') {
-            this.orderDetail.sleeve.X = parseInt(this.orderDetail.caseX) - 30*2;
-            this.sleeveLRect.set('top', 30 + parseInt(this.orderDetail.caseY));
-            this.sleeveRRect.set('top', 30 + parseInt(this.orderDetail.caseY));
-            this.SetFabricObjVisible(this.sleeveLRect);
-            this.SetFabricObjVisible(this.sleeveRRect);
-          } 
+          // if (this.orderDetail.selectedType.value === '窗戶') {
+          //   this.SetFabricObjVisible(this.window1Rect);
+          // } else if (this.orderDetail.selectedType.value === '槽孔') {
+          //   this.SetFabricObjVisible(this.slot1Rect);
+          // } else if (this.orderDetail.selectedType.value === '套筒') {
+          //   this.orderDetail.sleeve.X = parseInt(this.orderDetail.caseX) - 30*2;
+          //   this.sleeveLRect.set('top', 30 + parseInt(this.orderDetail.caseY));
+          //   this.sleeveRRect.set('top', 30 + parseInt(this.orderDetail.caseY));
+          //   this.SetFabricObjVisible(this.sleeveLRect);
+          //   this.SetFabricObjVisible(this.sleeveRRect);
+          // } 
+          console.log(this.orderDetail.editAttachment);
           break;
         case 3:
           this.SyncWindowAthennaSize();
