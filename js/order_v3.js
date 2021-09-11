@@ -249,9 +249,9 @@ const vueInstance = Vue.createApp({
             width: newObj.X,
             height: newObj.Y,
             fill: '#f5f3f4',
-            stroke: '#333',
-            strokeWidth: 1,
-            strokeDashArray: [5, 5],
+            // stroke: '#333',
+            // strokeWidth: 1,
+            // strokeDashArray: [5, 5],
             selectable: false
           });
           this.orderDetail.editAttachment = this.orderDetail.attachment.find(ele => ele.id === newObjId);
@@ -262,14 +262,14 @@ const vueInstance = Vue.createApp({
           };
           this.orderDetail.attachment.push(newObj);
           this.AddFabricObj(`rectAttachment${newObjId}`, {
-            top: 50,
-            left: 50,
+            top: 40,
+            left: 40,
             width: newObj.X,
             height: newObj.Y,
             fill: '#f5f3f4',
-            stroke: '#333',
-            strokeWidth: 1,
-            strokeDashArray: [5, 5],
+            // stroke: '#333',
+            // strokeWidth: 1,
+            // strokeDashArray: [5, 5],
             selectable: false
           });
           this.orderDetail.editAttachment = this.orderDetail.attachment.find(ele => ele.id === newObjId);
@@ -419,7 +419,7 @@ const vueInstance = Vue.createApp({
 
       this.canvas.requestRenderAll();
     },
-    SetAttachmentXc(id) {
+    SetAttachmentXcYc(id) {
       this.SetAttachmentPosition(id, this.orderDetail.editAttachment.pos.value);
       this[`rectAttachment${id}`].setCoords();
       this.canvas.requestRenderAll();
@@ -503,30 +503,59 @@ const vueInstance = Vue.createApp({
     SetAttachmentPosition(id, pos) {
       let win = this.orderDetail.editAttachment;
       console.log(pos);
-      switch (pos) {
-        case 'left_up':
-          this[`rectAttachment${id}`].set('top', 30);
-          this[`rectAttachment${id}`].set('left', 30 + parseInt(win.Xc));
-          this[`rectAttachment${id}`].setCoords();
-          break;
-        case 'right_up':
-          this[`rectAttachment${id}`].set('left', 30 + parseInt(this.orderDetail.caseX) - parseInt(win.X) - parseInt(win.Xc));
-          this[`rectAttachment${id}`].set('top', 30);
-          this[`rectAttachment${id}`].setCoords();
-          break;
-        case 'left_down':
-          this[`rectAttachment${id}`].set('left', 30 + parseInt(win.Xc));
-          this[`rectAttachment${id}`].set('top', 30 + parseInt(this.orderDetail.caseY) - parseInt(win.Y));
-          this[`rectAttachment${id}`].setCoords();
-          break;
-        case 'right_down':
-          this[`rectAttachment${id}`].set('left', 30 + parseInt(this.orderDetail.caseX) - parseInt(win.X) - parseInt(win.Xc));
-          this[`rectAttachment${id}`].set('top', 30 + parseInt(this.orderDetail.caseY) - parseInt(win.Y));
-          this[`rectAttachment${id}`].setCoords();
-          break;
-        default:
-          break;
+      if (win.type === 'window') {
+        switch (pos) {
+          case 'left_up':
+            this[`rectAttachment${id}`].set('top', 30);
+            this[`rectAttachment${id}`].set('left', 30 + parseInt(win.Xc));
+            this[`rectAttachment${id}`].setCoords();
+            break;
+          case 'right_up':
+            this[`rectAttachment${id}`].set('left', 30 + parseInt(this.orderDetail.caseX) - parseInt(win.X) - parseInt(win.Xc));
+            this[`rectAttachment${id}`].set('top', 30);
+            this[`rectAttachment${id}`].setCoords();
+            break;
+          case 'left_down':
+            this[`rectAttachment${id}`].set('left', 30 + parseInt(win.Xc));
+            this[`rectAttachment${id}`].set('top', 30 + parseInt(this.orderDetail.caseY) - parseInt(win.Y));
+            this[`rectAttachment${id}`].setCoords();
+            break;
+          case 'right_down':
+            this[`rectAttachment${id}`].set('left', 30 + parseInt(this.orderDetail.caseX) - parseInt(win.X) - parseInt(win.Xc));
+            this[`rectAttachment${id}`].set('top', 30 + parseInt(this.orderDetail.caseY) - parseInt(win.Y));
+            this[`rectAttachment${id}`].setCoords();
+            break;
+          default:
+            break;
+        }
+      } else if (win.type === 'slot') {
+        let slot = this.orderDetail.slots.find(ele => ele.id === id);
+        switch (pos) {
+          case 'left_up':
+            this[`rectAttachment${id}`].set('top', 30 + parseInt(win.Yc));
+            this[`rectAttachment${id}`].set('left', 30 + parseInt(win.Xc));
+            this[`rectAttachment${id}`].setCoords();
+            break;
+          case 'right_up':
+            this[`rectAttachment${id}`].set('left', 30 + parseInt(this.orderDetail.caseX) - parseInt(win.X) - parseInt(win.Xc));
+            this[`rectAttachment${id}`].set('top', 30 + parseInt(win.Yc));
+            this[`rectAttachment${id}`].setCoords();
+            break;
+          case 'left_down':
+            this[`rectAttachment${id}`].set('left', 30 + parseInt(win.Xc));
+            this[`rectAttachment${id}`].set('top', 30 + parseInt(this.orderDetail.caseY) - parseInt(win.Y) - parseInt(win.Yc));
+            this[`rectAttachment${id}`].setCoords();
+            break;
+          case 'right_down':
+            this[`rectAttachment${id}`].set('left', 30 + parseInt(this.orderDetail.caseX) - parseInt(win.X) - parseInt(win.Xc));
+            this[`rectAttachment${id}`].set('top', 30 + parseInt(this.orderDetail.caseY) - parseInt(win.Y) - parseInt(win.Yc));
+            this[`rectAttachment${id}`].setCoords();
+            break;
+          default:
+            break;
+        }
       }
+      
     },
     SetWindowsPosition(id, pos) {
       let win = this.orderDetail.windows.find(ele => ele.id === id);

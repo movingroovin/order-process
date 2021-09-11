@@ -95,13 +95,13 @@
                 {{ele.label}}
               </option>
             </select>
-            <a class="btn-primary mB10 mL10" @click="AddObj(orderDetail.selectedType)">新增</a>
+            <a v-if="orderDetail.attachment.length !== orderDetail.editAttachment.id" class="btn-primary mB10 mL10" @click="AddObj(orderDetail.selectedType)">新增</a>
           </div>
         </div>
 
         <!-- 窗戶 -->
         <div>
-          <div>
+          <div v-if="orderDetail.attachment.length === orderDetail.editAttachment.id">
             <h3 class="mB5">{{orderDetail.editAttachment.typeName}}{{orderDetail.editAttachment.id}}</h3>
             <div class="input_step">
               <div class="input_group">
@@ -128,11 +128,11 @@
               <div class="input_group">
                 <p v-if="orderDetail.editAttachment.type === 'window'"><span class="color-warning">*</span>側邊長Xc (mm)</p>
                 <p v-if="orderDetail.editAttachment.type === 'slot'"><span class="color-warning">*</span>側邊長Xc (mm)</p>
-                <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.Xc" @input="SetAttachmentXc(orderDetail.editAttachment.id)">
+                <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.Xc" @input="SetAttachmentXcYc(orderDetail.editAttachment.id)">
               </div>
               <div class="input_group" v-if="orderDetail.editAttachment.type === 'slot'">
                 <p><span class="color-warning">*</span>側邊寬Yc (mm)</p>
-                <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.Yc">
+                <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.Yc" @input="SetAttachmentXcYc(orderDetail.editAttachment.id)">
               </div>
               <div class="input_group">
                 <p><span class="color-warning">*</span>{{orderDetail.editAttachment.typeName}}材質</p>
