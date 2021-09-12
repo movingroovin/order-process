@@ -87,7 +87,7 @@
         <div class="input_step">
           <div class="input_group">
             <p><span class="color-warning">*</span>窗戶/槽孔/套筒</p>
-            <select class="input_select w50" name="" id="" v-model="orderDetail.selectedType">
+            <select class="input_select w50" :disabled="orderDetail.attachment.length === orderDetail.editAttachment.id" name="" id="" v-model="orderDetail.selectedType">
               <option
                 v-for="(ele, idx) in orderDetail.typeList"
                 :key="idx"
@@ -96,6 +96,7 @@
               </option>
             </select>
             <a v-if="orderDetail.attachment.length !== orderDetail.editAttachment.id" class="btn-primary mB10 mL10" @click="AddObj(orderDetail.selectedType)">新增</a>
+            <a v-if="orderDetail.attachment.length === orderDetail.editAttachment.id" class="btn-secondary-outline mB10 mL10" @click="ReselectAttachment(orderDetail.editAttachment.id)">重新選擇</a>
           </div>
         </div>
 
@@ -316,18 +317,18 @@
       <div class="design_area" v-show="orderStep.isStep3">
         <h2 class="mB25">天線尺寸</h2>
         <span class="color-subtitle font-title-small-400"><span class="color-warning">*</span>為必填欄位</span>
-        <div class="input_step">
+        <div class="input_step" v-if="orderDetail.editAttachment.antenna">
           <div class="input_group">
             <p><span class="color-warning">*</span>天線長Xa (mm)</p>
-            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.antennaX" @input="SetAntennaX">
+            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.antenna.X" @input="SetAntennaX(orderDetail.editAttachment.id)">
           </div>
           <div class="input_group">
             <p><span class="color-warning">*</span>天線寬Ya (mm)</p>
-            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.antennaY" @input="SetAntennaY">
+            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.antenna.Y" @input="SetAntennaY(orderDetail.editAttachment.id)">
           </div>
           <div class="input_group">
             <p><span class="color-warning">*</span>天線厚度Za (mm)</p>
-            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.antennaZ">
+            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.antenna.Z">
           </div>
         </div>
         <div class="mB10">

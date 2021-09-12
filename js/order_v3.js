@@ -202,12 +202,7 @@ const vueInstance = Vue.createApp({
           console.log(this.orderDetail.editAttachment);
           break;
         case 3:
-          this.SyncWindowAthennaSize();
-          const scale = this.antennaRect.getObjectScaling();
-          this.antennaRect.set('width', this.orderDetail.windowX/scale.scaleX);
-          this.antennaRect.set('height', this.orderDetail.windowY/scale.scaleY);
-          this.windowRect.setCoords();
-          this.SetFabricObjVisible(this.antennaRect);
+          this.AddAntenna(this.orderDetail.editAttachment.id)
           break;
         default:
           break;
@@ -245,7 +240,7 @@ const vueInstance = Vue.createApp({
           this.orderDetail.attachment.push(newObj);
           this.AddFabricObj(`rectAttachment${newObjId}`, {
             top: 30,
-            left: 30,
+            left: 40,
             width: newObj.X,
             height: newObj.Y,
             fill: '#f5f3f4',
@@ -280,6 +275,36 @@ const vueInstance = Vue.createApp({
           break;
       }
     },
+    DeleteObj(id) {
+      // 找到id刪除
+      let delIndex = this.orderDetail.attachment.findIndex(ele => ele.id === id);
+      this.orderDetail.attachment.splice(delIndex, 1);
+      // 重設editAttachment
+      this.orderDetail.editAttachment = {};
+      // 刪除fabric canvas物件
+      this.DeleteFabricObj(`rectAttachment${id}`);
+      this.DeleteFabricObj(`rectAntenna${id}`);
+    },
+    ReselectAttachment(id) {
+      this.DeleteObj(id);
+    },
+    AddAntenna(id) {
+      let attach = this.orderDetail.attachment.find(ele => ele.id === id);
+      attach.antenna = { X: attach.X, Y: attach.Y, Z: 10};
+      // 重設editAttachment
+      this.orderDetail.editAttachment = attach;
+      this.AddFabricObj(`rectAntenna${id}`, {
+        top: this[`rectAttachment${id}`].get('top'),
+        left: this[`rectAttachment${id}`].get('left'),
+        width: parseInt(attach.X),
+        height: parseInt(attach.Y),
+        fill: '#598e9a',
+        stroke: '#333',
+        strokeWidth: 2,
+        selectable: false
+      });
+      console.log(this.orderDetail.editAttachment);
+    },
     AddWindow() {
       let newId = this.orderDetail.windows.length+1;
       this.orderDetail.windows.push({ id: newId, X: 50, Y: 50, Xc: 0, pos: { label: '--請選擇--', value: null }, mat: { label: '塑膠', value: '塑膠' }, });
@@ -298,7 +323,6 @@ const vueInstance = Vue.createApp({
       this[`slot${newId}Rect`].set('width', 50);
       this[`slot${newId}Rect`].set('height', 50);
     },
-    AddAntenna() {},
     DeleteSlot(slot) {
       let delIndex = this.orderDetail.slots.findIndex(ele => ele.id === slot.id);
       this.orderDetail.slots.splice(delIndex, 1);
@@ -370,6 +394,9 @@ const vueInstance = Vue.createApp({
       this[obj] = new fabric.Rect(option);
       this.canvas.add(this[obj]);
     },
+    DeleteFabricObj(obj) {
+      this.canvas.remove(this[obj]);
+    },
     SetFabricObjVisible(obj) {
       obj.set('visible', true);
       this.canvas.requestRenderAll();
@@ -379,8 +406,8 @@ const vueInstance = Vue.createApp({
       this.canvas.requestRenderAll();
     },
     SyncWindowAthennaSize() {
-      this.orderDetail.antennaX = this.orderDetail.windowX;
-      this.orderDetail.antennaY = this.orderDetail.windowY;
+      // this.orderDetail.antennaX = this.orderDetail.windowX;
+      // this.orderDetail.antennaY = this.orderDetail.windowY;
     },
     // 設定機殼尺寸
     SetCaseX() {
@@ -502,7 +529,6 @@ const vueInstance = Vue.createApp({
     },
     SetAttachmentPosition(id, pos) {
       let win = this.orderDetail.editAttachment;
-      console.log(pos);
       if (win.type === 'window') {
         switch (pos) {
           case 'left_up':
@@ -529,7 +555,6 @@ const vueInstance = Vue.createApp({
             break;
         }
       } else if (win.type === 'slot') {
-        let slot = this.orderDetail.slots.find(ele => ele.id === id);
         switch (pos) {
           case 'left_up':
             this[`rectAttachment${id}`].set('top', 30 + parseInt(win.Yc));
@@ -670,16 +695,16 @@ const vueInstance = Vue.createApp({
 
       this.canvas.requestRenderAll();
     },
-    SetAntennaX() {
-      const scale = this.antennaRect.getObjectScaling();
-      this.antennaRect.set('width', this.orderDetail.antennaX/ scale.scaleX);
-      this.antennaRect.setCoords();
+    SetAntennaX(id) {
+      const scale = this[`rectAntenna${id}`].getObjectScaling();
+      this[`rectAntenna${id}`].set('width', this.orderDetail.editAttachment.antenna.X/ scale.scaleX);
+      this[`rectAntenna${id}`].setCoords();
       this.canvas.requestRenderAll();
     },
-    SetAntennaY() {
-      const scale = this.antennaRect.getObjectScaling();
-      this.antennaRect.set('height', this.orderDetail.antennaY/ scale.scaleY);
-      this.antennaRect.setCoords();
+    SetAntennaY(id) {
+      const scale = this[`rectAntenna${id}`].getObjectScaling();
+      this[`rectAntenna${id}`].set('height', this.orderDetail.editAttachment.antenna.Y/ scale.scaleY);
+      this[`rectAntenna${id}`].setCoords();
       this.canvas.requestRenderAll();
     },
 
