@@ -130,6 +130,7 @@ const vueInstance = Vue.createApp({
         [ '交期', '-', '日', '日', '日'],
         [ '預估製作費用', '-', '$', '$', '$'],
       ],
+      isAddMore: true,
       termsCheck: false,
       isLightbox: false,
     }
@@ -162,13 +163,13 @@ const vueInstance = Vue.createApp({
       }
     },
     isStep3Finished() {
-      return this.orderDetail.antennaX > 0 && this.orderDetail.antennaY > 0 && this.orderDetail.antennaZ > 0;
+      return this.orderDetail.editAttachment.antenna && this.orderDetail.editAttachment.antenna.X > 0 && this.orderDetail.editAttachment.antenna.Y > 0 && this.orderDetail.editAttachment.antenna.Z > 0;
     },
     isStep4Finished() {
-      return this.orderDetail.antennaApps.filter(ele => ele.amount > 0).length > 0;
+      return this.orderDetail.editAttachment.antennaApps && this.orderDetail.editAttachment.antennaApps.filter(ele => ele.amount > 0).length > 0;
     },
     isStep5Finished() {
-      return !this.orderDetail.antennaSpec.filter(ele => !ele.freq || !ele.power || !ele.s11 ).length > 0;
+      return this.orderDetail.editAttachment.antennaSpec && !this.orderDetail.editAttachment.antennaSpec.filter(ele => !ele.freq || !ele.power || !ele.s11 ).length > 0;
     },
     isStep7Finished() {
       return this.templateList.find(ele => ele.isSelected).id === 0;
@@ -202,7 +203,8 @@ const vueInstance = Vue.createApp({
           console.log(this.orderDetail.editAttachment);
           break;
         case 3:
-          this.AddAntenna(this.orderDetail.editAttachment.id)
+          this.DeleteFabricObj(`rectAntenna${this.orderDetail.editAttachment.id}`);
+          this.AddAntenna(this.orderDetail.editAttachment.id);
           break;
         default:
           break;
@@ -230,12 +232,41 @@ const vueInstance = Vue.createApp({
       
     },
     AddObj(selectedtype) {
+      this.isAddMore = false;
       let newObj = {};
       let newObjId = this.orderDetail.attachment.length+1;
       switch (selectedtype.value) {
         case 'window':
           newObj = {
-            type: selectedtype.value, typeName: selectedtype.label, id: newObjId, X: 30, Y: 30, Xc: 10, pos: { label: '左上', value: 'left_up' }, mat: { label: '塑膠', value: '塑膠' }, 
+            type: selectedtype.value,
+            typeName: selectedtype.label,
+            id: newObjId,
+            X: 30,
+            Y: 30,
+            Xc: 10,
+            pos: { label: '左上', value: 'left_up' },
+            mat: { label: '塑膠', value: '塑膠' },
+            antennaApps: [
+              { name: '5G', amount: 0, selectedFreq: '800/900/1800/1900/2100/2600/3500/5500', freqList: ['800/900/1800/1900/2100/2600/3500/5500'] },
+              { name: '4G', amount: 0, selectedFreq: '800/900/1800/1900/2100/2600', freqList: ['800/900/1800/1900/2100/2600'] },
+              { name: '3G', amount: 0, selectedFreq: '800/900/1800/1900/2100', freqList: ['800/900/1800/1900/2100'] },
+              { name: 'WLAN', amount: 0, selectedFreq: '2450/5500', freqList: ['2450/5500', '2450/5500/6500'] },
+              { name: 'MIMO', amount: 0, selectedFreq: '3500', freqList: ['3500', '3500/4200'] },
+              { name: 'GPS', amount: 0, selectedFreq: '1575', freqList: ['1575'] },
+            ],
+            antennaSpec: [
+              { freq: '617~698', power: -6.5, s11: '<-4' },
+              { freq: '698-960', power: -6.5, s11: '<-6' },
+              { freq: '1452-1496', power: -6.5, s11: '<-6' },
+              { freq: '1710-2200', power: -6.5, s11: '<-6' },
+              { freq: '2300-2400', power: -6.5, s11: '<-6' },
+              { freq: '2400-2500', power: -6.5, s11: '<-6' },
+              { freq: '2500-2690', power: -6.5, s11: '<-6' },
+              { freq: '3300-3800', power: -6.5, s11: '<-6' },
+              { freq: '3800-4200', power: -6.5, s11: '<-6' },
+              { freq: '5150-5850', power: -6.5, s11: '<-6' },
+              { freq: '5850-7125', power: -6.5, s11: '<-6' },
+            ],
           };
           this.orderDetail.attachment.push(newObj);
           this.AddFabricObj(`rectAttachment${newObjId}`, {
@@ -253,7 +284,36 @@ const vueInstance = Vue.createApp({
           break;
         case 'slot':
           newObj = {
-            type: selectedtype.value, typeName: selectedtype.label, id: newObjId, X: 50, Y: 50, Xc: 10, Yc: 10, pos: { label: '左上', value: 'left_up' }, mat: { label: '塑膠', value: '塑膠' }, 
+            type: selectedtype.value,
+            typeName: selectedtype.label,
+            id: newObjId,
+            X: 50,
+            Y: 50,
+            Xc: 10,
+            Yc: 10,
+            pos: { label: '左上', value: 'left_up' },
+            mat: { label: '塑膠', value: '塑膠' },
+            antennaApps: [
+              { name: '5G', amount: 0, selectedFreq: '800/900/1800/1900/2100/2600/3500/5500', freqList: ['800/900/1800/1900/2100/2600/3500/5500'] },
+              { name: '4G', amount: 0, selectedFreq: '800/900/1800/1900/2100/2600', freqList: ['800/900/1800/1900/2100/2600'] },
+              { name: '3G', amount: 0, selectedFreq: '800/900/1800/1900/2100', freqList: ['800/900/1800/1900/2100'] },
+              { name: 'WLAN', amount: 0, selectedFreq: '2450/5500', freqList: ['2450/5500', '2450/5500/6500'] },
+              { name: 'MIMO', amount: 0, selectedFreq: '3500', freqList: ['3500', '3500/4200'] },
+              { name: 'GPS', amount: 0, selectedFreq: '1575', freqList: ['1575'] },
+            ],
+            antennaSpec: [
+              { freq: '617~698', power: -6.5, s11: '<-4' },
+              { freq: '698-960', power: -6.5, s11: '<-6' },
+              { freq: '1452-1496', power: -6.5, s11: '<-6' },
+              { freq: '1710-2200', power: -6.5, s11: '<-6' },
+              { freq: '2300-2400', power: -6.5, s11: '<-6' },
+              { freq: '2400-2500', power: -6.5, s11: '<-6' },
+              { freq: '2500-2690', power: -6.5, s11: '<-6' },
+              { freq: '3300-3800', power: -6.5, s11: '<-6' },
+              { freq: '3800-4200', power: -6.5, s11: '<-6' },
+              { freq: '5150-5850', power: -6.5, s11: '<-6' },
+              { freq: '5850-7125', power: -6.5, s11: '<-6' },
+            ],
           };
           this.orderDetail.attachment.push(newObj);
           this.AddFabricObj(`rectAttachment${newObjId}`, {
@@ -286,7 +346,12 @@ const vueInstance = Vue.createApp({
       this.DeleteFabricObj(`rectAntenna${id}`);
     },
     ReselectAttachment(id) {
+      this.isAddMore = true;
       this.DeleteObj(id);
+    },
+    AddMoreObj() {
+      this.isAddMore = true;
+      this.ToStep(2);
     },
     AddAntenna(id) {
       let attach = this.orderDetail.attachment.find(ele => ele.id === id);
@@ -437,6 +502,8 @@ const vueInstance = Vue.createApp({
       this[`rectAttachment${id}`].setCoords();
 
       this.canvas.requestRenderAll();
+      // 刪除既有天線
+      this.DeleteFabricObj(`rectAntenna${id}`);
     },
     SetAttachmentY(id) {
       const scale = this[`rectAttachment${id}`].getObjectScaling();
@@ -445,11 +512,15 @@ const vueInstance = Vue.createApp({
       this[`rectAttachment${id}`].setCoords();
 
       this.canvas.requestRenderAll();
+      // 刪除既有天線
+      this.DeleteFabricObj(`rectAntenna${id}`);
     },
     SetAttachmentXcYc(id) {
       this.SetAttachmentPosition(id, this.orderDetail.editAttachment.pos.value);
       this[`rectAttachment${id}`].setCoords();
       this.canvas.requestRenderAll();
+      // 刪除既有天線
+      this.DeleteFabricObj(`rectAntenna${id}`);
     },
     // 設定窗戶尺寸
     SetWindowX() {
@@ -522,6 +593,7 @@ const vueInstance = Vue.createApp({
     },
     SetAttachmentPos(id, pos) {
       this.SetAttachmentPosition(id, pos);
+      this.DeleteFabricObj(`rectAntenna${id}`);
       // this.SetFabricObjVisible(this[`window${id}Rect`]);
       // this.antennaRect.set('left', (parseInt(this.orderDetail.windows.find(ele => ele.id === id).Xc)+30));
       // this.antennaRect.setCoords();
@@ -699,12 +771,18 @@ const vueInstance = Vue.createApp({
       const scale = this[`rectAntenna${id}`].getObjectScaling();
       this[`rectAntenna${id}`].set('width', this.orderDetail.editAttachment.antenna.X/ scale.scaleX);
       this[`rectAntenna${id}`].setCoords();
+      // 天線置中
+      let newLeft = this[`rectAttachment${id}`].get('left') + (this[`rectAttachment${id}`].get('width') - parseInt(this.orderDetail.editAttachment.antenna.X))/2;
+      this[`rectAntenna${id}`].set('left', newLeft);
       this.canvas.requestRenderAll();
     },
     SetAntennaY(id) {
       const scale = this[`rectAntenna${id}`].getObjectScaling();
       this[`rectAntenna${id}`].set('height', this.orderDetail.editAttachment.antenna.Y/ scale.scaleY);
       this[`rectAntenna${id}`].setCoords();
+      // 天線置中
+      let newTop = this[`rectAttachment${id}`].get('top') + (this[`rectAttachment${id}`].get('height') - parseInt(this.orderDetail.editAttachment.antenna.Y))/2;
+      this[`rectAntenna${id}`].set('top', newTop);
       this.canvas.requestRenderAll();
     },
 

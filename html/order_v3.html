@@ -87,7 +87,7 @@
         <div class="input_step">
           <div class="input_group">
             <p><span class="color-warning">*</span>窗戶/槽孔/套筒</p>
-            <select class="input_select w50" :disabled="orderDetail.attachment.length === orderDetail.editAttachment.id" name="" id="" v-model="orderDetail.selectedType">
+            <select class="input_select w50" :disabled="!isAddMore" name="" id="" v-model="orderDetail.selectedType">
               <option
                 v-for="(ele, idx) in orderDetail.typeList"
                 :key="idx"
@@ -95,14 +95,14 @@
                 {{ele.label}}
               </option>
             </select>
-            <a v-if="orderDetail.attachment.length !== orderDetail.editAttachment.id" class="btn-primary mB10 mL10" @click="AddObj(orderDetail.selectedType)">新增</a>
-            <a v-if="orderDetail.attachment.length === orderDetail.editAttachment.id" class="btn-secondary-outline mB10 mL10" @click="ReselectAttachment(orderDetail.editAttachment.id)">重新選擇</a>
+            <a v-if="isAddMore" class="btn-primary mB10 mL10" @click="AddObj(orderDetail.selectedType)">新增</a>
+            <a v-if="!isAddMore" class="btn-secondary-outline mB10 mL10" @click="ReselectAttachment(orderDetail.editAttachment.id)">重新選擇</a>
           </div>
         </div>
 
         <!-- 窗戶 -->
         <div>
-          <div v-if="orderDetail.attachment.length === orderDetail.editAttachment.id">
+          <div v-if="orderDetail.attachment.length === orderDetail.editAttachment.id && !isAddMore">
             <h3 class="mB5">{{orderDetail.editAttachment.typeName}}{{orderDetail.editAttachment.id}}</h3>
             <div class="input_step">
               <div class="input_group">
@@ -149,130 +149,6 @@
             </div>
           </div>
         </div>
-        
-        <!-- <div class="input_step">
-          <div class="input_group">
-            <p><span class="color-warning">*</span>窗戶長Xw (mm)</p>
-            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.windowX" @input="SetWindowX">
-          </div>
-          <div class="input_group">
-            <p><span class="color-warning">*</span>窗戶寬Yw (mm)</p>
-            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.windowY" @input="SetWindowY">
-          </div>
-          <div class="input_group">
-            <p><span class="color-warning">*</span>側邊長Xc (mm)</p>
-            <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.windowXc" @input="SetWindowXc">
-          </div>
-          <div class="input_group">
-            <p><span class="color-warning">*</span>窗戶材質</p>
-            <select class="input_select" name="" id="" v-model="orderDetail.selectedWindowMaterial">
-              <option
-                v-for="(ele, idx) in orderDetail.windowMaterialList"
-                :key="idx"
-                :value="ele">
-                {{ele.label}}
-              </option>
-            </select>
-          </div>
-        </div> -->
-
-        <!-- 窗戶 -->
-        <!-- <div v-if="orderDetail.selectedType.value === '窗戶'">
-          <div v-for="(win, widx) in orderDetail.windows" :key="widx">
-            <h3 class="mB5">窗戶{{win.id}}</h3>
-            <button v-if="widx === orderDetail.windows.length-1 && widx !== 3" @click="AddWindow">增加窗戶</button>
-            <button v-if="widx === orderDetail.windows.length-1 && widx !== 0" @click="DeleteWindow(win)">刪除窗戶</button>
-            <div class="input_step" v-show="widx === orderDetail.windows.length-1">
-              <div class="input_group">
-                <p><span class="color-warning">*</span>窗戶位置</p>
-                <select class="input_select" name="" id="" v-model="win.pos" @change="SetWindowsPos(win.id, win.pos.value)">
-                  <option
-                    v-for="(ele, idx) in orderDetail.posList"
-                    :key="idx"
-                    :value="ele"
-                    :disabled="orderDetail.windows.map(w => w.pos).map(p => p.value).includes(ele.value) || !ele.value">
-                    {{ele.label}}
-                  </option>
-                </select>
-              </div>
-              <div class="input_group">
-                <p><span class="color-warning">*</span>窗戶長Xw1 (mm)</p>
-                <input class="input_text" placeholder="請填寫" type="text" v-model="win.X" @input="SetWindowsX(win.id)">
-              </div>
-              <div class="input_group">
-                <p><span class="color-warning">*</span>窗戶寬Yw1 (mm)</p>
-                <input class="input_text" placeholder="請填寫" type="text" v-model="win.Y" @input="SetWindowsY(win.id)">
-              </div>
-              <div class="input_group">
-                <p><span class="color-warning">*</span>側邊長Xc1 (mm)</p>
-                <input class="input_text" placeholder="請填寫" type="text" v-model="win.Xc" @input="SetWindowsXc(win.id)">
-              </div>
-              <div class="input_group">
-                <p><span class="color-warning">*</span>窗戶材質</p>
-                <select class="input_select" name="" id="" v-model="win.mat">
-                  <option
-                    v-for="(ele, idx) in orderDetail.windowMaterialList"
-                    :key="idx"
-                    :value="ele">
-                    {{ele.label}}
-                  </option>
-                </select>
-              </div>
-            </div>
-            <span>{{win.pos.label}}/Xw{{win.id}}: {{win.X}}/Yw{{win.id}}: {{win.Y}}/Xc{{win.id}}: {{win.Xc}}/材質: {{win.mat.label}}</span>
-          </div>
-        </div> -->
-
-        <!-- 槽孔 -->
-        <!-- <div v-if="orderDetail.selectedType.value === '槽孔'">
-          <div v-for="(slot, sidx) in orderDetail.slots" :key="sidx">
-            <h3 class="mB5">槽孔{{slot.id}}</h3>
-            <button v-if="sidx === orderDetail.slots.length-1 && sidx !== 3" @click="AddSlot">增加槽孔</button>
-            <button v-if="sidx === orderDetail.slots.length-1 && sidx !== 0" @click="DeleteSlot(slot)">刪除槽孔</button>
-            <div class="input_step" v-show="sidx === orderDetail.slots.length-1">
-              <div class="input_group">
-                <p><span class="color-warning">*</span>槽孔位置</p>
-                <select class="input_select" name="" id="" v-model="slot.pos" @change="SetSlotsPos(slot.id, slot.pos.value)">
-                  <option
-                    v-for="(ele, idx) in orderDetail.posList"
-                    :key="idx"
-                    :value="ele"
-                    :disabled="orderDetail.slots.map(w => w.pos).map(p => p.value).includes(ele.value) || !ele.value">
-                    {{ele.label}}
-                  </option>
-                </select>
-              </div>
-              <div class="input_group">
-                <p><span class="color-warning">*</span>槽孔長Xw1 (mm)</p>
-                <input class="input_text" placeholder="請填寫" type="text" v-model="slot.X" @input="SetSlotsX(slot.id)">
-              </div>
-              <div class="input_group">
-                <p><span class="color-warning">*</span>槽孔寬Yw1 (mm)</p>
-                <input class="input_text" placeholder="請填寫" type="text" v-model="slot.Y" @input="SetSlotsY(slot.id)">
-              </div>
-              <div class="input_group">
-                <p><span class="color-warning">*</span>側邊長Xc1 (mm)</p>
-                <input class="input_text" placeholder="請填寫" type="text" v-model="slot.Xc" @input="SetSlotsXc(slot.id)">
-              </div>
-              <div class="input_group">
-                <p><span class="color-warning">*</span>側邊寬Yc1 (mm)</p>
-                <input class="input_text" placeholder="請填寫" type="text" v-model="slot.Yc" @input="SetSlotsYc(slot.id)">
-              </div>
-              <div class="input_group">
-                <p><span class="color-warning">*</span>槽孔材質</p>
-                <select class="input_select" name="" id="" v-model="slot.mat">
-                  <option
-                    v-for="(ele, idx) in orderDetail.slotMaterialList"
-                    :key="idx"
-                    :value="ele">
-                    {{ele.label}}
-                  </option>
-                </select>
-              </div>
-            </div>
-            <span>{{slot.pos.label}}/Xw{{slot.id}}: {{slot.X}}/Yw{{slot.id}}: {{slot.Y}}/Xc{{slot.id}}: {{slot.Xc}}/Yc{{slot.id}}: {{slot.Yc}}/材質: {{slot.mat.label}}</span>
-          </div>
-        </div> -->
 
         <!-- 套筒 -->
         <!-- <div v-if="orderDetail.selectedType.value === '套筒'">
@@ -350,7 +226,7 @@
               <th><span class="color-warning">*</span>操作頻段MHz</th>
             </tr>
             <tr 
-              v-for="(ele, idx) in orderDetail.antennaApps"
+              v-for="(ele, idx) in orderDetail.editAttachment.antennaApps"
               :key="idx">
               <td>{{ele.name}}</td>
               <td>
@@ -388,7 +264,7 @@
               <th style="width: 80px;"><span class="color-warning">*</span>|S11|規格(dB)</th>
             </tr>
             <tr 
-              v-for="(ele, idx) in orderDetail.antennaSpec"
+              v-for="(ele, idx) in orderDetail.editAttachment.antennaSpec"
               :key="idx">
               <td>{{ele.freq}}</td>
               <td>
@@ -402,6 +278,7 @@
         </div>
         <div class="mB10">
           <a class="btn-secondary-outline mB10 mR10" @click="ToStep(4)">上一步</a>
+          <a class="btn-primary-outline mB10 mR10" @click="AddMoreObj">繼續新增窗戶/槽孔/套筒</a>
           <a class="btn-primary mB10 mR10" v-if="isStep5Finished" @click="ToStep(6)">下一步</a>
           <button class="btn-primary mB10 mR10" disabled v-if="!isStep5Finished">下一步<button/>
         </div>
