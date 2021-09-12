@@ -330,6 +330,49 @@ const vueInstance = Vue.createApp({
           this.orderDetail.editAttachment = this.orderDetail.attachment.find(ele => ele.id === newObjId);
           break
         case 'sleeve':
+          newObj = {
+            type: selectedtype.value,
+            typeName: selectedtype.label,
+            id: newObjId,
+            X: 50,
+            Y: 50,
+            Z: 10,
+            mat: { label: '塑膠', value: '塑膠' },
+            antennaApps: [
+              { name: '5G', amount: 0, selectedFreq: '800/900/1800/1900/2100/2600/3500/5500', freqList: ['800/900/1800/1900/2100/2600/3500/5500'] },
+              { name: '4G', amount: 0, selectedFreq: '800/900/1800/1900/2100/2600', freqList: ['800/900/1800/1900/2100/2600'] },
+              { name: '3G', amount: 0, selectedFreq: '800/900/1800/1900/2100', freqList: ['800/900/1800/1900/2100'] },
+              { name: 'WLAN', amount: 0, selectedFreq: '2450/5500', freqList: ['2450/5500', '2450/5500/6500'] },
+              { name: 'MIMO', amount: 0, selectedFreq: '3500', freqList: ['3500', '3500/4200'] },
+              { name: 'GPS', amount: 0, selectedFreq: '1575', freqList: ['1575'] },
+            ],
+            antennaSpec: [
+              { freq: '617~698', power: -6.5, s11: '<-4' },
+              { freq: '698-960', power: -6.5, s11: '<-6' },
+              { freq: '1452-1496', power: -6.5, s11: '<-6' },
+              { freq: '1710-2200', power: -6.5, s11: '<-6' },
+              { freq: '2300-2400', power: -6.5, s11: '<-6' },
+              { freq: '2400-2500', power: -6.5, s11: '<-6' },
+              { freq: '2500-2690', power: -6.5, s11: '<-6' },
+              { freq: '3300-3800', power: -6.5, s11: '<-6' },
+              { freq: '3800-4200', power: -6.5, s11: '<-6' },
+              { freq: '5150-5850', power: -6.5, s11: '<-6' },
+              { freq: '5850-7125', power: -6.5, s11: '<-6' },
+            ],
+          };
+          this.orderDetail.attachment.push(newObj);
+          this.AddFabricObj(`rectAttachment${newObjId}`, {
+            top: this.caseRect.get('height')+30,
+            left: this.caseRect.get('left') + (this.caseRect.get('width') - parseInt(newObj.X))/2,
+            width: newObj.X,
+            height: newObj.Y,
+            fill: '#36bbd9',
+            // stroke: '#333',
+            // strokeWidth: 1,
+            // strokeDashArray: [5, 5],
+            selectable: false
+          });
+          this.orderDetail.editAttachment = this.orderDetail.attachment.find(ele => ele.id === newObjId);
           break   
         default:
           break;
@@ -351,6 +394,7 @@ const vueInstance = Vue.createApp({
     },
     AddMoreObj() {
       this.isAddMore = true;
+      this.orderDetail.selectedType = { label: '窗戶', value: 'window' };
       this.ToStep(2);
     },
     AddAntenna(id) {
@@ -410,17 +454,6 @@ const vueInstance = Vue.createApp({
         selectable: false,
       });
 
-      // window
-      // this.AddFabricObj('windowRect', {
-      //   top: 30,
-      //   left: 30,
-      //   width: this.orderDetail.windowX,
-      //   height: this.orderDetail.windowY,
-      //   fill: '#f5f3f4',
-      //   selectable: false,
-      //   visible: false
-      // });
-
       // sleeve
       this.AddFabricObj('sleeveLRect', {
         top: 30,
@@ -440,20 +473,6 @@ const vueInstance = Vue.createApp({
         visible: false,
         selectable: false,
       });
-      // antenna
-      this.SyncWindowAthennaSize();
-      this.AddFabricObj('antennaRect', {
-        top: 30,
-        left: 30,
-        width: this.orderDetail.windowX,
-        height: this.orderDetail.windowY,
-        fill: '#598e9a',
-        stroke: '#333',
-        strokeWidth: 2,
-        selectable: false,
-        visible: false
-      });
-      
     },
     AddFabricObj(obj, option) {
       this[obj] = new fabric.Rect(option);
@@ -498,10 +517,13 @@ const vueInstance = Vue.createApp({
     SetAttachmentX(id) {
       const scale = this[`rectAttachment${id}`].getObjectScaling();
       this[`rectAttachment${id}`].set('width', this.orderDetail.editAttachment.X/ scale.scaleX);
-      // this.SetWindowsPosition(id, win.pos.value);
       this[`rectAttachment${id}`].setCoords();
 
+      if (this.orderDetail.editAttachment.type === 'sleeve') {
+        this[`rectAttachment${id}`].set('left', this.caseRect.get('left') + (this.caseRect.get('width') - parseInt(this.orderDetail.editAttachment.X))/2);
+      }
       this.canvas.requestRenderAll();
+
       // 刪除既有天線
       this.DeleteFabricObj(`rectAntenna${id}`);
     },

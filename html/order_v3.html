@@ -91,7 +91,8 @@
               <option
                 v-for="(ele, idx) in orderDetail.typeList"
                 :key="idx"
-                :value="ele">
+                :value="ele"
+                :disabled="ele.value === 'sleeve' && this.orderDetail.attachment.findIndex(el => el.type === 'sleeve') >= 0">
                 {{ele.label}}
               </option>
             </select>
@@ -105,7 +106,7 @@
           <div v-if="orderDetail.attachment.length === orderDetail.editAttachment.id && !isAddMore">
             <h3 class="mB5">{{orderDetail.editAttachment.typeName}}{{orderDetail.editAttachment.id}}</h3>
             <div class="input_step">
-              <div class="input_group">
+              <div class="input_group" v-if="orderDetail.editAttachment.type !== 'sleeve'">
                 <p><span class="color-warning">*</span>{{orderDetail.editAttachment.typeName}}位置</p>
                 <select class="input_select" name="" id="" v-model="orderDetail.editAttachment.pos" @change="SetAttachmentPos(orderDetail.editAttachment.id, orderDetail.editAttachment.pos.value)">
                   <option
@@ -119,14 +120,16 @@
               <div class="input_group">
                 <p v-if="orderDetail.editAttachment.type === 'window'"><span class="color-warning">*</span>窗戶長Xw (mm)</p>
                 <p v-if="orderDetail.editAttachment.type === 'slot'"><span class="color-warning">*</span>槽孔長Xw (mm)</p>
+                <p v-if="orderDetail.editAttachment.type === 'sleeve'"><span class="color-warning">*</span>套筒長Xw (mm)</p>
                 <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.X" @input="SetAttachmentX(orderDetail.editAttachment.id)">
               </div>
               <div class="input_group">
                 <p v-if="orderDetail.editAttachment.type === 'window'"><span class="color-warning">*</span>窗戶寬Yw (mm)</p>
                 <p v-if="orderDetail.editAttachment.type === 'slot'"><span class="color-warning">*</span>槽孔寬Yw (mm)</p>
+                <p v-if="orderDetail.editAttachment.type === 'sleeve'"><span class="color-warning">*</span>套筒寬Yw (mm)</p>
                 <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.Y" @input="SetAttachmentY(orderDetail.editAttachment.id)">
               </div>
-              <div class="input_group">
+              <div class="input_group" v-if="orderDetail.editAttachment.type !== 'sleeve'">
                 <p v-if="orderDetail.editAttachment.type === 'window'"><span class="color-warning">*</span>側邊長Xc (mm)</p>
                 <p v-if="orderDetail.editAttachment.type === 'slot'"><span class="color-warning">*</span>側邊長Xc (mm)</p>
                 <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.Xc" @input="SetAttachmentXcYc(orderDetail.editAttachment.id)">
@@ -134,6 +137,10 @@
               <div class="input_group" v-if="orderDetail.editAttachment.type === 'slot'">
                 <p><span class="color-warning">*</span>側邊寬Yc (mm)</p>
                 <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.Yc" @input="SetAttachmentXcYc(orderDetail.editAttachment.id)">
+              </div>
+              <div class="input_group" v-if="orderDetail.editAttachment.type === 'sleeve'">
+                <p><span class="color-warning">*</span>套筒厚Zw (mm)</p>
+                <input class="input_text" placeholder="請填寫" type="text" v-model="orderDetail.editAttachment.Z">
               </div>
               <div class="input_group">
                 <p><span class="color-warning">*</span>{{orderDetail.editAttachment.typeName}}材質</p>
